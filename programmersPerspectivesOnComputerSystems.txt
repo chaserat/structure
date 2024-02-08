@@ -1,0 +1,187 @@
+一、计算机操作系统预览
+1、bits信息上下文
+	如何写自己的unix shell，动态存储分配包，甚至你自己的web server
+2、程序被翻译成不同的形式
+	理解并发的优势和边界：多核处理器的重要特点
+	源文本->预处理器->修改源程序(text)->编译器(cc1)->程序集(文本)->重定位程序(二进制)->可执行程序(linker)
+	{预处理阶段：头文件
+	编译阶段：程序集中包含low-level机器码；high-level语言
+	程序集阶段：程序集转换为 relocatable object program
+	链接阶段：链接器处理库和程序集，生成可执行程序
+	}
+	GNU工程（GNU's Not Unix）：
+3、理解编译系统如何运行
+	优化性能：
+	机器语言：IA32
+	如何调节，是的编码器工作更佳
+	C编码器在内存中存储数据列阵，且C程序如何运行的更佳有效率；
+	理解link-time errors： linker表示不能解决a reference
+	chapter7: 链接error
+	避免安全漏洞：buffer overflow vulnerabilities
+	编码程序、编码器、操作系统减少攻击的威胁
+4、存储中处理器读取和解释器指令存储
+	系统的硬件组织(硬件系统)：{CPU，ALU，PC：program counter，USB：universal serial bus}
+	Buses：word size(4 bytes)
+	I/O Devices:I/O设备；硬盘驱动，I/O bus & I/O device
+	主存储器：DRAMs，IA32机器码
+	处理器：program counter（PC）:word-size的存储器;CPU：运行主存储器的解释器指令；
+	简单指令集模型（指令集架构）；ALU计算新数据和地址: Load,Store,Operate,Jump
+	Direct memory access(DMA):
+5、缓存非常重要
+	系统花费时间移动information（系统设计的一个重要目的是使的copy操作越快越好）
+	硬盘越大，访问速度越慢；同时寄存文件只有少数bytes信息；processor-memory gap继续增加；处理器操作速度加快的成本比主存储器要更低；
+	缓存：L1 & L2 cache 硬件技术：SRAM{static random access memory}
+6、存储器形成结构
+	在处理器和大的慢的设备中插入更小、更快的存储设备，成为了通用思路；
+7、操作系统管理硬件
+	所有控制硬件的应用程序必须经过操作系统
+	操作系统有两个目的：保护硬件被失控的应用使用；提供统一机器码的应用在多物理硬件中调用；
+	Processes{processor,virtual memory{main memory,Files{I/O devices}}}
+	操作系统跟踪所有的process状态信息{context,PC的当前值，寄存文件和主存储器的内容}
+	Process context switching：进程上下文切换
+	ThreadsThreads：每个进程包含很多处理单元「线程」，
+	Virtual Memory: 虚拟地址空间，Program code and data{处理代码和数据；Heap，Shared Libraries,
+	Stack,Kernel virtual memory} 复杂的交互系统在硬件和操作系统之间是被需要的；
+	Files: bytes流；I/O设备，包括硬盘、键盘、显示器和网络；提供了应用varied I/O设备；使用不同的disk技术，代码可运行在不同的操作系统；
+	简单和优雅的概念
+8、系统使用networks（？？）与其他系统交互
+	main memory--> network adaptor: local disk driver;
+	系统可以被看作为硬件和软件的集合孤岛
+	信息传输是网络的重要组成部分{system bus,memory bus,I/O bus}
+	代理和服务器的交换类型是典型的网络应用；
+9、重要议题
+	concurrency & parallelism：并行「计算机架构上，三层描述」
+		Thread-level concurrency:{uniprocessor system;多处理器系统；多核处理器}
+		Instruction-level Parallelism: processors 可运行更快{superscalar processors}
+		Single-Instruction,Multiple-Data(SIMD)parallelism{用于处理图像、声音和视频}
+10、总结
+	Files是I/O设备的抽象；VM是main memory和disk的抽象；Processes是processor、main memory和I/O devices的抽象；
+二、程序架构和运行
+1、表示和处理信息：
+	1:信息存储
+		编译器和run-time系统划分存储空间，以便更容易控制存储不同程序对象；
+		十六进制、Words、Data Sizes、Addressing & Byte Ordering；
+		Web Aside Data: more on bool algebra and bool rings
+		Bit-Level 操作 in C
+		Logical Operation in C
+		Shift Operation in C： << 向右或向左移动bit类型	
+	2：整数描述
+		数学特性和机器层-implementations；
+	3:整数计算
+	4:浮点数
+	5:总结
+2、程序在机器层面的描述
+	1：历史角度
+	2：程序编码
+	3：数据形式
+	4：可达信息
+	5：数理逻辑
+	6：控制
+	7：procedure
+	8：Array分配与Access
+	9：Heterogeneous数据结构
+	10：理解指针
+	11：使用GDB debugger
+	12：oom引用和缓存溢出
+	13：X86-64 拓展IA32到64Bits
+	14:浮点数程序的机器层表示
+	15:总结
+3、处理器架构
+	1：Y86指令集架构
+	2:逻辑设计和HCL（硬件控制语言）
+	3：Sequential Y86 Implementations
+	4:管线的通用规则
+	5:管线Y86Implementations
+	6:总结
+4、优化程序性能
+	1：编译器的能力与限制
+	2：表达程序表象
+	3:程序样例
+	4:删除无效循环
+	5:减少Procedure Calls
+	6:删除不需要的内存引用
+	7:理解现代处理器
+	8:Loop unrolling
+	9:增强并行性
+	10:优化Combinning代码的结果
+	11:限制因素
+	12:理解内存表现
+	13:performance improvement techniques
+	14:发现和消除表现瓶颈
+	15:总结
+5、内存结构
+	1:存储技术
+	2：Locality
+	3:内存结构
+	4:缓存内存
+	5:Cache友好型代码
+	6:程序中缓存的冲击
+	7:总结
+6、系统中运行项目
+	1:Linking
+		编译Drivers
+		静态链接
+		Object Files
+		重新分配Object Files
+		字符和字符表
+		字符精度
+		重寻址
+		执行Object文件
+		加载执行对象文件
+		使用Shared库动态链接
+		从应用中加载和链接shared库
+		独立于Position编码【PIC】
+		处理Object文件工具
+	2：异常控制流
+		异常
+		Processes
+		系统句柄报错Error
+		Process Control
+		Signals：信号
+		NonLocal jumps
+		处理流程的工具
+	3:虚拟内存
+		蓄力和虚拟地址
+		地址空间
+		VM是缓存的一个工具
+		VM作为内存管理的工具
+		VM作为内存保护的工具
+		地址转移
+		样例分析：i7 / Linuex Memory System
+		内存映射
+		动态内存分配
+		Garbage Collection
+		常见的C程序中的内存bug
+		总结
+三、在系统上运行程序
+	1、系统级的IO操作
+		Unix I/O
+		打开和关闭文件
+		读取和写入文件
+		使用Rio package更加鲁棒地读写
+		读取metadata
+		sharing files
+		I/O Redirection
+		Standard I/O
+		那些I/O函数可见
+		总结
+	2、Network编程
+		Client-Server编程模型
+		网络
+		全球IP internet
+		Socket 接口
+		Web Servers
+		TINY Web Server
+		总结
+	3、Concurrent编程：并发程序设计
+		1、处理的Concurrent编程
+		2、I/O 多复杂的Concurrent编程
+		3、线程的Concurrent编程
+		4、线程中的共享变量
+		5、使用Semaphores同步变量
+		6、使用线程实现并行
+		7、其他的concurrency issues
+		8、总结
+四、错误handling
+	1、Error handling in unix system
+	2、Errorhandling wrappers
