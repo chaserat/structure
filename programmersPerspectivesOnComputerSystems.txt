@@ -70,19 +70,65 @@
 	3:整数计算
 	4:浮点数
 	5:总结
-		二进制描述
 2、程序在机器层面的描述
 	1：历史角度
-		编译器生成机器码；进攻和防御，并行都在机器码层有体现；其中一个目的是使用汇编写下完整的函数，链接他们与C语言函数在链接层；
-	使用GCC实现嵌入汇编；SSE指令集用于支持Multi-media应用；最新的版本中SSE在IA32和X86-64机器上，用于映射浮点方法；
-		演化历史和摩尔定律
-	2：程序编码     ---- 195
-
+	Intel Architecture 32-bit: Intel64 -> X86-64: 
+	Advanced Micro Devices(AMD): 
+	2：程序编码
+	unix > gcc -O1 -o p p1.c p2.c
+	机器码：被定义instruction of architexture： ISA（IA32 和 X86-64）
+	ISA：指令集
+	second： 内存地址：虚拟地址，提供了存储模型，体现非常大的byte排列；
+	存储系统提供了硬件存储和操作系统的结合；
+	program counter + integer register包含了八个名为locations storing 32-bit values；
+	简单的程序指令只是基础的操作，例如：在寄存器中增加两个数字，传输存储和寄存器，或者条件分支到
+	新的指令地址；编译器必须生成指令集用于补充程序产生数学表达估计、循环和procedure call舍返回；
 	3：数据形式
+	C描述：char，short，int，long int，loing long int，char *，float，double，long double
+	intel：Byte，Word，Double word，-----，Single precision，Extended precision
 	4：可达信息
+	Operand Specifier：Results 可悲存储在寄存器或者内存中；不同的操作可分为三类：
+	Immediate，Register，Memory；
+	Data movement instructions：Address, Register,Operand Value
+	MOV class由三个指令组成{movb,movw,movl: operate on data of size 1,2,4}
 	5：数理逻辑
+	Load Effective Address:整数代数操作
+	unary & binary操作：
+	Shift Operation: 
+	讨论：
+	special arithmetic operation：
 	6：控制
+	迄今为止：我们只记住了straight-line代码的行为；机器码提供两个基础的机制：基于测试数据的结果，要么修改控制流或者数据流
+	数据依赖的控制流是更加general和更加通用的操作，因此我们将测试这个；机器码的指令能够使用jump指令集进行修改
+	条件码：常用的condition code：Carry flag，Zero flag，Sign flag，Overflow flag；
+	对比和测试指令集： SET instructions；
+	Accessing the condition codes：设置single bytes{0~1};跳转到另一个的程序；条件转移数据；
+	编译或反assembly是的任意选择；
+	jump指令：在生成object-code文件，程序集决定了所有标记的指令的地址；编码jump目标做为跳跃指令的部分；
+	：：direct jump-jump目标编码为指令的一部分；indirect jump-从寄存器或者memory地址中读取jump目标；
+	".L1"标签：Conditional jump只能是direct
+	在程序集代码中，jump目标使用符号标签；程序集和链接linker；
+	PC relatives： 
+	Most common constructs：simple conditional branches & loops and swith statements
+	迁移条件分支：original code -> goto version -> assembly code
+	Loops: {.L2: jg .L2}
+	Conditional Move Instructions: 
+	misprediction penalty:
+	指令有两个操作：源寄存器或存储地址、目标寄存器
+	不像unconditional instructions：operand length可以边编码为指令名；
+	switch statements
 	7：procedure
+	数据的传递和分配&删除
+	stack frame structure：
+	Current frame{argument build area;saved registers,local variables and temporaries;Saved %ebp}
+	Caller's frame{return address;argument [4n + 4] -- increasing address} 
+	Earlier frames{stack "bottom"} 
+	procedure Q使用本地变量存储不到寄存器中：对所有的local数据不足寄存器；array/structure引用；地址算子应用于局部变量，因此我们必须生成新的地址；
+	相类似的，通过增加pointer可回收空间；
+	转移控制：ret指令剔除栈中地址和跳到新的地址{执行call，call之后，ret之后}
+	caller-save / callee-save
+	recursive procedures: 栈提供正确的policy：分配局部存储当程序被调用时，当返回时解除分配；
+	---------------------------------------------------------------------------------------------
 	8：Array分配与Access
 	9：Heterogeneous数据结构
 	10：理解指针
@@ -91,6 +137,7 @@
 	13：X86-64 拓展IA32到64Bits
 	14:浮点数程序的机器层表示
 	15:总结
+	---------------------------------------------------------------------------------------------
 3、处理器架构
 	1：Y86指令集架构
 	2:逻辑设计和HCL（硬件控制语言）
@@ -99,7 +146,17 @@
 	5:管线Y86Implementations
 	6:总结
 4、优化程序性能
+	有效程序需要一些典型特征：选择正确的算法集合和数据结构；优化执行代码{编译器的边界和能力}；
+	C的特征「指针」；并行计算；
+	在代码可实施和运行速度之间进行trade-off；
+	算法层：插入排序时间
+	编码层：很多低层优化减少了代码的可读性和模块化，使的程序脆弱和难以维护；
+	挑战是保持一些优雅和可读性； 
+	优化程序的性能：编码器必须知道计时信息能够决定使用多指令或者shifts和adds；
+	指令集层的优化；
+	Amdahl's law；
 	1：编译器的能力与限制
+	memory aliasing；
 	2：表达程序表象
 	3:程序样例
 	4:删除无效循环
