@@ -154,31 +154,99 @@
 	挑战是保持一些优雅和可读性； 
 	优化程序的性能：编码器必须知道计时信息能够决定使用多指令或者shifts和adds；
 	指令集层的优化；
-	Amdahl's law；
+	Amdahl's law；提升一个系统的一个部分的性能对整个系统有多大影响；
 	1：编译器的能力与限制
-	memory aliasing；
+	memory aliasing；两个指针指向同一个地址；
+	第一个优化blockers：程序严格限制编译器生成的优化代码的可能性；确保不会引入memory aliasing 
+	第二个优化blockers：side effect ---- 编译器假设最坏的情况，并leave functions calls intact；
+	编译器必须只应用safe优化项到项目中，保持功能一致；迁移为有效机器码；
+	优化函数calls通过inline substitution；
+	花费更多的精力用于书写编程，简化产生有效代码的编译器任务；
 	2：表达程序表象
+	cycles per element： CPE
+	loop unrolling： 循环展开；   优化原理： 减少指令开销，内部流水线优化
+	prefix-sum functions： 减少指令开销
 	3:程序样例
-	4:删除无效循环
-	5:减少Procedure Calls
+	优化后的代码和优化前的代码解决的是优化问题；
+	4:删除无效率循环(inefficiencies code)
+	使用变量，删除重复性的操作；
+	5:减少Procedure Calls:减少过程调用
+	Move vec_length -> Direct data access: 减少获取length时间
 	6:删除不需要的内存引用
+	删除不必要的reading&writing of memory；Expressing relative performance{？？}
 	7:理解现代处理器
+	instruction-level parallelism: 指令层的并行
+	latency bound： 延迟界限，当下一个操作需要上一个操作的结果----边界能限制程序性能；
+	throughput bound: 原生计算处理器的函数单位容量；{overall操作：superscalar，out-of-order，instruction control unit[ICU]，execution unit[EU] <- instruction cache}
+	branch prediction: 分支是否被选择和预测分支目标操作 
+	load和store单元access memory通过data cache；
+	speculative execution存在滞后性{misprediction}
+	retirement unit：系列语义的机器码程序；寄存器文件包含了整数、浮点数、和更多的SSE寄存器；{先进先出队列} misprediction不会修改程序状态；
+	最常用的用于控制操作交互的操作单元机制为register renaming；
+	functional unit performance：单元函数性能
+	processor operation的抽象模型：限制招致在图方面的critical paths{执行程序指令，lower bound}；
+	从机器码层代码 -> Data-Flow Graphs: {
+		Graphical representation of inner-loop code: read-only & write-only & local & Loop
+	}
+	其他的性能影响因素：
+	https://www.zhihu.com/question/274071028/answer/3228007605
+	性能限制：latency bound{延迟界限}、throughput bound{吞吐量界限，处理器功能单元的原始计算能力}
+	内存指标：延迟{latency}和带宽{brandwidth} 缓存模块
 	8:Loop unrolling
+	循环展开
+	基于reassociation transformation进行优化： 优化代码中的critical path{关键路径}
 	9:增强并行性
-	10:优化Combinning代码的结果
+	mutiple accumulators、reassociation transformation{结合律}
+	SIMD
+	10:优化Combinning代码的结果的总结
+	用电量的考虑
 	11:限制因素
+	register spilling： 
+	Branch prediction and misprediction penalties：不需过多关注可预测分支；Write Code Suitable for Implementation with Conditional Moves；
 	12:理解内存表现
-	13:performance improvement techniques
+		load performance：
+		store performance：
+	13:performance improvement techniques： life in the real world
+		从文件中读取每一个word并转化为小写
 	14:发现和消除表现瓶颈
+		program profiling：
+		using profiler to Guide Optimization
+		Amdahl’s Law：重要部分和加速度量决定了系统性能： 用于判断极限优化值{the cost of manufacturing razor blades}
 	15:总结
-5、内存结构
+		1、更有效的算法和数据结构是不能被编译器替代的；
+		2、operations、latencies、单元函数运行时间可预测程序性能；
+		3、loop unrolling、creating multiple accumulators、reassociation可挖掘指令集层的处理器并行；
+		4、程序需要牵涉条件分支和与存储系统进行复杂交互的基础策略：使得分支更加可预测或使用conditional-data transfers；注意store和load操作（I/O操作；使用局部变量
+		5、花费最多时间的程序模块优化，profiler工具是游泳的
+		6、Amdahl’s Law提供了有效的测试内容
+5、存储结构
+	memory system是一个存储结构{不同的容量，costs，access times}；
 	1:存储技术
+	RAM{SRAM/DRAM}
+	Accessing Main Memory:  Main memory <-memory bus-> I/O bridge <-System bus-> Bus interface{<->register file <-> ALU}
+	a note on bus designs: --
+	Disk Geometry: platters
+	SSD 没有moving parts{}
+	Storage Technology Trends: 
 	2：Locality
+	principle of locality: 硬件和软件系统设计与性能 -- temporal locality/spatially locality
+	locality of references to program data: 指针序号的顺序问题
+	Locality of Instruction Featches: 
+	Locality的总结：程序引用相同的变量喜欢好的时域locality；程序 with stride-1 reference图案有着好的spatial locality；Loops有着好的时空locality respect to instruction fetches；
 	3:内存结构
+	storage tech. / Computer software: 
+	Andrew File System(AFS)/Network File System(NFS)允许程序获取存储在远端网络服务器上的文件；
+	Cache Hits，Cache Misses， Kinds of cache misses；-> cache management;
+	存储结构概念： Exploiting temporal locality；Exploiting spatial locality；
 	4:缓存内存
+	Generic Cache Memory Organization / Direct-Mapped Caches{Selection && Line Matching} / 
+	Caches block 是固定size的信息包在缓存和主存储（lower-level cache）；line在cache中的存储了block的存储器，valid bit和tag bits；set是一个或者更多line的集合；
 	5:Cache友好型代码
-	6:程序中缓存的冲击
+	1、 make the common case go fast；2、在每一个inner loop中减少缓存misses的数量；--- 重复性的引用局部变量；stride-1引用好，因为内存连续；
+	6:程序中缓存对性能的影响
+	Rearranging Loops to increase spatial locality / Exploit Locality in Your programs 
 	7:总结
+	-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 6、系统中运行项目
 	1:Linking
 		编译Drivers
