@@ -248,12 +248,57 @@
 	7:总结
 	-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 6、系统中运行项目       -688
-	1:Linking
+	1:Linking: separate compilation: 理解linker有益于构建大型项目；理解linkers有助于避免危险项目错误；有助于理解language scoping rules
+	linking是收集和合并不同code模块和数据进入到(加载进内存和执行的)单个文件；编译时间内，当源代码转译成机器码；加载时间，程序被加载进内存并且被加载器执行；运行时，通过应用程序运行；
+	linker允许独立编译{解耦}；
+	不考虑operating system,ISA,object file format链接的基础概念是相通的；
 		编译Drivers
+			shell激活操作系统的函数，叫做loader
 		静态链接
-		Object Files
-		重新分配Object Files
+			可运行的主要任务是：symbol resolution(定义和引用符号), Relocation（编译和集合产生的代码和数据段）
+			对象文件仅仅是bytes块的收集器；blocks包含程序码；其他包含程序数据和包含数据结构(guide the linker和loader)
+		Object Files： 
+			relocatable object file，executable object file，shared object file；
+			编译和集合产生relocatable object文件；链接产生可执行程序文件；
+			交换object module(bytes)和object file(在disk上的object module)
+		重新分配Object Files：relocatable object file
+			.text: 编译程序的机器码
+			.rodata: 只读数据
+			.data: 初始化全局C变量
+			.bss: 未初始化的全局C变量
+			.symtab:符号表
+			.rel.text:.text段
+			.rel.data: Relocation信息，用于全局变量(被模块引用或者定义)
+			.debug: 用于debug的符号表
+			.line: 在line numbers和.text的机器码指令之间的映射；
+			.strtab: 在.symtab和.debug之间的字符串表for符号表表
 		字符和字符表
+			Global symbols，symbols are external和其他模块中的变量；局部变量
+			本地的链接符号与局部程序变量不一样；
+			通过static，隐藏变量和函数名；
+			名字是{points to the null-terminated string name}byte offset，value是symbol的地址；binding域表明了符号是局部还是全局的；
+			linking with static libraries: 引用输入到链接器 -- 
+			Relocation: Relocation sections and symbol definitions && Relocating symbol references within sections
+				Relocation Entries / Relocating Symbol References
+			Executable Object Files: 
+			ELF 执行时设计为可简单加载进内存：segment header table
+			Loading 和 linking shared libraries from applications：： Distributeing software，building high-performance web servers{
+				网络服务器产生了动态内容，比如个性化网页、账户balances或者banner ads；
+			}
+			Postition-Independent Code(PIC): 共享库时使用多个运行进程共享相同的库代码和保存内存资源；{编译库代码，可被加载和运行在任意地址，
+			而不用修改linker；}
+			PIC data references：global offset table；运行时，全局变量通过GOT间接引用 -- lazy binding{GOT 和 procedure linkage table PLT}
+			处理对象文件的工具：{
+				AR 创建静态库，插入、删除、列出和精简成员
+				STRINGS：所有的可打印包含对象文件的可打印字符串；
+				STRIP：从对象文件删除符号表信息
+				NM：列出对象的符号表在symbols
+				SIZE：对象文件中的在符号表中定义的符号；
+				READELF：显示对象文件的完整结构：包含所有的ELF头的编码信息；包括了SIZE和NM的功能；
+				OBJDUMP:所有二进制工具的总成，
+
+				UNIX： LDD：列出运行时可执行程序的所有依赖库	
+			}
 		字符精度
 		重寻址
 		执行Object文件
@@ -262,26 +307,161 @@
 		从应用中加载和链接shared库
 		独立于Position编码【PIC】
 		处理Object文件工具
-	2：异常控制流
+
+		LINKING：编译时静态库，运行时动态库；两个主要的链接器任务是符号精度；在对象文件的全局符号限于unique定义和重定向，对于ultimate内存地址的每一个符号；
+		静态链接被编译驱动（例如GCC）激活；
+		left-to-right 序列扫描：linkers使用解析符号引用是另一个导致link-time error的源头；
+		加载图映射部分链接可执行进入内存和成为动态链接库；
+		共享库作为PIC和被多进程在运行时调用，应用能够使用动态链接库用于加载、链接和获取函数和数据；
+	2：异常控制流：每一个流传递称为control transfer，flow of control；-- Exceptional control flow（ECF）
 		异常
-		Processes
+			exceptional control flow通过硬件和操作系统补充异常流；
+			异常是在处理器的状态中的变化，control flow的突然的变化；
+			Exception Handling： 
+				exception number：{
+					处理器的设计者：除0，缺页，内存获取冲突，断点，计算溢出；
+					操作系统核的设计者：system calls和额外的I/O设备信号；
+				}
+				system boot时间：计算机重置和通电；exceptional table；
+				运行时：处理器检测发生的事情和决定相关异常数字；
+			exception table base register：
+				exception是类似于procedure call，但是有重要区分{
+					procedure call：返回一个分支语句的句柄；
+					处理器推一些额外的处理器状态到栈中，重启程序；
+					控制流从个人程序转移到kernel，则被退出kernel栈而不是用户栈；
+					exception处理句柄在kernel模式下运行；
+				}
+			异常类：
+				打断(interrupts),Traps and system calls,Faults,Aborts,Linux/IA32 Faults and aborts,Linux/IA32 system calls,
+		Processes:
+			logical control flow: 提供了我们的程序有着处理器专用；
+				程序内存定位和寄存器；
+			私人地址空间i提供了专用存储系统；
+				Concurrent Flows：逻辑控制流在计算机系统中有多种形式{Exception handlers，processes，signal handlers，threads，Java processes}
+				run concurrently：
+				multitasking： 进程执行了流{time slice}; time slicing
+			private address space：
+				x86 linux process{usual text,data,heap,stack segments}
+				地址空间包含了代码，数据，kernel栈；
+			user和kernel模式：
+				为了操作系统kernel提供处理；处理器提供机制 应用可执行的指令集；
+				process address space：
+					kernel mode： supervisor mode ---- mode bit
+					privileged instructions：halt这个处理器、变换mode bit或者初始化I/O操作
+					不被允许直接应用地址空间中的reference代码和数据；
+					进程运行应用代码在user mode中初始化{interrupt,fault,trapping system call}
+			Linux提供了/proc文件系统，允许个人模式进程获取kernel数据结构内容；/sys文件系统，输出additional low-level信息关于系统buses和devices
+			Context Switches：异常控制流的更高级的形式：：包括了objects的类型{general purpose寄存器}：floating-point寄存器，程序计数器，user's stack,
+			status 寄存器，kernel栈和各种各样的kernel数据结构(比如页表，地址空间)，进程表包含了当前进程的信息，文件表包含了文件打开的信息；
+			disk将提供一个相对长时间获取data；核处理指令集，在switch的初始部位；kernel模式处理指令
+ 		-------------------------cache pollution和exception control flow----------------------------------------------------------------------
 		系统句柄报错Error
+			fork函数：
+			strerror函数：error-reporting函数
+			error-handling wrappers:
 		Process Control
+			获取process IDs； 
+			创建和结束进程{running;stopped;terminated;}； 
+			Reaping Child processes：
+				Determining the memobers of the wait set：pid>0,等于pid；；pid=-1，wait set由parent’s chidl进程；
+				modifying the default behavior： WNOHANG,WUNTRACED,WNOHANG|WUNTRACED
+				检查exit status of a reaped child
+				Error Conditions：
+				[waitpid]
+			Putting Processes to Sleep： 进程休眠
+			Loading 和 Running程序
+				[使用fork，和execve运行程序]
 		Signals：信号
+			Unix signal：允许进程和核打断其他进程
+				Signal Terminology：信号到目标进程----sending a signal & receiving a signal:: 已发出，但未收到的pending signal
+			sending signal: process groups ID, seding signals from the keyboard;
+				sending signals with kill function: 
+				sending signals with the alarm function:
+				安装和使用信号处理可以很轻微；
+			receiving signals: default action
+				进程终止；
+				进程终止和dumps core；
+			pending signals：
+				blocked;
+				not queued;
+				system calls can be interrupted;	
+			portable signal handling: 
+			explicitly blocking and unblocking signals	
+			Synchronizing flows to avoid nasty concurrency bugs
 		NonLocal jumps
+
 		处理流程的工具
+			STRACE, PS, TOP, PMAP, /proc
+		总结：
+			Exceptional control flow（ECF）启用了计算机系统的all levels
+			四个不同的exception类型：interrupts,faults,aborts,traps
+			进程提供了两个功能：logical control flows给了每个程序假象(都是专用处理器)；私有地址空间提供了假象(程序专用main memory)
+			signal process；	
 	3:虚拟内存
-		蓄力和虚拟地址
+		物理和虚拟地址
+			adrress translation: 将虚拟地址转义为物理地址
+			memory management unit(on CPU chip)
 		地址空间
 		VM是缓存的一个工具
+			unallocated{未被分配的或者创建的页面} / cached{物理内存中缓存中的页面分配} / uncached{物理内存中的未在缓存中的页面分配}
+			DRAM Cache 组织；
+			Page Tables： 
+				操作系统软件、MMU中的地址转义硬件和存储在物理内存中的数据结构
 		VM作为内存管理的工具
+			VM简化了链接和加载，代码和数据的共享和分配到应用的内存
+			Simplifying linking：统一格式，生产fully链接的可执行程序，独立于ultimate location代码和数据；
+			Simplifying loading：VM使得加载可执行程序和共享文件进内存变得简单；
+			Simplifying sharing：独立的地址空间，使得每个程序都有自己的vm
+			Simplifying memory allocation：VM提供了一个简单的机制用于分配增型内存；页面可以在物理内存中随机割裂；	
 		VM作为内存保护的工具
-		地址转移
-		样例分析：i7 / Linuex Memory System
+			现在计算机系统必须提供控制获取内存系统的方法；提供了不同程序的私有内存；
+		地址转义（address translation）
+			集成caches和VM
+			使用TLB(translation lookaside buffer)提速
+			Multi-Level Page Tables
+			Putting It together: End-to-End Address Translation
+		样例分析：i7 / Linux Memory System
 		内存映射
+			Linux： memory mapping
+				Regular file in the unix file system
+				Anonymous file
+				Shared Objects Revisited
+				the fork Function Revisited
+				the execve Function Revisited
+				User-level Memory Mapping with the mmap function
 		动态内存分配
-		Garbage Collection
+			low-level mmap和munmao函数用于创建和删除VM的地址
+			dynamic memory allocator保持着处理器的VM(heap)
+				Explicit allocators
+				Implicit allocators
+				malloc & free函数
+			Dynamic Memory Allocation & Allocator Requirements and Goals & Fragmentation & Implementation Issues & Implicit Free Lists
+			Placing Allocated Blocks{first fit,next fit, best fit}
+			Splitting Free Blocks: 
+			Getting Additional Heap Memory
+			Coalescing Free Blocks：       合并空闲块
+			Coalescing with Boundary Tags: 合并Boundary Tags
+		Putting it together： implementing a simple allocator ---- 实施一个简单的分配器
+			基础常熟和Macros用于处理Free列表
+			Freeing和链接块
+			分配块
+			Explicit Free Lists/Segregated Free Lists/
+		Garbage Collection：
+			常见的报错是无法释放块；
+			GC basics： 有向reachability graph{root nodes and heap nodes};包含pointers into heap；地址是寄存器、栈上的变量和VM的read-write数据区的全局变化；
+			conservative garbage collectors: 
+			Mark&Serrp Garbage Collectors;???
 		常见的C程序中的内存bug
+			Dereferencing bad pointers: 
+			reading uninitialized memory:
+			Allowing Stack Buffer Overflows
+			Assuming that Pointer and 指针指向的objects 是相同的size
+			Making Off-by-One Errors
+			Referencing a pointer替代指针指向的对象
+			误解指针计算
+			指向不存在的变量
+			在free heap blocks中引用数据
+			引入内存泄露： slow，silent killer
 		总结
 三、程序间的交互和通信
 	1、系统级的IO操作
