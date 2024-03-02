@@ -465,33 +465,150 @@
 		总结
 三、程序间的交互和通信
 	1、系统级的IO操作
-		Unix I/O
+		Unix I/O:
+			unix file是一个系列的bytes；所有的I/O设备例如网络、磁盘和中断都以files建模；所有的输入和输出都是以reading和writing争取的文件；
+		优雅的设备映射到文件使得Unix核产出一个简单的低层次的应用接口(unix I/O)；
+			Opening Files: 应用表述了assess I/O设备；使得询问kernel用于打开相关文件；
+			Changing the current file position
+			Reading and writing files
+			Closing files
 		打开和关闭文件
+			open函数将一个文件名转换为一个文件描述子，并返回描述数字；O_RDONLY / O_WRONLY / O_RDWR
 		读取和写入文件
-		使用Rio package更加鲁棒地读写
+			应用通过调用read和write函数展示了输入和输出功能；
+			ssize_t和size_t的区别是什么？
+			short counts不能表示一个错误： 
+				Encountering EOF on reads / Reading text lines from a terminal / Reading and writing network sockets
+		使用Rio package更加鲁棒地读写:: robust I/O
+			unbuffered input and output functions
+			Buffered input functions
 		读取metadata
+			应用可以获取文件信息(metadata:: stat & fstat)
+			regular file & directory file & socket
 		sharing files
+			打开文件的几种相关数据结构：
+				Descriptor table:  每一个进程都有自己独立的描述table
+				File table：  所有进程都能够打开的文件
+				v-node table：  像是file table---- 所有进程都在共享v-node table
 		I/O Redirection
+			I/O redirection operators: 使得用户链接标准的硬盘文件输入和输出
+			Right and left hoinkies: 
 		Standard I/O
-		那些I/O函数可见
+			三个开放的streams：stdin,stdout,stderr
+			getc 能够从stream buffer直接served <--
+		用哪些I/O函数？
+			open,close,lseek,read,write 和 stat函数
+				*流程限制：
+					input函数不能follow output函数，如果没有intervening call to fflush,fseek,fsetpos,rewind
+					output函数不能follow input函数，除非input函数已经结束
 		总结
+			因为一些交互不兼容的限制(standard I/O & network files)
 	2、Network编程
+		网络应用依赖已有的多个概念： processes,signals,byte ordering,memory mapping & dynamic storage allocation
 		Client-Server编程模型
+			代理和服务器编程模型：FTP服务器处理disk文件的集合：获取和执行代理；
 		网络
-		全球IP internet
-		Socket 接口
-		Web Servers
+			计算机网络的硬件和软件资源：代理和服务器是运行在独立的hosts
+			针对一个host：
+		全球IP internet：全球IP因特网
+		Socket 接口：socket interface
+		Web Servers：network programming--简单的echo server
+			Web Basics{
+				HTTP: Hypertext Transfer Protocol ---- text-based application-level protocol
+				Web Client(a browser): 打开一个internet链接到一个服务器，并请求内容
+				服务器根据请求内容响应和关闭连接
+				浏览器读取内容和显示
+				：： 与FTP最大的区别是，可以引入HTML语言[拥有超链接功能等]
+			}
+			Web Content{
+				MIME: multipurpose Internet Mail Extensions
+				Web servers提供了两种内容到client的方式:
+					1、 获取一个disk和返回内容到client： serving static content
+					2、 运行程序并返回输出： dynamic content
+			}
+			HTTP Transactions{
+				Server 返回了HTTP反应和关闭了连接
+					HTTP Requests: request line；被0或者more request headers
+				包括了大量的方法： GET,POST,OPTIONS,HEAD,PUT,DELETE,TRACE
+				URI(Uniform Resource Identifier)
+			}
+			HTTP Responses{
+				HTTP相似于HTTP requests： 
+			}
+			Serving Dynamic Content{
+				CGI： Common Gateway Interface: 通用接口
+			}
 		TINY Web Server
+			包含了很多内容：
+				process control,Unix I/O,the sockets interface & HTTP
+				the TINY main Routine: 
 		总结
+			client-server model： 
+			programmer的角度： 
+				1、 每一个internet host都有一个单独的32-bit名字，IP地址
+				2、 IP地址集合映射到Internet domain的集合中
+				3、 在不同Internet hosts的进程中能够通过连接进行交互
+			Clients和servers通过使用sockets interface建立连接： 文件收集的终端展现在应用上是以描述文件的方式进行处理的；
+			Clients和Servers通过读写这些描述文件建立联系；
+			WebServers和他们的代理通过HTTP协议进行联系
 	3、Concurrent编程：并发程序设计
-		1、处理的Concurrent编程
+		Accessing slow I/O devices
+		Interacting with humans
+		Reducing latency by deferring work
+		Servicing multiple network clients
+		computing in parallel on multi-core machines 
+		现代操作系统提供了三种基本方式进行并行处理：
+			Processes,I/O multiplexing,Threads
+			Multiplexing: 多路复用
+		1、使用processes处理的Concurrent编程
+			1、 基于processes的并行服务器
+				1、 基于进程的并行处理器
+				2、 parent和child必须关闭他们独立的副本；必须关闭副本，用以避免内存泄漏
+				3、 client的连接不能关闭，直到parents和child的都关闭
+			2、 进程的pros和cons
+				进程有赶紧的模型用于在parents和children中：file table是共享的，个人地址空间不是
+				独立的地址空间进程
 		2、I/O 多复杂的Concurrent编程
+			fork,exec,waitpid
+			servers接受client的请求
+			servers分拆紫禁城用于服务client
+			server接受另一个连接请求
 		3、线程的Concurrent编程
+			进程的Pros和Cons；
+				进程有赶紧的模型用于共享状态信息在parents和children之间：文件表被公用和个人地址空间不共用
+			独立的地址空间对进程来说共享state information更加艰难：必须使用明确的IPC(interprocess communication)机制
+			使用I/O multiplexing的并行编程：	
 		4、线程中的共享变量
 		5、使用Semaphores同步变量
+			线程是一个逻辑flow，运行一个进程的上下文，我们的项目组成了一个进程一个线程；但是现在系统使得我们书写项目有着；Thread context---包含了独立的整数 thread ID(TID)、
+			stack、stack pointer、program counter、general-purpose registers和condition codes
+			Thread Excecution model / Posix Threads / Creating Threads / Terminating Threads /
+			Reaping Terminated Threads 
+			Detaching Threads
+			Initializing Threads
+			A Concurrent server Based on threads
+		Shared variables in threaded programs: 在线程中的共享参数
+			Threads Memory Model
+			Mapping Variables to Memory
+			Shared Variables
+		Synchronizing Threads with Semaphores
+			Progress Graphs
+			Semaphores
+			using semaphores for mutual exclusion
+			使用semaphores{旗语}用于schedule shared resources： 
+				Readers-Writers problem
 		6、使用线程实现并行
+			Concurrent programs(parallel programs <-> sequential programs)
 		7、其他的concurrency issues
+			Thread safety：	 线程保护
+			Reentrancy： 	 可重入性
+			在线程代码中，使用一致的library函数
+			Races： 线程竞赛依赖
+			Deadlocks： 等待一个永远不能实现的条件
 		8、总结
+
 四、错误handling
 	1、Error handling in unix system
+		Unix-style Error handling / Posix-style error handling / DNS-Style Error handling
 	2、Errorhandling wrappers
+		
