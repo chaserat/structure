@@ -1,0 +1,217 @@
+一、虚幻基础知识
+	1、虚幻编辑器界面
+		菜单栏{Menu Bar}、主工具栏{Main Toolbar}、关卡视口{Level Viewport}、内容侧滑菜单{Content Browser}、底部菜单栏、大纲{Outliner}、细节面板{Detail}
+	2、虚幻术语
+		项目、蓝图、对象、类、Actor、类型转换、组件、Pawn、角色、玩家控制器、AI控制器、玩家状态、游戏模式、游戏状态、笔刷、体积、关卡{定义的gameplay的区域}、世界{容器}
+	3、工具
+		关卡编辑器、静态网络编辑器、材质编辑器、蓝图编辑器、物理资源编辑器、行为树编辑器、Niagara编辑器、UMG界面编辑器、字体编辑器、Sequencer编辑器、动画编辑其、Control Rig编辑器、
+		Sound Cue编辑器、媒体编辑器、nDisplay 3D配置编辑器、DMX库编辑器
+	4、被许可用户： 开发管理类
+	5、目录结构
+		根目录：
+			Engine：包含构成引擎的所有源码和内容
+			Templates：创建新项目是可用的项目模板集合
+			GenerateProjectFiles.bat: 用于在VS中使用引擎和游戏所需的UE4解决方案和项目文件
+			UE4Games.uprojectdirs:辅助文件，帮助引擎找到子目录中的项目
+		通用目录：
+			Binaries：可执行文件或编译期间创建的其他文件
+			Build：包含编译或游戏所需的文件，包括为某些平台闯将项目版本时所需的文件
+			Config：配置文件，用于控制引擎的行为
+			Content: 保存引擎或游戏中的内容，例如资产包、贴图
+			DerivedDataCache：包含派生数据文件：这类数据专为被引用内容生成，并且在加载时生成，若被引用内容未生成过缓存文件，则加载时间会显著增加；
+			Intermediate：包含编译引擎或游戏时生成的临时文件，在游戏目录中，着色器也保存在Intermediate目录中；
+			Saved：包含自动保存文件、配置(.ini)文件和日志文件，此外Saved还包含崩溃日志、硬件信息和Swarm选项与数据
+			Source：包含引擎或游戏的所有源文件、包括引擎源代码、工具和游戏类等
+				Engine： Developer，Editor，Programs，Runtime
+				Game：Classes{包含所有头文件、Private、Public}
+			VS：
+				External dependencies：显示公有的引擎头文件
+				Intermediate：包含UnrealBuildTool生成的文件，如VS项目文件；可以删除并重新构建
+		引擎专有目录：
+			Documentation：引擎文档、源文件和发布的文件
+				HTML
+				Source
+			Extras：其他辅助和工具文件
+			Plugins：包含引擎中使用的插件
+			Programs：包含UE4根目录中各个项目及其他虚幻程序的配置文件和日志文件
+			Shaders(.usf)
+二、内容浏览器
+	1、内容浏览器界面
+		Navigation Bar,Sources Bar,Collections,Filters,Search Bar,Asset View,Settings Button
+	2、开发者文件夹
+		Content Browser -> Developers
+		Developers never cook
+	3、源面板参考
+	4、内容浏览器设置参考
+		试图类型、图块、列表、列、锁定、视图、内容、搜索、缩略图、
+	5、筛选器和集合
+		筛选器和集合
+		资产筛选器：提供了一种可以缩小内容浏览器资产视图中可见资产范围的方式
+		启用筛选器：筛选器
+		停用筛选器：
+		资产添加到集合、集合中删除资产、重命名和删除集合
+	6、高级搜索语法
+		搜索语法
+三、自定义虚幻引擎
+	插件：Edit -> Plugins
+	自定义快捷键
+	编辑器偏好设置
+四、使用项目和模板
+	模板定义
+五、Project Settings
+	项目：项目描述、高级复制、映射和模式、默认地图、本地多人游戏、游戏实例、打包
+		视频设置
+		打包
+		项目：编译、编译配置、编译目标、暂存目录、完全重新编译、用于发行、在发布版本中包含调试文件
+		先决条件：包含先决条件调试工具、包含应用本地先决条件、应用本地先决条件目录
+	Game: Asset Manager:
+		Primary AssetTypes to Scan
+		Directories to Exclude
+		Primary Asset Rules
+		Custom Primary Asset Rules
+		Only Cook Production Assets
+		Should Manager Determine Type and Name
+		Should Guess Type and Name In Editor
+		Should Aquire Missing Chunks on Load
+		Should Warn About Invalid Assets
+	Redirects: Primary Asset id Redirects / primary Asset Type Redirects / Asset Path Redirects
+	Asset Registry: Metadata Tags For Asset Registry
+	Asset Tools
+	引擎：
+		AI System / Animation / Animation Modifiers/Audio/Chaos Solver/Collision/Console/烘焙器/Crowd Manager/
+		Data-Driver CVars/Debug Camera Controller/Gameplay Debugger/Garbage Collection/General Engine Settings/
+		Hierarchical LOD/Input/Interchange/Landscape/Level Sequence/Navigation Mesh/Network/
+		物理设置/渲染/渲染覆盖/Slate设置/流送设置/纹理编码/教程/用户界面/世界分区
+	Editor：
+		2D/外观/蓝图/类查看器设置/派生数据设置/HLOD网格体简化设置/关卡序列设置/网格体简化设置/Paper2D-导入设置/性能/
+		骨骼网格体简化/源码管理设置/结构体查看器/纹理导入设置/控制设计器设置
+	平台：
+	插件：
+		AndroidFileServer/AVF媒体/几何体缓存/GooglePAD/Groom/IMG媒体/关卡Sequencer/建模模式/Niagara编辑器/Paper2D/
+		谐振音频/TCP消息传递/UDP消息传递/WMF媒体
+六、关卡
+	使用关卡{创建关卡、保存关卡、打开关卡}、
+	管理多个关卡{}、世界设置{预先计算可视性、Lightmass、世界、物理、初步检测[MBPBounds，MBPOuter边界部分控制多盒体的边界]、
+	在多盒体网格边缘上创建四个专用的单元格、分层细节级别系统{启用分层细节级别HLOD}、世界分区设置和世界分区{世界分区，新的
+	数据管理和基于距离的关卡流送系统}}、更改默认关卡{}、导航{配置关卡中使用的导航网格}、虚拟现实{VR世界}、
+	渲染{配置与距离场环境光这笔相关的多项配置，以及动态间接阴影}、音频、更新、AI、烘焙{打包packaging和烘焙cooking}
+七、资产和内容包
+	导入资产、使用资产、迁移资产{资产迁移故障排除}、资产元数据、自动重新导入、查找资源引用、替换引用工具{替换引用工具、合并资产}、
+	替换引用工具的工作方式{最佳实践[使用不当会极其危险、尽可能少得引用要合并的对象、替换引用工具大量使用对象重定向器]、限制和
+	警告[****]}、类查看器{类操作、拖放类、使用类选择器、配置类选择器}、全局资产选取器{窗口不可移动、不可调整大小}
+八、Actor和几何体
+	Actor和几何体{放置Actor，选择Actor，变换Actor，Actor移动性，Actor分组，Actor对齐，合并Actor}、
+	Actor参考{几何体笔刷Actor[规划关卡、简单填充几何体、笔刷图元、修改笔刷、]、贴花Actor用户指南{延迟贴花[提供更好的性能和维护性、GBuffer而非重新计算光照；使用屏幕空间遮罩时，可实现一些其他情况很难实现的效果]、延迟贴花属性[材质、排序顺序]、材质设置[DecalBlendMode、ShaderComplexity]}、玩家出生点、触发器Actor{放置触发器}、静态网络体Actor{用于创建游戏世界或其他类型的环境、更改静态网格体Actor的材质、GamePlay期间移动静态网格体Actor、为静态网格体Actor启用物理、为静态网格体Actor启用碰撞}、骨骼网络体Actor{放置骨骼网格体Actor、制作骨骼网格体Actor的动画、更太骨骼网格体Actor的材质、骨骼网格体Actor的碰撞}、摄像机Actor{摄像机Actor、电影摄像机Actor：摄像机阻挡体积、摄像机吊臂、摄像机轨道、关卡序列Actor}、
+	体积Actor{体积类型-阻挡体积、摄像机阻挡体积、销毁Z体积、施加伤害体积、物理体积、触发器体积；音频体积参数{Details-属性：优先级、应用混响、混响效果、体积、渐变时间、启用；环境区域设置：外部音量、外部淡入淡出时间、}、伤害施加体积、物理体积参数}、3D文本Actor{文本3D；3DActor设置、逐字母动画处理、文本3D角色变换设置[启用、进度、顺序、范围、开始、结束|距离]}、目标点Actor{放置目标点Actor、使用目标点}}
+	玩家出生点{}
+九、组件
+	组件实例化、组件类型
+十、运行和模拟
+	编辑器中运行(PIE): 在主工具栏上的运行Play按钮访问；编辑器中模拟(SIE):
+	运行虚幻引擎：
+		运行编辑器：需将项目名称作为参数传递给可执行文件
+		通过命令行运行编辑器
+		通过可执行文件运行编辑器
+		不使用参数(Stand-alone)运行编辑器：运行未烘焙游戏、使用命令行运行未烘焙游戏；
+		运行烘焙游戏、加载地图、启动时加载地图、加载新地图
+十一、打包项目
+	Project-Maps&Modes
+	创建打包文件：
+	发布：打包(Packaging,Packaging Settings,Distribution)
+	高级设置：Project-Packaging
+	签名和加密
+	内容烘焙
+	优化加载时间
+		使用事件驱动加载器(Event Driven Loader,EDL)和异步加载线程(Asynchronous Loading Thread, ALT)
+	压缩.pak文件
+		井井油条的.pak文件对减少加载事件至关重要；
+十二、源码管理（*****）
+	源码管理：
+		1、资产修改时，是否自动检出
+		2、修改包时提示检出
+		3、修改时增加新文件？在发生改动时，向源码添加新文件
+		4、使用全局设置
+		5、文本对比工具
+	通过内容浏览器启用源码管理工具
+	状态图标
+	源码管理操作：
+	检入和捡出：
+	内容热重载：
+	停用源码管理：
+十三、为unity开发者准备的虚幻引擎指南
+https://docs.unrealengine.com/5.3/zh-CN/unreal-engine-for-unity-developers/
+类别		                   	Unity                                 虚幻引擎
+GamePlay类                  Prefab                                蓝图类
+网格体						Mesh                                  静态网格体(Static Mesh Actor)
+							Skinned Mesh                          骨骼网格体(Skeletal Mesh Actor)
+材质							Shader                                材质、材质编辑器
+							Material                              材质实例
+特效							Particle Effect						  特效、粒子、Niagara(新型视觉特效系统)
+游戏界面						UI                                    UMG(虚幻示意图形)
+动画                        Animation                             骨骼网络体动画系统
+							Mecanim								  动画蓝图
+							Sequences							  Sequencer
+2D							Sprite2D						      Paper2D
+编程					        Script\Bolt                           蓝图
+物理							Raycast								  Line Trace、Shape Trace
+							Rigidbody							  碰撞、物理
+项目和文件：
+项目应该放在content文件夹下，类似于Assets，是保存游戏资产的地方
+C++类，应该存储在Source文件夹中
+Config文件夹下保存项目的配置(ini)文件
+
+Datasmith：支持各种CAD应用程序中的3D场景和资产
+LiDAR点云插件：LiDAR点云
+U3D导入器：.usd(通用场景描述)
+Alembic文件导入器: .abc
+
+C++项目在虚幻项目目录中有一个Source文件夹：包括C++源文件和头文件、以及一些编译用的脚本
+蓝图项目没有Source文件夹、蓝图可以放在虚幻项目的COntent文件夹中的任意位置
+
+组件在哪里？
+从Unity的Prefab到虚幻引擎的蓝图类：使用组件构建Actor{Details，点击蓝图(Blueprint)>添加脚本(Add script)}；选
+择一个位置保存你的新蓝图类；创建蓝图；
+
+Unity的Script组件和MonoBehaviour：Actor的细节(Details)面板,从编辑Actor(Editor Actor)窗口：
+	InitializeComponent(): 通unity的Start()函数相同
+	TickComponent(): 与Update()函数相同
+在蓝图组件中，函数显示为可视化节点
+	蓝图
+	蓝图类可扩展：
+	变换组件{Root Component，Scene Component}、复合对象{通过组件的层级关系相互嵌套，创建复合游戏对象};
+	Gameplay
+
+编写事件函数{void BeginPlay(); void EndPlay(); void Tick(float DeltaSeconds);}
+蓝图：
+
+在虚幻引擎中编写游戏逻辑代码：
+{实例化GameObject/生成Actor：：：：UObject,NewObject}
+
+在虚幻引擎中，创建UObject派生模型，可以如下实例化： UMyObject* NewObj = NewObject<UMyObject>();
+AActor和SpawnActor：默认42，默认半径20的SphereCollider组件；
+
+类型转换：nullptr::::
+	销毁GameObject/Actor: MyActor->SetLifeSpan(1);
+
+物理：刚体与图元组件：任何图元组件(C++中的UPrimitiveComponent)都可以是物理对象，常见的图元组件{
+	形状组件（胶囊体、球体和盒体）、静态网格体组件、骨骼网格体组件
+}
+
+层和通道：虚幻中的碰撞通道对应Unity中的层
+
+RayCast与RayTrace：碰撞过滤
+碰撞体积：
+刚体运动：
+输入事件：
+
+如何自动加载最后一个项目：
+	
+虚幻中，测量单位是1cm；
+
+如何抛出异常：不同于unity，虚幻不处理异常；改用check()函数触发严重的断言错误；如果你附加了调试器，这两个函数都会暂定进入调试器；
+
+.Net Framework::::
+
+代码更改时虚幻会自动重新加载；
+
+术语表

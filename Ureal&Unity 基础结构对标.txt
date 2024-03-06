@@ -1,0 +1,41 @@
+引擎设计结构的区别 				    Ureal                                         Unity
+相同： 场景是游戏世界的基本单位，用于组织和管理游戏对象、光照、相机等元素；两个引擎中，游戏对象都是场景中的实体，包含组件和脚本，实现游戏逻辑和功能；
+组件是游戏对象的一部分，用于添加功能和行为，如unity的脚本组件和unreal中的蓝图组件可以用于实现游戏逻辑；资源是游戏中使用的各种数据文件，如模型、纹理、声音等；
+不同：
+		 蓝图		  蓝图系统允许开发者使用可视化脚本和节点创建游戏逻辑和行为；        unity使用c#实现
+		 关卡         关卡是场景的一个子集，用于实现游戏的不同阶段或关卡
+		 			  {关卡可包含多个蓝图}；游戏中加载或切换不同的关卡  		           unity的场景可包含整个游戏内容
+		 			  Level streaming和level blueprint
+		 			  关卡蓝图可用于实现复杂的逻辑和交互
+		 			  Material Instance、Material Parameter Collection用于
+		 			  动态修改渲染效果
+		 渲染管线      PBR和deferred rendering等技术，unity使用自己的渲染管线和定制渲染特性；
+		 资源管理      使用Asset Registry管理资源                                   unity使用Database管理资源 
+
+
+unreal中，super_ID，type，unreal_instance,unreal_type是一些概念和属性，用于标识和描述不同的对象和实例；
+"super_ID": 是一个唯一的标识符，用于标识一个对象或实例;用于在引擎内部进行标识和索引；
+"type": 表示一个对象或实例，每个对象或实例都有一个类型，用于确定它所属的类别或种类；
+"unreal_instance": 一个对象或实例的具体类型，确定所属具体类别或类型;unreal_instance用于在引擎内部进行实例化和管理；可以包含对象或实例的具体属性或数据；
+"unreal_type":一个角色对象的unreal_type可以是CharacterBlueprint,一个物体对象的unreal_type可以是StaticMeshActor
+
+虚幻引擎开发文档和文档架构：
+5.3修改内容：渲染{Nanite样条，遮罩材质和像素深度偏移[PDO]的性能优化{提高光栅化速度}，修复了编辑器中的几个问题，与选择、修改或删除启用了Nanite的实例化静态网络体或制备Actor有关、Lumen、正交渲染{实验性}、稀疏体积纹理{实验性、SVT}、某些基于延迟渲染的效果{异类体积、体积云、体积雾等；可通过在其体积域材质中包含一套稀疏体积纹理材质节点，充分利用SVT}、使用异类体积渲染的资产必须利用新的异类体积组件、延迟渲染功能仍然限于现有的实时体积功能集；路径追踪器、表现力更强、更为模块化的框架；提供更大范围的表面外观和更宽泛的参数空间；虚拟阴影贴图；毛发-Groom资产的CPU和GPU内存压力得到缓解、时序超分辨率、光照}
+世界构建{关卡Actor筛选器、关卡流送持久性[.ini中定义]、Nanite地形、大型地形导入/导出、地形物理材质显示、地形LOD组、程序化内容生成(PCG)、层极化生成、来自外部数据的规则处理、子图表检查、图表实例参数、自定义PCG元素、多进程烘焙、虚拟资产、移动渲染器{基于计算的地形顶点剔除、雾体积支持、移动正向的全局距离场生成、实例渲染优化(GPU场景、虚拟纹理支持)}}、程序化内容生成、动画和建模工具{运行时和非线性过长[用户定义的动态绑定、材质分段混合、子序列的镜头试拍、镜头试拍注释、文本轨道、动画重定向、动画编辑、智能烘焙、智能自动切线、曲线编辑器优化、动作混合优化、导出优化、骨骼编辑器(试验性){静态网个体转换为骨骼网格体、创建和编辑骨架、创建皮肤权重、绘制地图、骨骼和权重的python API支持}]、机器学习(ML)变形器[近似表示复杂的rig、非线性变形器或任意变形]、基于数据构建Control Rig}、虚拟制片{SMPTE2110：基于该方式实现端到端IP视频信号流与nDisplay一起使用、镜头试拍浏览器、来自单个VCam的多个HUD、带时间刻度的播放和录制、初始macOS支持、CineCamera绑定轨道、计划你的构图、驱动轨道、使用Sequencer、可视化你的速度、选择你的轴继承、CineCamera场景捕获组件、变形镜头校准解算器、nDisplay多玩家Actor复制、nDisplay填充派生数据缓存、DMX控制控制台UX、DMX像素映射UX、媒体IO媒体板材质系统}、模拟{Chaos布料编辑器基础、ChasosML布料、Chaos刚体和场景查询、Chaps破坏[破裂编辑器更新]、Niagara流体、音频、UI系统[UMG的字体DPI匹配、蓝图中的ViewModel]等多方面
+建模/内容管线{交换导入、重新导入}、USD MaterialX、USD材质和纹理、USD动画
+框架： 智能对象(世界分区支持)、蓝图类型转化自动类型、数据资产合并、检查工具Swarm注释
+引擎内容与模板：使用增强输入的协作查看器模板、
+UMG(Unreal Motion Graphics)
+shader的定义和使用：r.Shaders.KeepDebugInfo{r.Shaders.Symbols\r.Shaders.ExtraData} 
+r.Shaders.Sybmbols\r.Shaders.ExtraData\r.Shaders.GenerateSymbols\r.Shaders.WriteSymbols\r.Shaders.AllowUniqueSymbols\r.Shaders.WriteSymbols.Zip
+UnrealObjectPtrTool: Engine\Programs\UnrealHeaderTool\Config -- DefaultEngine.ini
+
+渲染：屏幕空间全局光照、基于Lumen硬件光线追踪的光线追踪支持、生成网格距离场
+删除内容：Nanite取消了硬件曲面细分的大部分用例、Lumen取代了光线传播体积(Light Propagation Volumes)和距离场全局光照(Distance-Field Global Illumination)
+老版色调映射器:
+世界构建：
+工具：
+控制绑定：
+音频：
+GamePlay框架：蓝图原生化在UE5中不再存在
+Lumen全局光照和反射：
