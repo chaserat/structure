@@ -1,0 +1,52 @@
+物理 {计算碰撞和模拟物理Actor的子系统}
+https://dev.epicgames.com/documentation/zh-cn/unreal-engine/physics-in-unreal-engine
+	Chaos破坏系统:除了出色的视觉效果，系统优化了性能，采用直观的非线性工作流，能更好的控制内容创建过程和破坏过程；该系统允许美术师精确定义几何体在模拟期间会如何破裂；
+		破坏系统依赖内部群集模型，控制如何模拟刚性附加的几何体；群集系统的核心是将每个连接的元素的质量和惯性链接为一个更大的单一刚体；使用UE5的Fracture mode进行破裂和群集
+		相邻值初始化链接图表：力模拟
+		对于大规模破坏模拟，随附了缓存系统(Cache System)，允许运行时流畅重播复杂的破坏；
+	Chaos Flesh：对可变形物体进行高质量的实时模拟：本来目的是专注于模拟骨骼动画期间角色的肌肉变形；
+	https://dev.epicgames.com/documentation/zh-cn/unreal-engine/chaos-flesh-overview
+		实时模拟软体：解算器Actor会显示以下功能-管理分布、线程模拟、模拟全局属性
+		技术实现：
+			1、四面体网格划分工具
+			2、四面体模拟
+			3、世界解算器交互
+			4、渲染功能
+			5、缓存模拟结果
+	布料模拟
+		机器学习布料模拟：{串通游戏，需要使用物理解算器模拟角色服装，计算量很大；布料与形体之间也要进行复杂的交互}
+			低频率变形 & 最邻近计算高频率变形；
+			限制：可预测形状细节，但无法预测摇摆或悬挂等动态移动；----适合紧身服，不适合宽松的衣服或裙摆
+		布料编辑器
+		布料工具：Chaos的布料解算器：底层布料解算器，负责实现布料的粒子模拟
+			{工具[笔刷、梯度、平滑、填充]、布料属性、遮罩、从股价网格体复制布料}
+	碰撞 https://dev.epicgames.com/documentation/zh-cn/unreal-engine/collision-tutorials-in-unreal-engine
+	流体模拟
+		提供一系列用于实时模拟2D和3D流体效果的工具，基于物理的方法，产生逼真的效果；
+		Niagara Fluids（Fluid-Implicit-Particle：流体隐式粒子）的混合粒子和网格算法来模拟液体
+	毛发物理
+		真实逼真的毛发：费性能：模拟运动和碰撞
+		渲染和模拟逼真毛发时，系统使用特定"导线"以降低模拟的计算成本；导线时发束中用于变形的子集；
+		UE使用两种类型的导线，即渲染导线和模拟导线；渲染导线通常为groom提供结构{聚集、方向变化和流动}；模拟导线{在物理模拟期间驱动关联法术的形状和运动，对渲染导线重新取样，并减少每个发束的顶点数；头发的点数设置为4，8，16或32}
+		解算约束：针对所有不同的约束进行解算，提供分布和解算器迭代的数量；以及发束、碰撞和本构模型参数；解算器将以重力作用下的原始网格体(休息姿势)为目标，使最终样式尽量接近原始样式；
+		处理碰撞：物理资产添加到骨骼网格体时，模拟解算器会针对该物理资产的Primitive处理形体碰撞；
+	物理材质
+	https://dev.epicgames.com/documentation/zh-cn/unreal-engine/physical-materials-in-unreal-engine
+		模拟图元物理效果的资产；分为直接应用以及通过材质应用；可用于配置并控制模拟所用的物理属性；
+	物理资产编辑器 https://dev.epicgames.com/documentation/zh-cn/unreal-engine/physics-asset-editor-in-unreal-engine
+	物理对象：代理形体使 3D 网格体的复杂程度不断增加，它必须用于 3D 程序中驱动物理模拟；物理对象（BodyInstances）是虚幻引擎 用于物理模拟的简单 3D 网格体。它们可以方块、球体、胶囊体或凸包的形态存在。
+		物理形体参考：属性、高级、碰撞、高级、形体设置、图元、盒体、
+	物理组件： 物理动画、推进器组件以及力组件
+		动画组件、约束组件、抓柄组件、推进器组件、径向力组件
+		缆绳组件：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/cable-components-in-unreal-engine
+	物理约束：在物理对象相互之间和世界场景之间设置约束
+
+	物理子步：对物理子步的解释：可获取更加精准且稳定的物理模拟，但将造成性能的损失。最明显的改进涉及到布偶振动和其他复杂物理资源。
+	可行走斜面：可对 角色 能行走的表面进行调整：：：：增加可行走斜面，减小可行走斜面；
+	物理场：使用户能够在运行时直接影响特定空间中的 Chaos物理（Chaos Physics） 模拟效果；  {瞬态、构造、持久}
+		https://dev.epicgames.com/documentation/zh-cn/unreal-engine/reference-guide-for-physics-field-in-unreal-engine
+	使用射线进行命中判定
+		https://dev.epicgames.com/documentation/zh-cn/unreal-engine/traces-with-raycasts-in-unreal-engine
+		追踪 (or 光线投射)可实现这两种情况——"发射"一道不可见的光线检测两点之间的几何体；如命中几何体，返回被击中的内容，以便对其进行操作。
+		Multi Line Trace By Channel / Multi Line Trace (Raycast) by Object
+		https://dev.epicgames.com/documentation/zh-cn/unreal-engine/traces-in-unreal-engine---overview
