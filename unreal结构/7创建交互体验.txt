@@ -1,1 +1,342 @@
-虚幻编辑器界面
+创建交互体验
+	UE中的Gameplay框架包括核心系统和用于处理通用Gameplay元素的框架：Actor、摄像机、组件、控制器、游戏规则、游戏模式、玩家输入、
+	Gameplay定时器和用户界面
+	人工智能介绍了UE中进行创作的各种可用系统：行为树、批量实体系统、状态树、寻路系统、智能对象、环境查询系统、AI感知组件和调试
+	物理：计算碰撞、光线投射、Chaos破坏系统、模拟物理Actor、布料物理、材质、毛发物理
+	大型世界坐标：在UE中引入了对双精度数据变量类型支持，并对所有引擎系统进行了广泛更改，以提高浮点精度
+	数据驱动GamePlay元素：有助于降低生命周期延长的游戏所设计的工作量和复杂性
+	GamePlay技能系统是一种高度灵活的框架，可构建在RPG或MOBA产品中看到的技能类型和属性
+	载具是UE的轻量级系统，用于执行载具物理模拟
+	网络与玩家现代多人游戏体验需要在全球的大量客户端之间同步海量数据，为了让用户拥有引人入胜的体验，会显著影响项目的表现和玩家的感受
+人工智能：在项目中创建高真实度AI实体的系统
+	行为树：
+		行为树资源将被用于执行包含逻辑的分支，决定应执行的分支，行为树依赖于另一种成为黑板的资源，充当了行为树的执行图
+		NavMesh: 寻路功能-黑板设置-行为树布局-追逐玩家-寻找随机巡逻-AI控制器设置-
+		装饰器及最终设置：
+		行为树概述：
+		行为树基础：装饰器节点、合成节点、任务节点
+		创建了行为树和逻辑后，需要在游戏中运行行为树，通常会有一个Pawn(角色或其他实体)，且Pawn有一个关联的AI控制器，对Pawn所执行动
+		作进行控制和指导；
+		UE中的行为树由事件驱动，可避免每帧进行不必要的工作；构建由事件驱动的架构可以对性能和调试进行改良；
+		当行为树的执行历史中前进和后退，对行为进行可视调试时{裁剪}
+		条件语句并非叶节点：使用装饰器节点作为条件语句
+			1、条件语句装饰器使行为树用户界面更直观、更易读；
+			2、所有叶节点都是操作任务节点，容易分辨树在指示进行哪些实际操作；
+		并发行为：通常使用合并节点来处理;同时执行几项任务的一种方式，仍在同一个线程上运行，以某种顺序开始，该顺序无关紧要，因为将在同一帧中发生，有时很重要；
+		UE行为树没有采用复杂的平行节点，而是采用了简单平行节点，一种称为服务节点的特殊节点，以及装饰器节点的观察者中止属性；
+		简单并行节点：单个任务节点、完整的子树；
+		服务节点：与任意合成节点{选择器节点、序列节点或简单平行节点}相关联的一种特殊节点，针对指定秒数的每个回调进行注册，并对多种需要周期性出现的类型进行更新；
+		观察者中止：标准平行节点的不断检查条件，一旦任务所需的条件编程false，则中止该任务；
+		UE处理并发行为的优点：
+			1、明确-使用服务节点和简单平行节点创造的树更简明，易于观察和理解；
+			2、调试简单-图表清晰，便于纠错；此外同时执行路径更少，易于观察正在执行的内容；
+			3、易于优化-由事件驱动的图表如果没有同时执行大量子树，将更易优化；
+		行为树节点参考：：基类执行行为树的主要工作：任务、逻辑流控制和数据更新
+			1、复合节点：此类节点定义分支的根以及执行该分支的基本规则；
+				只有合成节点可被连接至行为树的根节点
+				选择器、序列、简单平行节点
+			2、装饰器节点：行为树的叶子，可执行的操作，没有输出连接；
+				连接到合成或任务节点，定义树中的分支，定义树中的分支；
+				黑板节点将检查给定的黑板键上是否设置了值；
+				检查Gameplay标签条件
+				比较黑板条目
+				合成装饰器
+				条件语句循环：
+					满足键查询条件，该装饰器将使它所连接节点进行循环；
+					Cone Check：确定Cone的起始位置，定义Cone的朝向方向，检查该位置是否在Cone内部；
+				CoolDown：将锁定节点或分支的执行，直到冷却时间结束
+				自定义装饰器(Decorator)：
+				路径是否存在：黑板键A和黑板键B：
+				Force Success: 
+			3、服务节点：决定树中分支、甚至单个节点能否被执行;
+				通常连接至合成节点或任务节点，只要其分支被执行，就会以定义的频率执行：取代了其他行为树系统中的传统平行节点；
+				Set Default Focus / Run EQA query on a regular basis;
+				BTService 蓝图base处理
+			4、任务节点：此节点使行为树的叶；它们使可执行的操作，没有输出连接；
+				连接至装饰器节点或服务节点
+					Finish With Result：基于所定义的结果强制分支结束或继续
+					MakeNoise
+					MoveDirectlyToward
+					MoveTo
+					PlayAnimation
+					PlaySound
+					Push PawnAction
+					Rotate to face BB entry
+					Run Behaviour
+					Run Behavior Dynamic
+					Run EQS Query
+					Set Tag cooldown
+					wait
+					wait blackboard time
+					BTTask BlueprintBase New
+			行为树节点实例化规则：
+				1、实例化节点{代理专属数据}
+				2、存储在黑板上{将变量存储在黑板上，操作方法是从节点公开变量命名}
+				3、存储在行为树节点上{将变量存储在节点的内存中}
+	MassEntity: 围绕游戏逻辑打造的框架，用于面向数据的计算
+		群体避障：基于力的避障系统
+			避障系统参数：实体力、实体避障的边缘列表、实体的目的地、实体的变换、实体的速度、实体的半径
+		MassEntity概述：
+			面向数据的计算
+			主要数据结构使片段{原子数据}：计算中用到的某类源自数据：常见片段包括变换、速度和LOD索引；片段可以组合成集合，集合实例
+			又可关联一个ID；集合的实例称为实体（Entity）
+			实体的创建类似于面向对象编程中的类实例化；片段和实体使不包含逻辑的纯数据元素；
+			Archetype是一组又相同构成的实体，不同Archetype，其片段组合会有所不同；
+			Archetype的实体整理在内存块中，确保从内存中检索同一类Archetype的实体片段时，实现最佳性能；
+				Entity{Transform,Velocity}<-Fragments
+			处理器(Processors)是为片段提供处理逻辑的无状态类，处理器使用EntityQuery来指定操作哪种片段，EntityQueries会向处理器批
+			量提供片段，而不考虑单个实体ID
+			标签(Tag)是一种不包含数据的简单片段，标签存在与否本身就是一种数据，标签是实体构成的一部分；
+			ChunkFragment是与块(Chunk)关联的片段，而不是实体；用于保存在管理处理中会用到的块数据，例如LOD等		
+		MassGameplay概述：
+			处理实体、EntityView、子系统、MassEntity管理器、实体模板、特征
+		概览：Mass Entity是UE一个用于面向数据运算的框架——>Mass GamePlay：包含用于世界内表示、生成、细节层级(LOD)机制、复制和状态数
+		(StateTree)的功能
+			子系统：Mass Representation：负责管理Mass Entity的各种视觉表现部分
+			对于每个显示LOD数值：高分辨率Actor、低分辨率Actor、实例化静态网格体(ISM)、不显示
+			MassSpawner / Mass LOD{Mass LOD,Mass Simulation LOD,Mass Replication LOD,Mass Replication, Mass StateTree,
+			Mass Signals,Mass Movement, Mass SmartObject}
+	寻路系统：可用的寻路系统不同组件
+		寻路系统包含三种生成模式{Generation Modes}：静态、动态、和仅限动态修改器；控制了项目中生成寻路网络体的方式，提供了各种选项来满足需要；
+		两种规避方法：相对速度障碍物（RVO）、大规模人群绕行避让管理器（Detour Crowd Manager）：这些方法允许代理在游戏过程中绕行，避让动态障
+		碍物和其他代理
+		{基于NavMesh}寻路修改器组件、用于为人工智能代理提供寻路功能：为帮助AI确定地垫和终点之间的路径，引擎会根据场景中的碰撞体生成寻路网络体
+		{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/basic-navigation-in-unreal-engine}；
+		-------------------------------------------------------------------------------------------------------------------------
+		对比避障方式：相对速度障碍物算法、群组绕行管理器
+		寻路中使用避障程序：
+		优化寻路网格体的生成速度：{图块大小、简化碰撞、降低会影响寻路网格体的对象数、启用多线程合成、将动态障碍物用于完全动态寻路网格体生成、
+		将数据区块流送用于子关卡中加载的静态寻路网格体}
+		用户指南：使用时关心
+		世界分区寻路网格体：世界分区是一种自动数据管理和基于距离的关卡流送系统，为大型世界管理提供了完整的解决方案；基于流送源的距离加载和卸载这些单元；
+	智能对象：代表了关卡中的一组活动，可通过保留系统使用
+		智能对象概述：可以放置在关卡中与AI代理和玩家交互的对象；这些对象包含交互所需的所有信息；智能对象隶属于一个全局数据库，并使用一种空间分区结构；
+		SmartObject元素：SmartObject子系统；
+		智能对象持久集合；智能对象容器；SmartObject组件；
+		智能对象定义：数据资产、包括多个智能对象运行时实例之间共享的不可变数据、智能对象定义存储用户要求的标签、活动标签、对象激活标签等过滤信息；
+		智能对象行为定义：包含代理或玩家进行给定交互所需的数据：批量实体行为，GamePlay行为
+		运行时流程->智能对象数据->搜索智能对象{用户标签、活动标签、行为定义类和搜索区域}->在搜索区域内查找与对象标签匹配的全部智能对象->将智能对象
+		结果返回给代理{智能对象结果是结构体数组，包含所有匹配的智能对象ID机器空闲插槽}
+		认领智能对象：{从智能对象中认领可用插槽；智能对象子系统认领可用插槽；在智能对象中认领可用插槽，状态设置为已认领；智能对象子系统向代理返回
+		认领句柄；代理会检查认领句柄是否有效；}
+		接近智能对象：
+			1、GetSlotLocation/GetSlotTransform方法，并传递认领句柄；
+			2、智能对象子系统会将已认领插槽的位置或变换返回给代理；
+			3、代理现在可以开始寻找关卡中的插槽位置；可使用所需的任意驯鹿方法达到目的地；
+			4、代理达到插槽位置，调用智能对象子系统中的UseSlot方法，并传递认领句柄；
+			5、Use方法将触发已认领插槽的状态变化；
+			6、智能对象子系统会将行为定义结构体返回给代理，行为定义将包含代理在插槽位置执行其所需行为的所有必要数据；
+		释放智能对象：
+			1、代理将执行行为定义中描述的所需行为
+			2、行为完成或中止后，代理将使用智能对象子系统中的认领句柄调用ReleaseSmartObject方法；
+			3、智能对象子系统将插槽状态从已占用改为空闲；
+			4、代理现在可以自由执行另一行为，或搜索另一个智能对象；
+		中止过程：
+			随时被代理或智能对象中断或中止
+		概述：放置在关卡中，且供AI代理和玩家交互的对象，自带了交互所需的所有信息；
+		{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/smart-objects-in-unreal-engine---quick-start}
+	StateTree：通用分层状态机，组合了行为树中的选择器与状态机中的状态和过渡
+		选择状态将激活从根到叶状态的所有状态。每个状态由 任务（Tasks） 和 过渡（Transitions） 组成。
+		选择流：选择新状态->执行状态任务->数据流->蓝图集成
+			常见模式：
+				对类似任务分组
+				序列：Next()： 简化了状态序列的创建和布局
+				失败处理：以分层方式处理任务完成失败，从活动任务开始，并沿树向上推进；
+				分层数据：任务可以彼此共享数据，任务公开的数据将可用于属于活动状态的其他任意任务；可提高StateTree中资源处理的效率；
+				优化行为：StateTree提供了一种组织任务的方法，以便轻松实现上下文行为
+			等待命中状态：将执行质量查看、质量上下文动画任务
+		{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/statetree-quick-start-guide}
+		：：：：通用分层状态机，组合了行为树中的选择器与状态机中的状态和过渡；
+	场景查询系统：[EQS：Environment Query System]
+		通过不同种类的测试向收集的数据提问，这些测试会根据提出问题的类型来生成最适合的项目；
+		EQS查询主要由生成器节点(生成将被测试及甲醛的位置或Actor)和情景节点(被用作各种测试和生成器引用的框架)组成；
+		EQS节点参考：生成器、情景、测试
+		AI感知{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/ai-perception-in-unreal-engine}
+		AI调试{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/ai-debugging-in-unreal-engine}
+		AI组件{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/ai-components-in-unreal-engine}
+数据驱动的GamePlay元素
+	基于数据驱动的游戏逻辑->需要不断根据玩家反馈调整和平衡数据的游戏；
+	数据曲线、曲线表、曲线表导入过程、数据连接、数据用法{仅限C++}
+	数据注册表：可存储、合并、读取和管理不同来源的数据
+		数据源、数据注册表源、元数据注册表源、标识符、数据注册表资产标识符、数据项标识符、快速函数参考
+{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/quick-start-guide-for-unreal-engine-data-registries}
+Gameplay技能系统：灵活的框架，可用于构建在ＲＰＧ或ＭＯＢＡ游戏中看到的技能和属性类型；构建可供游戏中的角色使用的动作或被动技能；
+技能、任务、属性和效果：与Gameplay技能系统交互的Actor须拥有技能系统组件：激活技能、存储属性、更新效果和处理Actor间的交互；
+{https://dev.epicgames.com/documentation/zh-cn/unreal-engine/gameplay-ability-system-for-unreal-engine}
+	技能系统组件与属性
+		Gameplay技能系统 是一个高度灵活的框架，可用于构建你可能会在RPG或MOBA游戏中看到的技能和属性类型;
+			实现这些动作使用的"冷却"计时或资源消耗，更改技能等级及每个技能等级的技能效果，激活粒子或音效等；
+		技能、任务、属性和效果：
+			技能任务异步编译块：完成操作时，会给予最终结果频繁调用委托{回调函数[异步编程、事件处理、GUI编程]、事件处理【委托可以调用一个或多个注册的方法来响应事件，使得事件驱动的编程模型变的简单和灵活】、多播委托【委托可以组合多个方法，形成一个多播委托；会按顺序调用所有注册的方法，一次性触发多个事件或执行多个回调函数时非常有用】}，多播委托【组合多个方法、多播委托】；委托链【多播委托链，允许i谭家、移除和调用多个方法】{动态地管理和调用一组方法变得更加方便}；匿名方法和Lambda表达式：委托可以与匿名方法和Lambda表达式结合使用，编写间接、可读性高;
+		Gameplay属性{浮点值：生命值、体力、跳跃高度、攻击速度等值}和Gameplay效果{可即时或随时间改变Gameplay属性(增益和减益)}
+		与Gameplay技能系统交互地Actor须拥有技能系统组件，激活技能、存储属性、更新效果和Actor之间地交互；技能系统组件
+			{暂不支持单个Actor拥有多个技能组件}
+	玩法技能
+		 源自UGameplayAbility类，定义了游戏中技能的效果、使用技能付出的代价（如有），以及何时或在何情况下可以使用等。玩法技能可以在整个网络中自诬服之，运行在PC上，能同步变量和执行过程过程调用(RPC)；玩法技能使引擎可在游戏会话期间灵活实现游戏技能；提供地扩展功能可用于实现和使用消耗、玩家输入、使用动画蒙太奇地动画，以及给予Actor地技能本身作出反应；
+		 授予和撤销技能：
+		 	授予：{GiveAbility[返回FGameplayAbilitySpecHandle]、GiveAbilityAndActivateOnce[返回FGameplayAbilitySpecHandle]}
+		 	撤销：ClearAbility{从技能组件中移除指定技能}，SetRemoveAbilityOnEnd{当技能执行完毕时，将该技能从技能系统组件中移除----如未执行，则立即清除，如正在执行，则立即清除其输入，如此玩家无法重新激活或与它互动}、ClearAllAbilities：从技能系统组件中移除所有技能
+		 补充：C#中的异步操作，返回的是Task对象或Task<T>对象，代表了异步操作执行状态和结果，Task对象可以用来获取异步操作结果、等待异步操作完成、取消异步操作等；返回的Task对象具有以下作用：
+		 	1、通过Task对象的Result属性可以获取异步操作的返回值，若未完成，则会阻塞当前线程，直至异步操作完成；
+		 	2、await等待异步操作完成，避免使用回调函数或显示地检查异步操作地状态；
+		 	3、Task对象提供了一系列的属性和方法，可用来检查异步操作的状态，如IsCompleted,isFaulted,IsCanceled等
+		 	4、通过ConcellationToken可以取消异步操作，Task对象的构造函数可以接受一个CancellationToken参数，当取消令牌被触发时，异步操作可以提前结束；
+		 基本用法：Actor技能组件系统，玩法技能的基本执行生命周期如下：
+		 	CanActivateAbility / CallActivateAbility / TryActivateAbility / EndAbility(C++) 或 EndAbility节点会在技能执行完毕后将其关闭；
+		 标记、复制{支持复制内蕴状态和玩法事件，或关闭复制以节省带宽和缩短CPU周期；{GamePlay Net Execution Policy:本地预测、仅限本地、服务器启动、仅限服务器}}、
+		 实例化策略：
+		 	按执行实例化(Instanced per Execution): 每次技能运行时，都会产生技能对象的副本；开销大，更适合不会频繁运行的技能
+		 	按Actor实例化(Instanced oer Actor):在技能首次执行时，每个Actor会产生该技能的实例；运行时较为理想的复制方法
+		 	非实例化：最搞笑的实例化策略；运行时不会产生任何对象，而是使用类默认对象；
+		 触发玩法事件：
+		 	玩法事件：可以传递的数据结构，能够直接触发玩法技能，无需通过正常通道，即可根据情景发送数据有效负载；{当游戏事件触发玩法技能时，玩法技能不会通过激活技能代码路径运行，而是使用提供附加情景数据作为参数的”从事件激活技能“}
+	Gameplay属性和属性集
+		属性集{游戏属性}、初始化{导入数据表、手动填充数据表}、控制游戏玩法属性访问、与游戏效果互动[]、复制
+	Gameplay效果
+		技能系统会利用Gameplay效果更改Gameplay技能所针对Actor的属性，Gameplay效果包含你可以应用到Actor属性的函数库
+			Gameplay技能效果进行增益和减益；根据你的游戏设计，让角色更强和更弱
+		Gameplay效果属于资产，因此运行时不可变{少量例外}
+		Gameplay效果规格时Gameplay效果的运行时版本；
+		Gameplay效果规格会添加到Actor的技能系统组件
+		生命周期：{时长：即时、无限、有持续时间}
+		Gameplay效果组件：确定Gameplay效果如何呈现的Gamplay效果组件(GEComponents):https://docs.unrealengine.com/5.2/zh-CN/using-gameplay-tags-in-unreal-engine/
+			属性集、编程效果和属性交互
+	GAS入门指南
+		https://dev.epicgames.com/documentation/zh-cn/unreal-engine/understanding-the-unreal-engine-gameplay-ability-system
+Gameplay定位系统
+	Gameplay定位系统时创建数据驱动的定位请求的方式，在Gameplay技能系统插件基础上扩展，但可在外部使用；
+	数据和设计
+		定位任务{选择、筛选、排序}、即时定位请求、异步定位请求、异步操作-执行定位/执行筛选
+		调试
+		开发参考：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/gameplay-targeting-system-reference-in-unreal-engine
+输入
+	负责将来自玩家的输入转换为Actor可理解的数据
+	设置Actor的输入、增强输入、RawInput插件、设置输入、
+	输入概念：输入对象负责将玩家的输入转换为以Actor能够理解和使用之形式表现的数据。
+		硬件输入：通常：包括按键、点击鼠标或移动鼠标、按控制器按钮或移动操纵杆。
+		玩家输入：操作映射{ActionMapping}、轴映射{AxisMapping}
+	力反馈：使用移动设备和控制器的震动功能，将游戏中发生的力传达给玩家；
+		通道、力反馈曲线、按设备覆盖、时长；
+Gameplay框架
+	核心系统：游戏规则、玩家输入和功能按钮、摄像机和用户界面
+	UE中的Gameplay框架提供了多个类和组件，可用作项目的构建块；
+	Actor时可在关卡中放置或生成的对象的基类；Actor包含一系列的Actor组件，用于控制Actor的移动方式和渲染方式；
+		所有可放入关卡的对象都是Actor；基类为AActor{Ticking：每帧进行tick}
+		生命周期、复制{用于处理联网多人游戏时，对场景中的Actor进行同步}
+		销毁Actor
+	摄像机表示玩家的视角；
+		摄像机责任链：游戏特定的摄像机行为和摄像机可通过责任链提供；
+		摄像机动画：{使用弹簧组件、在多个固定摄像机视角间切换、使用摄像机组件、使用静态摄像机}
+	【组件】：Actor组件、场景组件、Primitive组件
+		注册组件{注册事件}、取消注册组件{取消注册事件}、更新、渲染状态、物理状态、视觉化组件、场景组件、附加、基元组件、场景代理
+		移动组件：人物移动组件、发射物移动组件、旋转移动组件
+	【游戏功能和模块化Gameplay】
+	Pawn类时可以由玩家或AI控制的所有Actor的基类，是世界中的玩家或AI实体的物理呈现；默认情况下，控制器和Pawn之间存在一一对应关系，每个控制器在任何给定时间仅控制一个Pawn；
+		Pawn由玩家或AI控制的所有Actor的基类；是玩家或AI实体在游戏场景中的具体体现；
+		角色{骨架网格体组件、胶囊体组件、角色移动组件}
+	控制器是可持有Pawn或从Pawn派生的类以控制其操作的非物理Actor；
+		控制器会接收到其控制的Pawn所发生诸多事件的通知，因此控制器可借机实现响应此事件的行为，拦截事件并接替Pawn的默认行为；
+		PlayerController控制Pawn，而AIController则对它们控制的Pawn施加人工智能效果；控制器用Process函数控制Pawn，用Unpossess函数放弃控制Pawn；
+		AI控制器：侧重通过场景中的信息来做出响应；
+		玩家控制器：Pawn和控制它的人类王家间的接口
+	Gameplay定时器创建对特定函数指针的异步回调，以在延迟后或一段时间内触发要执行的事件；
+		定时器管理、设置和清空定时器、暂停和恢复定时器、定时器信息、定时器是否活跃、定时器速率、经过时间和剩余时间
+		使用定时器创建火焰效果：
+			https://dev.epicgames.com/documentation/zh-cn/unreal-engine/using-timers-in-unreal-engine
+	游戏框架的基类是GameMode和Game State；
+		Game mode{定义和实现规则：：AGameMode，AGameModeBase简洁高效}
+			https://dev.epicgames.com/documentation/zh-cn/unreal-engine/game-mode-and-game-state-in-unreal-engine
+		基础规则：
+			1、出现的玩家和观众数量，及允许的最大数量
+			2、进入游戏方式：选择申城地点和其他生成/重生行为的规则
+			3、是否可暂停，及如何处理暂停
+			4、关卡之间的过渡，是否以动画模式开场
+		GameState：负责启用客户端监控游戏状态
+		-->基于规则事件在游戏发生，需要追踪并和所有玩家共享时，信息将通过GameState进行存储和同步，包括：
+			1、游戏已运行时间
+			2、每个各地玩家加入游戏时间和玩家的当前状态；
+			3、当前GameMode的基类
+			4、游戏是否开始
+		GameState应该追踪游戏进程中变化的属性{与所有人相关，所有人均可见}：GameMode存在服务器上，而GameState存在服务器上且会被复制到所有客户端，保持所有已连接机器的游戏进程更新；
+	【游戏框架组件管理器】https://dev.epicgames.com/documentation/zh-cn/unreal-engine/game-framework-component-manager-in-unreal-engine
+	游戏功能和模块化Gameplay插件可为项目创建独立功能
+		激活、停用或在项目之间共享的独立功能：GameFeature、Modular Gameplay插件可帮助开发人员为项目创建独立功能；
+		游戏功能动作----引擎启动时加载
+	用户界面（UI）和平视显示器（HUD）用于向玩家提供有关游戏的信息，且在一些情况下允许玩家与游戏交互
+		HUD{游戏期间在屏幕上覆盖的状态和信息}、画布{在HUD渲染循环中使用的对象}、Slate（自定义、平台无关的用户界面框架，可用于创建各种工具和应用的用户界面）
+物理 {计算碰撞和模拟物理Actor的子系统}
+https://dev.epicgames.com/documentation/zh-cn/unreal-engine/physics-in-unreal-engine
+	Chaos破坏系统
+	Chaos Flesh
+	布料模拟
+	碰撞
+	流体模拟
+	毛发物理
+	物理材质
+	物理资产编辑器
+	物理对象
+	物理组件
+	物理约束
+	物理子步：对物理子步的解释
+	可行走斜面
+	物理场
+	使用射线进行命中判定
+
+Gameplay教程 https://dev.epicgames.com/documentation/zh-cn/unreal-engine/gameplay-tutorials-for-unreal-engine
+	将组件添加到Actor、设置角色动作、查找Actor、重生玩家角色、保存和加载游戏、持有Pawn、设置游戏模式、使用OnHit事件
+大世界坐标
+	提高了浮点数(32->64)
+	大型世界坐标渲染介绍：
+		LWC渲染概述
+		材质转换器
+载具
+	Chaos载具是UE的轻量级系统，用于实现载具物理模拟
+	载具质量重心
+	将PhysX载具转换为Chaos
+联网和多人游戏 https://dev.epicgames.com/documentation/zh-cn/unreal-engine/networking-and-multiplayer-in-unreal-engine
+	网络对人游戏基础
+		分类{客户端--作为网络多人游戏会话中与服务器连接的客户端运行，不会运行服务器逻辑；聆听服务器{主持功能，有本地玩家，临时合作和竞技多人游戏；专属服务器{废弃图形、音效、输入和其他面向玩家的功能，更固定、安全和大型多人功能的游戏}}
+		Actor复制：网络会话中的不同机器间复制游戏状态信息
+			网络角色和授权：决定网络游戏期间控制Actor的机器，授权Actor被认为可控制Actor的状态，可将信息复制到网络多人游戏会话中的其他机器上{Local Role & Remote Role变量进行追踪}
+				客户端拥有权
+				相关性和优先级
+			变量复制：
+				RepNotify：可指定在Actor成功接收特定变量的复制信息时，要调用的RepNotify函数；RepNotify仅在变量更新时本地出发；
+			远程过程调用(RPC):
+				Server： 仅在主持游戏的服务器上调用
+				Client：仅在拥有该函数所属的Actor的客户端上调用，若Actor无拥有连接，将不会执行此逻辑
+				NetMulticast：在于服务器连接的所有客户端及服务器本身上调用
+				可靠性：
+				验证：
+				多人游戏编程快速入门指南：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/multiplayer-programming-quick-start-for-unreal-engine
+	管理多人游戏会话
+		无缝{非阻塞式操作}与非无缝{阻塞操作}切换：
+			非无缝转移：
+				初次加载地图时、初次作为客户端连接服务器时、想中止一个多人模式游戏并启动新游戏时
+			无缝切换：过渡场景； 无缝切换流程{标记出要在过度关卡中存留的actor；转移到过渡关卡；标记处在最终关卡中存留的actor；转移到最终关卡}
+	编写多人游戏[*****************************************************************************************************************************************************************************]
+	https://dev.epicgames.com/documentation/zh-cn/unreal-engine/programming-network-multiplayer-games-for-unreal-engine
+		Detailed Actor Replication Flow
+			Add Actors to the considered for replication list
+			Loop Through Each Connection
+				Loop Through Sorted Actors List
+				Replicate an Actor to a Connection
+		Actor所有者和所属连接
+		Actor的Role和RemoteRole属性
+		Actor Network Dormancy
+		Actor优先级
+		Actor相关性
+		复制Actor属性
+		复制子对象
+		Online Beacons
+		RPC
+		Replicated Object Execution Order
+		重播系统： 用于录制和播放游戏的重播系统概述
+		Replication Graph
+	Iris复制系统
+		复制系统：托管游戏的服务器；玩家控制的连接到游戏的客户端；
+		性能优化----去除了反面模式的约束，提高了可扩展性；通过分离复制和游戏线程数据，启用了并发；为多个对象和连接共享工作负载，提高效率；
+	网络调试
+	https://dev.epicgames.com/documentation/zh-cn/unreal-engine/network-debugging-for-unreal-engine
+	部署多人游戏：：：：使用Steam Sockets
+	教程与示例 https://dev.epicgames.com/documentation/zh-cn/unreal-engine/network-programming-tutorials-and-examples
