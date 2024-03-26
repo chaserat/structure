@@ -1,1 +1,31 @@
-虚幻编辑器界面
+建立开发流程
+	资产管理
+		资产管理器：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/asset-management-in-unreal-engine
+			主资产：唯一的主资产类型
+			次要资产：其他资产
+		蓝图类资产和数据资产：
+			蓝图类资产：需要实例化的主要资产；不需要实例化的蓝图类；
+		非蓝图资产：不需存储蓝图数据，可使用非蓝图资产；
+		可流送管理器：执行实际的异步对象加载，使用可流送句柄将对象保存在内存中，直到不再需要后进行卸载，与单件的资产管理器不同，引擎不同区域中有多个可流送管理器；
+		从硬盘注册并加载主资产、注册并加载动态创建地主资产、
+	UE云部署：依赖远端机器，不依赖本地
+	使用UE Turkey进行平台管理：：Turnkey 是在 虚幻引擎5 中引入的系统，可以自动执行设置平台支持时需要执行的大部分步骤，包括查找用于安装SDK和显示开发工具包的源文件。
+		{XML}
+	使用UE构建管道
+		虚幻编译工具https://dev.epicgames.com/documentation/zh-cn/unreal-engine/unreal-build-tool-in-unreal-engine
+		虚幻头文件分析工具https://dev.epicgames.com/documentation/zh-cn/unreal-engine/unreal-header-tool-for-unreal-engine
+		自动工具https://dev.epicgames.com/documentation/zh-cn/unreal-engine/unreal-automation-tool-for-unreal-engine
+			AutoMationTool:
+			BuildGraph： 编制与UE相关地无人值守过程脚本；
+	推荐的资产命名规范
+	部署UE：：：：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/deploying-unreal-engine
+	UE中的协作和版本控制：：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/collaboration-and-version-control-in-unreal-engine
+	派生数据缓存：：DDC：：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/derived-data-cache
+	UE多用户编辑::https://dev.epicgames.com/documentation/zh-cn/unreal-engine/multi-user-editing-in-unreal-engine
+	插件
+	虚拟资产::将资产虚拟化，提高团队的源码控制拉取效率。
+		https://dev.epicgames.com/documentation/zh-cn/unreal-engine/overview-of-virtual-assets-in-unreal-engine
+	重定向器::::在包中设置用于将对已移动资源的引用重定向到其当前位置的对象
+	编辑器的脚本与自动化：：：：使用蓝图及Python对虚幻编辑器进行程序化控制
+	UE与Autodesk ShotGrid
+测试并优化你的内容：：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/testing-and-optimizing-your-content
