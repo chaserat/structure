@@ -50,3 +50,8 @@ https://dev.epicgames.com/documentation/zh-cn/unreal-engine/physics-in-unreal-en
 		追踪 (or 光线投射)可实现这两种情况——"发射"一道不可见的光线检测两点之间的几何体；如命中几何体，返回被击中的内容，以便对其进行操作。
 		Multi Line Trace By Channel / Multi Line Trace (Raycast) by Object
 		https://dev.epicgames.com/documentation/zh-cn/unreal-engine/traces-in-unreal-engine---overview
+追踪概述：
+	按照信道或对象类型追踪：信道和对象类型--信道用于可视性和摄像机等事物，且只和追踪相关；对象类型是场景中带碰撞的Actor物理类型，如Pawn，载具、可破坏物Actor等；
+	返回单个或多个命中：：：：按信道多重追踪(Multi Trace by Channel) 和 按对象多重追踪 (Multi Trace for Objects)
+		按信道多重追踪：追踪将返回包含第一个阻挡在内的所有重叠；
+		按对象多重追踪：将返回与追踪查找的对象类型匹配的所有对象，它适合计算追踪开始和结束之间的对象数量

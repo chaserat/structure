@@ -1,1 +1,37 @@
-虚幻编辑器界面
+创建用户界面
+	构建用户界面
+		注意：[创建的简单 UI 画面包含少量变化频率较高的变量时，则需要考虑使用 属性绑定 来驱动这些变更。 然而，如果 UI 画面更为复杂，数个属性将在特定时间发生变更，则使用 基于事件的 逻辑执行这些变更为佳，而无需在每帧进行检查确认是否应该形成变更]
+		提示与技巧：使用垂直框或横向框时，需确定是否对槽尺寸使用填充(Fill)或自动(Auto)：
+		使用渲染变形：影响特定控件的平移、缩放或其他设置时需谨慎：临时变形，执行永久变形效果不佳
+		右键快捷菜单
+		Ctrl拖动锚和控件
+		设计师预览背景
+		用户控件/重复使用内容
+		优化
+	UMG编辑器参考
+		锚点、制作UMG空间动画、裁剪DPI缩放、UMG事件、UMG安全区、属性绑定、UMG样式
+	Slate UI框架：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/slate-user-interface-programming-framework-for-unreal-engine
+		Slate架构、裁剪系统
+	文本格式设置、本地化、字体：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/text-formatting-localization-and-fonts-in-unreal-engine
+		UMG富文本块
+		Fonts：字体DPI缩放、导入字体、字体资源和编辑器、创建并指定字体、字体材质和外框、使用UMG字体
+	无障碍功能
+		朗读器、视觉障碍、文本转语音
+	Optimization
+		Slate的休眠定时器和活跃定时器
+		优化准则
+		UI无效化
+	测试和调试
+		控制台Slate调试器、空间反射器
+	UI开发插件
+		UMG viewmodel、Common UI
+	控件类型参考说明
+		背景模糊空间
+		无效化方框
+		菜单锚点
+		自动换行框
+		命名槽
+	教程和示例：https://dev.epicgames.com/documentation/zh-cn/unreal-engine/tutorials-and-examples-for-user-interfaces-in-unreal-engine
+		1、使用事件驱动UI的更新
+		2、Scaling UI for Different Devices
+		3、创建拖放UI

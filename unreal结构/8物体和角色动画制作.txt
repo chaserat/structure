@@ -1,1 +1,83 @@
-虚幻编辑器界面
+物体和角色动画制作
+https://dev.epicgames.com/documentation/zh-cn/unreal-engine/animating-characters-and-objects-in-unreal-engine： 相关动画的动作优化 需要给出一个Xmind描述动画工作流及其功能{优化点}
+强大的动画工具和编辑器，以便为角色和物体创建运行时动画系统，渲染电影动画内容，并在引擎中直接新建动画内容
+	骨架网格体动画：使用动画蓝图可视化脚本编辑器管理其资产
+		动画编辑器{骨架编辑器、骨架网格体编辑器、动画序列编辑器}
+		动画蓝图{动画蓝图编辑器、在动画蓝图中使用图表功能、状态机、动画节点参考、动画插槽、同步组、动画蓝图链接}
+			状态机：状态是状态机中的一个特定结构组织的子模块，通常可以相互转换；一个状态自身包含动画图表，且包含任意类型的动画逻辑；
+			动画节点：控制物体的动画行为：事件图表、动画图表
+				动画蓝图事件节点
+				FABRIK动画蓝图节点
+				空间转换节点
+				混合节点
+				骨骼控制{
+					AnimDynamics,应用旋转百分比，骨骼驱动控制器，CCDIK，复制骨骼，首部IK重定向，Look At,Modify Curve,观察骨骼，RigidBody,Spline IK,弹簧控制器，
+					Trail Controller，Transform Bone，Twist Corrective，Two Bone IK
+				}
+				动画插槽{slots}
+				同步组：动画协调
+				动画蓝图链接
+		动画资产和功能{MotionMatching、动画序列、骨架、混合空间、动画蒙太奇、IK Rig、移动、动画合成、动画姿势资产、变形器图{Deformer Graph}、动画修改器、制作动画镜像、蒙皮权重配置文件{提高低端平台上的视觉逼真度}、顶点动画工具、变形目标预览器}
+		LiveLink：一个从外部DCC环境实时流送动画数据的工具
+			连接你的Master Lockit系统
+			连接你的Preston系统
+			Live Link FreeD
+			Live Link VRPN
+			LinveLinkXR
+			使用LiveLink整合虚幻引擎和Maya
+			使用LiveLink数据
+			LiveLink插件的开发
+			LiveLinkCurveDebugger
+			使用LiveLink整合UE和Motionbuilder
+		调试和优化：
+			动画共享插件
+			动画压缩
+			动画预算分配器
+			Animation Insights
+			动画优化：
+			Rewind调试器：
+		工作流程指南和示例：
+			1、创建自定义变形器图表
+			2、使用IK重定向修正滑步
+			3、使用机器学习变形器
+			4、使用IK Rig重定向两足角色
+			5、使用重定向配置文件
+			6、运行时IK重定向
+			7、使用模块化角色
+			8、使用模块化角色
+			9、使用分层动画
+			10、创建瞄准偏移
+			11、如何获取动画变量
+			12、混合动画
+			13、动画蓝图覆盖
+			14、创建动态动画
+			15、基于运动的混合
+			16、设置角色
+			17、从另一个骨架网格体复制姿势
+			18、创建姿势资产
+			19、曲线驱动动画
+			20、面部动画共享
+			21、使用IOS设备录制面部动画
+			22、编辑动画层
+			23、使用动画蓝图链接
+			24、基于物理的动画
+			25、动画姿势快照
+			26、使用重定向动画
+			27、使用子动画实例
+			--动画相关的快捷键和技巧
+	Sequencer为游戏电影或串通的动画电影制作创建和编辑阶段性的动画内容，同时使用UE的动画和世界渲染工具；
+		Sequencer基础
+		Sequencer概述
+		Sequencer中的摄像机
+		电影渲染队列
+		过场动画流程指南和示例
+		过场动画快捷方式和提示
+		Sequencer热键
+	Control Rig：
+		Control Rig快速入门指南：K动画
+		使用控制绑定制作动画：{
+			ControlRig编辑器；控制点、骨骼和Null；解算方向[前向解算、后向解算]；FBIK；样条线操控；姿势缓存；控制点形状和控制点形状库；ControlRig组件；Control Rig函数库；Control Rig中的Python脚本{python脚本控制功能}；Control Rig调试；
+		}
+		使用控制绑定实现动画效果
+		为UE升级ControlRig的C++单元
+	虚幻引擎：(Paper2D):https://dev.epicgames.com/documentation/zh-cn/unreal-engine/paper-2d-overview-in-unreal-engine
