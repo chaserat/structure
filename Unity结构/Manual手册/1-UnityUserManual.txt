@@ -1,0 +1,56 @@
+新特性
+
+packages
+	working with the Package Manager
+
+最佳实践向导
+	
+设计结构：
+	Unity2D、Graphics、Physics、MultiPlayer、Scripting、Audio、Animation、UI、
+	Navigation、UnityService、Virtual reality、Platform specific
+
+Unity User Manual:
+1、 Documentation versions
+2、 Offline documentation
+3、 Tradermarks and terms of use
+
+Packages and feature sets:
+	Released packages, Pre-release packages,
+
+	Release candidates
+
+	Core packages
+
+	Built-in packages
+
+	Experimental packages
+
+	Packages by keywords
+
+	Unity's Package Manager
+
+	Creating custom packages
+
+	Feature sets
+
+Quality of life and efficiency improvements
+	Transform 组件可以限制scale性质
+	Table view in search： 查找中的图表
+	Optimized build process： 优化构建过程： 支持增量构建C#代码
+	IL2CPP代码生成选项，可减少50%的代码量，使得IL2CPP构建时间更快和执行文件更小
+	visual scripting？？
+
+Android App bundles设置：Android App Bundle(AAB)
+
+开启Boost在自适应performance中
+
+安卓线性构建：optimize an application for energy-efficiency or high performance
+
+运行时，支持UDP协议
+
+Cinematics：
+	1、Sprite Editor
+	2、Recorder updates / package
+	3、Alembic package：交换文件格式
+	4、Cinemachine package：专门控制相机的模块：：：Dotween模块
+	5、Feature sets :::: 相关packages的bundles；specific task -- building environments or optimizing specific platforms

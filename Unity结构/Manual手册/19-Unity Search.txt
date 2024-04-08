@@ -1,0 +1,17 @@
+Unity Search：查找Assets 
+	(Ctrl + K)
+	The Search window{
+		Serach field; Saved Seraches; Search Provider; Results area; Preview Inspector; Views and Preferences
+	}
+	搜索使用：
+		1、Filter searches
+		2、Search Query operators
+		3、The index Manager
+		4、Search Object Picker
+	搜索Providers：
+		1、Each type的搜索有自身的provider
+	搜索描述方式：Functions reference
+	创建通用搜索provider
+		https://docs.unity3d.com/2021.3/Documentation/Manual/api.html
+
+

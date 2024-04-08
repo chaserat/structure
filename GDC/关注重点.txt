@@ -1,0 +1,9 @@
+https://www.bilibili.com/video/BV1v94y1E7b2/?spm_id_from=333.337.search-card.all.click
+让3D模型动起来   如何让3D模型栩栩如生
+
+temp/apk_coldstart
+
+RC_3.2.0_cold_start
+
+
+"C:/Program Files/Unity/Hub/Editor/2021.3.6f1c1/Editor/Unity.exe" -quit -projectPath ./ -executeMethod BuildProject.MacroSettingAdded -batchmode -logFile ./log.txt
