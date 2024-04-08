@@ -54,3 +54,6 @@ Cinematics：
 	3、Alembic package：交换文件格式
 	4、Cinemachine package：专门控制相机的模块：：：Dotween模块
 	5、Feature sets :::: 相关packages的bundles；specific task -- building environments or optimizing specific platforms
+
+packagelist:
+https://docs.unity3d.com/2021.3/Documentation/Manual/PackagesList.html
