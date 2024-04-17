@@ -1,0 +1,19 @@
+https://zhuanlan.zhihu.com/p/689285306
+
+Low-level Thinking in High-level Shading Languages: 使用高级着色语言，底层硬件合编译器行为的理解，有助于编写高性能Shader；
+
+关键点速读：
+1、编译器不会改变操作顺序，改变操作顺序是不安全的；
+	编译器不会将优化计算，即使是有问题的；
+	由于开方的对象为非负[float,double]，导致生成的数据可能为NAN；
+	编译器善于：
+		移除无用代码、消除没有使用的资源、合并常量、寄存器分配、代码调度；
+	不善于：
+		改变代码含义、移除依赖、打破规则；
+	通常线性映射(Linear Remap)的操作应是一个MAD指令，可伴随saturate、clamp操作；最一般的情况下是MAD_SAT+MAD;但是线性映射
+	不是直观的MAD，需要对计算顺序进行一点优化；
+	除法优化
+	abs/negate/saturate优化： abs应尽量使用在输入操作上，而不是输出上；
+2、尽量使用MAD替代ADD+MUL两个指令；
+3、在输入参数使用abs、negate，在输入参数使用saturate是没有消耗的；
+4、标量操作比向量操作使用的资源更少；

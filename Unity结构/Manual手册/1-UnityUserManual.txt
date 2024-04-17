@@ -46,7 +46,7 @@ Android App bundles设置：Android App Bundle(AAB)
 
 安卓线性构建：optimize an application for energy-efficiency or high performance
 
-运行时，支持UDP协议
+运行时，支持UDP协议{User Data Protocol}
 
 Cinematics：
 	1、Sprite Editor
@@ -57,3 +57,100 @@ Cinematics：
 
 packagelist:
 https://docs.unity3d.com/2021.3/Documentation/Manual/PackagesList.html
+
+ML-Agents::::
+https://docs.unity3d.com/Packages/com.unity.ml-agents@2.0/manual/index.html
+
+Release
+Release-Candidates
+Pre-release {UnityTransport: low-level interface for sending UDP data}
+Core packages:
+	2D sprite / 2D Tilemap Editor/ Core RP library/High DRP/ Shader Graph/Unity UI/URP/Visual Effect Graph
+Build-in packages:
+	https://docs.unity3d.com/2021.3/Documentation/Manual/pack-build.html
+Unity Web Request{unitywebrequest/unitywebrequestassetbundle/}
+Experimental packages
+UnityPackagesManager:
+	1、Registry / Built-in / Embedded / Local / Tarball(local) / Git
+	Package states and lifecycle----Dependency and resolution ---- Global Cache
+
+Configuration: 解决网络问题、瞭望登录授权、Package缓存共享、使用私有仓库(Git Urls)、使用passphrase-protected SSH keys with SSH Git URLs
+
+Scripting API for packages:
+	使用PackageManager脚本API用于与PackageManager进行交互{Accessing package assets}
+Scoped registries: 可用于Unity交互custom package server，获取不同包的收集
+	Resolution and conflict / Choosing the best solution / Lock files and resolutionStrategy / Example
+Project Manifest:
+	Embedded dependencies/Git dependencies / Local folder and tarball paths
+Troubleshooting:诊断网络问题
+创建custompackages{https://docs.unity3d.com/2021.3/Documentation/Manual/CustomPackages.html}
+Feature sets{https://docs.unity3d.com/2021.3/Documentation/Manual/FeatureSets.html}
+	2D feature set;
+	3D Characters and Animation feature set;
+	3D World Building feature set;
+	AR feature set
+	Cinematic Studio feature set
+	Engineering feature set
+	Gameplay and Storytelling feature set
+	Mobile feature set
+	VR feature set
+Working in Unity:
+	安装Unity、Unity's Interface{}
+
+Asset workflow:
+Import {
+	导入过程::::并行导入--控制importer worker process： desired  import worker count | Standby Import Worker Count | idle Import Worker Shutdown Delay}
+SupportedAssetTypes:
+	Build-int importers、Scripted Importers、Importer Consistency、Text assets
+Asset Metadata{Unity分配asset一个唯一ID、创建.meta、处理asset}
+AssetDatabase：
+	Asset import dependencies: 平台参数、re-import/Asset caching/Platform Switching and reimporting
+	Artiface database
+	Import an Asset / Loading an Asset / File Operation using the Assetdatabase
+		Refresh process{重载后，正在使用的文件已经修改；OnPostProcessAllAssets,可用一下的接口:ForceReserializeAssets/AssetImporter.SaveAndImport/任意AssetDatabaseAPI}
+		Reimport 激活Refresh流程
+	Look for changes on disk/Update source Asset Database/Dependency tracking/
+	Import and compile code-related files/Reload the domain/Import non-code-related Assets
+	当import 重载一个asset文件，unity生成了一个AssetImporrtContext，该上下文描述了一个asset的静态依赖
+	import calls的预处理-后处理
+	Customizing the asset database workflow：
+		asset objects/
+	Batching with the AssetDatabase: AssetDatbase.StartAssetEditing & StopAssetEditing
+		Nested calls to StartAssetEditing and StopAssetEditing	 
+Special folder: Assets / Editor / Editor Default Resources/ Gizmos / Resources/ Standard Assets/ StreamingAssets / AndroidAssetPacks/Android Library Projects
+	Hidden folders: 以'.'开头的文件或者文件夹、以'~'结尾的文件或者文件夹、命名为cvs的文件或者文件夹、扩展名为.tmp的文件或者文件夹
+Create {创建过程}  ：： import Activity Windows
+	Asset information
+Presets： 用于保存和应用组件或对象属性设置的功能
+	Applying settings from a Preset/ Applying partial Presets / Editing a Preset
+	Applying default presets to Assets by folder
+Build {}  
+Distribute 
+Load ::::  
+AssetBundle Overflow:
+	Assigning Assets to AssetBundles / Build the AssetBundles / Loading AssetBundles and Assets / 
+	Prepare Assets for AB: 并行处理，若相同的Object有不同的版本，可考虑下Assetbundle variants
+	AssetBundle Dependencies: bundle依赖
+	Using AB natively： 通过引用计数管理bundle卸载
+	AB Compression / Patching with AB / Troubleshooting / Assetbundle Cache{MemoryCache, DiskCache} / 
+	Patching with AssetBundles{}
+	a patching system 需要两个信息列表：1、当前下载的AB及版本信息；2、服务器的AB，及版本信息
+	Troubleshooting： Asset Dulplication 
+		定位问题的方式：
+			share bundle、拆包、
+		Sprite Atlas Duplication：
+			为不重复，所有的sprites标仅相同的sprite atlas，并打进同一个bundle
+		Android Textures：
+		Shaders 和 AB：SVC 和 graphics settings
+	Unity AB Bundle browser tools
+	AB下载完整性和安全性：HTTPs / CRC 校验完整性 / User Generated Content{}
+	Scripting with Assets:
+		运行时加载资源、S-Assets；通过脚本修改源资源
+	Asset Packages
+Input： Input Manager： 按键设置
+Mobile device input： {Mobile Keyboard}
+	{multi-touch screen/Mouse simulation/Accelerometer/Low-Pass Filter}
+Unity XR input::::
+	XR input mappings / Accessing input devices / Accessing input devices by characteristics / Accessing input devices by role / Accessing input devices by XR node/Accessing input features on an input device / XR input through the legacy input system / Haptics / 
+
+2D game development: https://docs.unity3d.com/2021.3/Documentation/Manual/Unity2D.html
