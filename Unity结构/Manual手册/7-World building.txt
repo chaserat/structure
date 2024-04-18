@@ -1,5 +1,34 @@
-新特性
-
-packages
-
-最佳实践向导
+World building:
+environmental features: landforms & vegetation	
+	Terrain: unity 内置terrain特性，创建和修改地形的工具；运行时优化地形rendering
+		地形特性的内置集合令你增加游戏中的地貌，创建Terrain tiles：调整高度或地形的显示效果，增加trees或grass；运行时，Unity优化了内置地形渲染；
+		创建临近（neighbor）Terrain：
+		Terrain tools：Raise or lower terrain / paint holes / paint texture / set height / smooth height / stamp terrain
+		terrain layers： 定义terrain 表面质量；地形分层；创建terrain layers/Create Layer/
+			{Diffuse【Color Tint,Opacity as Density】/Normal Map/Normal Scale/Mask Map/Channel Remapping / Specular / Metallic / Smoothness / Tiling Settings{Size,Offset}}
+		brushes: Custom Brushes / Brush settings / 
+		Texture painting
+		Rendering performance
+		Trees: Bend Factor / Making trees bend in the wind;
+			Speed Trees:  
+		Wind Zones: 创建风和粒子系统；风浪{Directional}、explode{Spherical}
+		Grass and other details： instanced mesh、Vertex Lit mesh、Grass Mesh、Grass Texture
+		Paint Detail：
+			Add Detail Mesh / Add Grass Texture / Remove details
+		Working with Heightmaps:
+			Terrain tools: 影响高度、
+			Importing and exporting heightmaps
+				import and export options{depth, resolution, Byte Order, Flip Vertically, Terrain Size}
+			Terrain Settings: ***
+			Using Terrain at runtime
+	Terrain Tools：内置地形特性：提供了增量式编辑器工具函数
+		Erosion、Sculpting tools, Brush Mask Filter; 创建新的Terrain from preset files or imported heightmaps;
+		附加的toolset：更多控制Terrain效果和希望streamline Terrain workflow
+			https://docs.unity3d.com/Packages/com.unity.terrain-tools@5.0/manual/getting-started-with-terrain-tools.html
+	Tree Editor：增加Tree Editor工具，使你再Editor模式下直接设计Trees
+		Tree Basics：Hand Editing Branches and Leaves
+		Branch Group Properties：Distribution / Geometry / Shape / Fronds / Wind
+		Leaf Group Properties：
+			Distribution: Group Seed / Frequency / Distribution / Twirl / Whorled Step / Growth Scale / Growth Angle
+			Geometry: 选择集合的类型用于生成leaf group和使用哪些材质球
+			Shape： 
