@@ -1,5 +1,77 @@
-新特性
-
-packages
-
-最佳实践向导
+3D物理：
+Charactor Control: 配置基于物理的first-person和third-pserson控制；基于碰撞的，以避免穿墙；
+	Character control：可控；可不基于物理的
+	Charactor Controller component reference：
+		Slope Limit / Step offset / skin width / Min Move Distance / Center / Radius / Height
+	Details: 
+		reference to CharacterController
+Rigidbody physics
+	Rigid physics : movement, gravity and collision; joints| 增加Rigidbody组件
+	基于物理的运动的Rigid body GameObjects----{AddForce，AddTorque}
+	Rigid body GameObjects without physics-based movement: unity中的movement称为 kinematic motion/
+	Rigidbody optimization: Sleep Threshold(若speed 小于该值，则物理系统中不进行计算)：：：：WakeUp、Sleep；
+	为计算准确Collider：
+		1、 DCC、工具拆分mesh
+		2、 使用原始碰撞体合成一个复合碰撞体
+		3、 使用自动化工具计算任意mesh的凸近似
+	应用constant force to a Rigidbody
+	应用插值到Rigidbody: https://docs.unity3d.com/2021.3/Documentation/Manual/rigidbody-interpolation.html
+	Rigidbody component reference::::https://docs.unity3d.com/2021.3/Documentation/Manual/class-Rigidbody.html
+		{Properties: Mass,Drag,Angular Drag,Use Gravity,Is Kinematic,Interpolate[None,Interpolate,extrapolate],Collision Detection[Discrete,Continuous,Continuous Dynamic,Continuous Speculative],Constraints[Freeze Position,Freeze Rotation]}
+		{Info section: Speed,Velocity,Angular Velocity,Inertia Tensor,Inertia Tensor Rotation,Local Center of Mass,World Center of Mass,Sleep State}
+	Constant Force component reference: https://docs.unity3d.com/2021.3/Documentation/Manual/class-ConstantForce.html
+		Property: Force[阻力],Relative Force,Torque[力矩],Relative Torque
+Collision：交互类游戏和模拟器的基石
+	Collider types：Static colliders，Rigidbody collider{dynamic colliders[默认], Kinematic colliders},Trigger Collider{初始化events，依赖RigidBody}|Collider Interactions{}
+	Collider shapes： main[Primitive colliders, compound colliders, Wheel Colliders]
+		Primitive Colliders[box,sphere,capsule] ---- Edit Collider / IsTrigger / Provides Contacts / Material / Center / Radius / Height / Direction / Center
+		Mesh Colliders ---- 准备Mesh用于Mesh colliders{read/write;运行时优化Mesh cooking;优化non-renders Meshes[关闭mesh的法线]；Mesh Collider component reference[Convex、Layer overrides]}
+			Meshes 在运行时变换shape、直接mesh朝向
+		}
+		Wheel colliders：https://docs.unity3d.com/2021.3/Documentation/Manual/wheel-colliders.html  -> 模拟或仿真
+		-------------------------------------------------------------------------------
+		compound collider：https://docs.unity3d.com/2021.3/Documentation/Manual/create-compound-collider.html
+		Terrain Collider：https://docs.unity3d.com/2021.3/Documentation/Manual/class-TerrainCollider.html
+		Additional Resources: 
+	Collider surfaces：计算fiction{摩擦力}和碰撞：
+		Collider surface friction / surface bounciness / collider surface values combine{Friction/Bounce combine} / 创建PhysicsMaterial{表示PhysicsMaterial这个类，用于控制参数} / PhysicMaterialComponentReference
+	Collider interactions：
+		surface friction / surface bounciness / Collider Events{https://docs.unity3d.com/2021.3/Documentation/Manual/collider-interactions-oncollision.html}
+	Collision detection：[detection mode / Discrete collision detection / Continuous collision detection{box/sphere/capsule}]
+		Speculative CCD: 相比与Sweep，计算量少【处理直线或旋转】；Continuous Speculative可能比较少精度，也可能缺失碰撞计算；false collisions可导致失败
+Joints
+	连接点链接一个刚体和另一个刚体；节点可应用阻力到运动物理上并限制运动；
+		Character Joint component reference： 限制移动，可进行角度旋转
+		Configurable Joint component reference：可进行任意角度的运动
+		Fixed Joint component reference：链接；而不继承transform
+		Hinge Joint component reference：铰链节点
+		Spring Joint component reference：弹簧链接
+Articulations
+	基于逻辑树的物理关节节点：ArticulationBody(component)
+		Fixed joint / Prismatic joint / Revolute joint / Spherical joint
+		properties: 
+			Physical body properties|Joint anchor proerties|Joint type selection and properties | Joint drive properties
+			Joint anchor properties: 连接点铰链属性
+				Joint type selection and joint properties
+				Prismatic joint additional properties
+				Revolute joint additional properties
+				Sperical joint additional properties
+			Joint drive properties:
+				joint limits
+			Configuring articulation joints: Joint drive effect
+			Joint anchors
+Ragdoll physics: 碰撞器的集合；刚体和连接点，可以应用humanoid模板；模拟冲击碰撞器和人物死亡的状态
+	创建布娃娃：create the character
+	Joint and Ragdoll 稳定性：
+		避免Y/Z的限制
+		不检查(uncheck)节点的Enable Preprocessing：
+		若刚体模型抖动，使用物理增加Default solver 循环次数
+		增加Solver Iterations值可增加节点的精度
+		避免差距过大，否则会带来抖动
+		避免scale不是1，否则会不稳定
+		降低速度，以达到平滑的目的
+Cloth：skinnedmeshrenderer
+	物理属性
+Multi-scene physics
+	collision/trajectories
+	pre-populated physics Scenes
