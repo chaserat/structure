@@ -1,0 +1,8 @@
+UnityEngine.Experimental
+	AI
+	Animations
+	Audio
+	GlobalIllmination
+	Playables
+	Rendering
+	Video

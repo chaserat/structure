@@ -1,5 +1,65 @@
-新特性
+User Interface{UI toolkit;Unity UI Package[uGUI];IMGUI}
+::::UI ToolKit-可用于Editor创建的UI扩展工具包并在运行时运行{
+	保持模式UI系统[包含核心特性和功能用于创建UI]、
+	UI asset特性[HTML、XML、CSS]；使用结构和风格化UI、
+	工具和资源-创建和debug UI
+}
+::::uGUI-支持高级渲染和text features[https://docs.unity3d.com/Packages/com.unity.ugui@2.0/manual/index.html]
+::::IMGUI-不建议在运行时使用
+::::创建项目的UI system
+	Comparison of UI system in Unity
+		推荐： uGUI[Runtime]/IMGUI[Editor]
+		UI designer | technical artist | programmer
+		Innovation and development: 
+		uGUI： UI positioned 和 3D world中显示 / custom shaders & materials VFX / Easy referencing from Monobehaviors
+		UI Toolkit： 产生多个UI / 需要熟悉美术和设计者的工作流 / 追寻textureless UI渲染能力
+		Use Cases：UI toolkit | unity UI[world space UI & VR / UI 需要customized shaders & materials]
+		In details:  https://docs.unity3d.com/2021.3/Documentation/Manual/UI-system-compare.html
+	Unity UI[uGUI]:https://docs.unity3d.com/Packages/com.unity.ugui@2.0/manual/index.html
+		Canvas: 使用EventSystem 对象用于帮助Messaging System：
+			Draw order of elements: UI elements in Canvas的顺序尤为重要: SetAsFirstSibling / SetAsLastSibling / SetSiblingIndex
+			Render Modes: 幕布可设置渲染空间[screen space（自适应屏幕大小） / world space（）]
+			Screen Space-Overlay: resized or changes resolution / render camera
+				Screen Space-Camera: Screen Space-Overlay
+			world space: diegetic interface--Rect Transform / UI elements
+		Basic Layout:
+			Rect Tool / Rect Transform {resizing versus scaling | Pivot | Anchors | Anchor presets | Anchor and position fields in the inspector}/ 
+		Visual Components:
+			Text: Text mesh pro 
+			Image: simple / sliced / tiled / filled
+			Raw Image: Image 关联的为sprite；Raw Image使用的是texture；Raw Image只有必须的时候才会使用
+			Mask: 遮罩
+			Effects: 视觉组件可以应用简单特效；必须雪花和轮廓；查看UI效果
+		Interaction Components:交互组件
+			Common Functionality
+			Button
+			Toggle:用于判断OnValueChanged UnityEvent
+				Toggle Group:mutually exclusive
+			Slider: 滑杆
+			Scrollbar: 
+			Dropdown： dropdown detail----option
+			InputField： Text Element{UnityEvent： 定义当text content修改时，发生UnityEvent}
+			Scrool Rect： Scroll View
+		Animation Integration: 基于Animator，与legacy animation system不兼容
+		Auto Layout:
+			Rect Transform layout系统
+			Understanding Layout Elements: layout元素和layout 控制器；
+				properties:[min width/min height/preferred width/preferred height/flexible width/flexible height]
+					content size filter | various layout group
+			Layout Element Component: 布局元素组件 -- 
+				用于override布局参数
+			Understanding layout controller:
+				Content Size Filter | Aspect Ratio Filter | Layout Groups | Driven Rect Transform properties
+				Technical Details:
+					Layout Interfaces[ILayoutElement/ILayoutGroup/ILayoutSelfController] | Layout Calculations[布局组件{
+						CalculateLayoutInputHorizontal on ILayoutElement components: bottom-up order | children的计算先于parent
+						SetLayoutHorizontal on ILayoutController components: top-down order    |   parent的计算先于children
+						CalculateLayoutInputVertical on ILayoutElement components: bottom-up order | children的计算先于parent
+						SetLayoutVertical on ILayoutController components： top-down order | parent的计算先于childrent的计算
+					}] 
+					Triggering layout Rebuild
 
-packages
-
-最佳实践向导
+		Rich Text:
+		Event System:
+		UI Reference:
+		UI How Tos:

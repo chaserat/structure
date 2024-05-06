@@ -1,0 +1,7 @@
+Classes:
+Enumerations:
+	GraphicsDeviceFeature: 
+		Deep Learning Super Sampling[DLSS]
+			列举GraphicsDevice API
+		DLSSQuality
+		DLSSFeatureFlags

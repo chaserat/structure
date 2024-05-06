@@ -1,0 +1,391 @@
+https://docs.unity3d.com/2021.3/Documentation/ScriptReference/AudioDataLoadState.html
+属性：
+		PropertyAttribute： 自定义属性的基类
+			关联一个自定义类PropertyDrawer::GUIDrawer <UnityEditor>
+	<CoreModule>
+		AddComponentMenu --> componentOrder 
+		AssemblyIsEditorAssembly:程序集等级属性
+		BeforeRenderOrderAttribute：onBeforeRender前callback[order]
+		ColorUsageAttribute: <PropertyAttribute> ：： order
+			属性用于构建色域和Color Picker的使用
+		ContextMenu: 用户选择context menu，执行函数
+		ContextMenuItemAttribute： <PropertyAttribute>
+			使用属性增加一个context menu到方法名的域
+		CreateAssetMenuAttribute： 创建asset
+		CustomGridBrushAttribute: 用于定义grid brush类和在调色板中可行
+		DelayedAttribute：<PropertyAttribute> 使用该属性延迟赋值float，int，string变量
+		DisallowMultipleComponent：防止相同类添加到GameObject上两次
+		ExcludeFromObjectFactoryAttribute：防止某一个类的添加
+		ExcludeFromPresetAttribute：防止创建类实例的预制
+		ExecuteAlways：一直执行
+		ExecuteInEditMode：Edit模式时执行
+		GradientUsageAttribute：<PropertyAttribute>
+			构建梯度域和梯度编辑器
+		GUITargetAttribute：允许控制显示OnGUI时调用的内容
+		HeaderAttribute：<PropertyAttribute>
+		HelpURLAttribute:提供类的自定义URL文本
+		HideInCallstackAttribute：从控制台callstack标记方法
+		HideInInspector：在监视器中标记一个不显示的变量
+		IconAttribute：明确MonoBehaviour和SO的icon
+		ImageEffectAfterScale：在Dynamic Resolution任务后，执行渲染
+		ImageEffectAllowedInSceneView： image effect应用到Scene view camera
+		ImageEffectOpaque：透明几何之前，opaquegeometry之后，渲染该类；该属性可减少后处理中visual artifacts数量；
+		ImageEffectTransformsToLDR：LDR buffer
+		ImageEffectUsesCommandBuffer：使用Command Buffers补充image effects；
+		InspectorNameAttribute：<PropertyAttribute>监视器属性名====displayName
+		MinAttribute:<PropertyAttribute>:最小值
+		MultilineAttribute：<PropertyAttribute> 多行文本用于string修改
+		NonReorderableAttribute：<PropertyAttribute> 关闭重排序
+		PreferBinarySerialization：二进制序列化属性，只可应用于序列化SO[ScriptableObject]的衍生类
+		RangeAttribute:<PropertyAttribute> 属性限制在range范围内
+		RequireComponent：需求组件自动需要依赖项作为组件
+		~RPC: 已删除><过时        创建RPC函数
+		RuntimeInitializeOnLoadMethodAttribute：<Scripting.PreserveAttribute> 运行时初始化类，在Awake之后进行初始化
+		SelectionBaseAttribute： 增加该属性到脚本类用于记录GameObect作为Scene View picking选择项的基类
+		SerializeField:强制unity序列化为一个私有域
+		SerializeReference：脚本属性，指导unity序列化一个域作为引用，而不是值
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/SerializeReference.html
+			[SerializeReference] UnityEngine.Object fields, by reference | Other field types, by value
+			序列化引用的可能条件：多个引用指向同一个自定义实例类，使用polymorphism域类；序列化空值
+		SpaceAttribute：<PropertyAttribute>: 使用该类增加一些spacing；
+			配合DecoratorDrawer
+		TextAreaAttribute：<PropertyAttribute>:属性用于编辑高度扩展和滚动文本区域
+		TooltipAttribute：<PropertyAttribute>:特定tooltip在监视器中的区域
+		UnityAPICompatibilityVersionAttribute：断定程序集兼容特定UnityAPI
+	<UnityEngine.AnimationModule>
+		SharedBetweenAnimatorsAttribute: 特定StateMachineBehaviour，只实例一次，并且被所有的animator实例共享；
+Interfaces：
+	IAnimationClipSource： list of animationclips
+	ICanvasRaycastFilter: 光线检测
+	IExposedPropertyTable： 在ExposedReferences的解算器
+		ClearReferenceValue / GetReferenceValue / SetReferenceValue
+	ILogger: 自定义logger implementation
+	ILogHandler： 自定义log 句柄补充
+	ISerializationCallbackReceiver：基于序列化和反序列化的回调接口
+	ISubsystem：提供了Subsystem和IntegratedSubsystem的状态provider control
+		属性： running 
+		公用方法：Destroy、Start、Stop
+	ISubsystemDescriptor：加载/初始化subsystem的元数据
+Enumerations：
+	Canvas设置：
+		AdditionalCanvasShaderChannels： Canvas mesh创建时，mask的可能shader通道属性；
+	AndroidActivityIndicatorStyle： 活动指示类
+	动画：
+		animation:
+			AnimationBlendMode：Blend / Addtive
+			AnimationCullingType：AlwaysAnimate | BaseOnRenderers
+			PlayMode: 分层暂停/暂停所有
+			QueueMode：CompleteOthers / PlayNow
+			
+			WeightedMode： 用于计算曲线片段
+			WrapMode： 折叠模式或者回调播放模式
+		animator：
+			AnimatorControllerParameterType: 控制参数
+			AnimatorCullingMode： 裁切类型
+			AnimatorRecorderMode：录制类型{Offline / Playback / Record}
+			AnimatorUpdateMode: 更新模式{normal / animatePhysics / UnscaledTime}
+		节点设置：
+			ArmDof：手臂的肌肉类型{sub-part of a human part}
+			ArticulationDofLock: 铰链身体的自由度锁
+			ArticulationJointType：节点类型{FixedJoint,PrismaticJoint,RevoluteJoint,SphericalJoint}
+			BodyDof: body的肌肉设置
+			FingerDof：
+			HeadDof：
+			HumanBodyBones：
+			HumanPartDof：
+			LegDof:
+			
+			ConfigurableJointMotion：movement限制
+			RotationDriveMode: 基于X&YZ或Slerp，控制旋转；
+			JointDriveMode:[已过时] ConfigureableJoint驱动设置：
+			JointLimitState2D：表达joint limit的状态
+			JointProjectionMode：如何截取物理节点到限制位置附近，当漂移很多的时候
+		IK设置：
+			AvatarIKGoal: IK Goal
+			AvatarIKHint：IK Hint ---- 用于获取和设置IK权重和位置
+		SkinMeshRenderer: 优化设置
+			SkinQuality
+			SkinWeights
+		RigidBody:
+			3D:
+				RigidbodyConstraints:限制Rigidbodies的运动
+				RigidbodyInterpolation：RigidBody插值模式
+			2D：
+				RigidbodyConstraints2D
+				RigidbodyInterpolation2D
+				RigidbodySleepMode2D
+				RigidbodyType2D
+		MaskPart：
+			AvatarMaskBodyPart
+		HideFlags： Bit mask控制对象摧毁、保存和可视
+		AvatarTarget：Target-设置目标
+			
+		ForceMode: 阻力模式[Rigidbody.AddForce / ArticulationBody.AddForce]
+		~:ForceMode2D : 应用阻力到ForceMode2D
+		
+		WindZoneMode： 风阻模式
+	AnisotropicFiltering：各向异性滤波类
+	ApplicationInstallMode：应用安装模式
+	ApplicationSandboxType：沙盒模式
+	资源设置：
+		AssetBundle设置：
+			AssetBundleLoadResult
+		音频：
+			AudioClipLoadType： audio clip如何加载
+			AudioCompressionFormat：音频的压缩类型
+			AudioDataLoadState: 音频数据加载状态[Unloading / Loading / Loaded / Failed]
+			AudioReverbPreset: 基于混响域类和混响滤波器的混响设置
+				https://docs.unity3d.com/2021.3/Documentation/ScriptReference/AudioReverbPreset.html
+			AudioRolloffMode： 音效曲线模式
+			AudioSourceCurveType：音频曲线类型
+			AudioSpeakerMode：音频的放声器类型
+			AudioType： 音频类型；导入数据类型
+			AudioVelocityUpdateMode：更新音源和音响的更新设置(Auto / Fixed / Dynamic)
+			
+			GamepadSpeakerOutputType: Gamepad audio输出类型[Speaker,Vibration,SecondaryVibration]
+	电池状态：
+		BatteryStatus：设备电池的当前状态[Unknown,Charging,Discharging,NotCharging,Full]
+	相机设置：
+		CameraClearFlags：相机渲染时，什么内容设置
+		CameraType：相机类型预览类型
+		
+		StereoTargetEyeMask: StereoTargetEyeMask类
+		
+		TransparencySortMode：相机渲染顺序[default,perspective,orthographic,customaxis]
+	胶囊体：
+		CapsuleDirection2D：胶囊边缘扩展方向
+		
+	碰撞体2D:
+		2D：
+			ColliderErrorState2D: 创建2D碰撞体时的错误
+			CollisionDetectionMode2D：2D碰撞检测类型
+		3D：
+			CollisionDetectionMode：碰撞检测类型
+			CollisionFlags：通过CharacterController.Move返回的位图掩膜；
+			MeshColliderCookingOptions: MeshCollider的Cooking option
+	Cluster：集群，实时GI技术	
+		ClusterInputType：实现几轮的输入类型[Button/Axis/Tracker/CustomProviderInput]
+	色彩设计：
+		ColorGamut：
+		ColorSpace：Gamma，Linear，uninitialized
+		
+		GradientMode: 插值方式
+	压缩方式：
+		CompressionLevel：-- None,Fastest,Fast,Normal,High,Maximum
+		CompressionType：压缩类型
+	Buffer:
+		ComputeBufferMode:缓存使用模式
+		ComputeBufferType：buffer类型
+	CubeMap：
+		CubemapFace：CubeMap.GetPixel / SetPixel
+	Cursor: 设置光标
+		CursorLockMode: 光标如何运行
+		CursorMode: 硬件或软件模式
+	触碰设置：
+		TouchPhase：触碰段
+		TouchScreenKeyboardType：触碰键盘类
+		TouchType：触碰类型
+	CustomRenderTexture:
+		CustomRenderTextureInitializationSource:自定义RenderTexture初始化源
+		CustomRenderTextureUpdateMode：自定义RT的初始化和更新频率
+		CustomRenderTextureUpdateZoneSpace：更新Zones的坐标空间
+	HDR显示：
+		D3DHDRDisplayBitDepth：显示深度
+		DepthTextureMode：摄像机的深度纹理生成模式
+		DetailRenderMode：细节原始类型的渲染模式[GrassBillboard,VertexLit,Grass]
+		
+		HDRDisplaySupportFlags：描述GPU和驱动支持的显示等级
+		
+		MotionVectorGenerationMode: motion vector的生成类型[Camera{只有camera运动追踪运动},Object{使用special pass追踪运动},ForceNoMotion{不追踪motion}]
+	设备：
+		DeviceOrientation：设备朝向
+		DeviceType：设备类型
+		ScreenOrientation： 屏幕方向
+		UserAuthorization：用户授权
+		
+		WebCamKind： 相机类型
+		
+	MESC：
+		DrivenTransformProperties：transform驱动属性
+		DurationUnit：时长单元
+		
+		EffectorForceMode2D：应用Effector2D阻力
+		EffectorSelection2D：使用Effector2D的目标
+		Screen渲染设置：
+			FullScreenMode：全屏模式----ExclusiveFullScreen / FullScreenWindow / MaximizedWindow / Windowed
+			FullScreenMovieControlMode: 显示播放movie控制的选项
+			FullScreenMovieScalingMode：显示movie的描述scaling模式[None,AspectFit,AspectFill,Fill]
+		按键设置：
+			KeyCode: Event.keyCode
+			PointerType：点击类型
+			
+		定位服务：
+			LocationServiceStatus：状态[initializing,running,stopped,failed]
+		LogOption：
+			LogOption：log消息的特殊设置 trace设置
+			LogType：log类型
+			StackTraceLogType： 堆栈消息追踪
+		MasterServerEvent: 主服务器事件
+		贴图设置：
+			NPOTSupport：NPOT纹理支持
+			TextureFormat：贴图格式
+			TextureWrapMode：贴图折叠模式
+			
+		系统设置：
+			OperatingSystemFamily：确定操作系统设置
+			RuntimePlatform： 运行平台
+		初始化设置:
+			RuntimeInitializeLoadType: 设置运行时方法加载类型
+		系统语言设置：
+			SystemLanguage
+		下载队列优先级：
+			ThreadPriority：
+		VRTexture:
+			VRTextureUsage
+			
+		杂项：
+			SnapAxis
+			Space： 哪个坐标空间用于操作
+			
+	事件：
+		EventModifiers：通过keystroke事件的激活类型
+		EventType：事件类型-GUI输入和处理事件类型
+	UI：
+		GUI:
+			FontStyle: 应用于GUI texts、TextMeshes或GUI styles的字体类型
+			HorizontalWrapMode： 折叠模式
+			ImagePosition: 图文排列
+			ScaleMode： 画图的scaling模式
+			
+			TextAlignment： 文本alignment
+			TextAnchor： 文本锚点
+			TextClipping：文本溢出处理
+			
+			VerticalWrapMode: 文本临近边界的折叠模式
+		IMGUI System：
+			FocusType： 聚焦类型
+			
+	FFT Window：光谱分析窗口类型：
+	FilterMode：贴图的滤波器模式
+	FindObject:
+		FindObjectsInactive: 查找未激活对象
+		FindObjectsSortMode: 查找结果排列模式
+	procedural:
+		ProceduralCacheSize: [obsolete]
+		ProceduralLoadingBehavior:[obsolete]
+		ProceduralOutputType:[obsolete]
+		ProceduralProcessorUsage:[obsolete]
+		ProceduralPropertyType:[obsolete]
+		
+	渲染：
+		RenderingPath: Camera的渲染路径：UsePlayerSettings, VetexLit,Forward,DeferredLighting,DeferredShading
+		RenderMode: 幕布渲染模式：[ScreenSpaceOverlay,ScreenSpaceCamera,WorldSpace]
+		RenderTextureCreationFlags: 设置贴图类型[mipmap,autogeneratemips,SRGB,EyeTexture,EnableRandomWrite,CreatedFromScript,AllowVerticalFlip,NoResolvedColorSurface,DynamicallyScalable,BindMS]
+		RenderTextureFormat: RT的格式
+		RenderTextureMemoryless：RT少内存模式
+		RenderTextureReadWrite：RT的色彩空间转换模式
+		效果：
+			FogMode：雾模式[Linear / Exponential / ExponentialSquared]
+		Mesh：
+			LODFadeMode：LOD设置
+			MeshTopology: Mesh面元的拓扑:[Triangles,Quads,Lines,LineStrip,Points]
+		材质球：
+			MaterialGlobalIlluminationFlags：材质如何与lightmaps和light反射求进行交互[None,RealtimeEmissive,BakedEmissive,EmissivesBlack,AnyEmissive]
+		阴影：
+			ShadowmaskMode： 阴影遮罩设置
+			ShadowObjectsFilter： 在shadow pass中可使用的滤波器
+			ShadowProjection：	质量设置中的阴影投影类型
+			ShadowQuality： 
+			ShadowResolution
+		光照：
+			LightmapBakeType: 描述烘焙类型[Realtime / Baked / Mixed]
+			LightmapCompression: 压缩质量设置[None / LowQuality / Normal Quality / HighQuality]
+			LightmapsMode: 构建模式
+			LightmapsModeLegacy：Single,dual,directional lightmaps渲染模式，只用GIWorkflowMode.Legacy
+			LightRenderMode：光照如何渲染[Auto,ForcePixel,ForceVertex]
+			LightShadowCasterMode:当ShadowMasks存在时，允许混合光照控制阴影裁剪；
+			LightShadows：光照的阴影设置
+			LightShape：光照形状: Cone / Pyramid / Box
+			LightType: 光照类型
+			LineAlignment：当使用LineRender或TrailRenderer时，控制朝向
+			LineTextureMode：选择纹理如何应用到lines和trails
+			MixedLightingMode:在混合光照中使用的光照模式[IndirectOnly,Shadowmask,Subtractive]
+			ReceiveGI: 目标场景设置了GI，才会生效：Lightmaps,LightProbes
+	地形：
+		TerrainChangedFlags：地形修改时的回调
+		TerrainRenderFlags：地形渲染枚举值
+		TerrainHeightmapSyncControl：地形高度图同步控制
+		
+	初始形状类型：
+		PrimitiveType：sphere,capsule,cylinder,cube,plane,quad
+	ParticleSystem:
+		ParticleSystemAnimationMode: Grid / Sprites
+		ParticleSystemAnimationRowMode: 选择动画行
+		ParticleSystemAnimationTimeMode：控制animation frames如何选择[Lifetime,Speed,FPS]
+		ParticleSystemAnimationType: 动画类型-WholeSheet / SingleRow
+		ParticleSystemColliderQueryMode: 判断碰撞信息[ParticleSystem::GetTriggerParticles]是否可行
+		ParticleSystemCollisionMode: 是否使用2D/3D粒子碰撞体
+		ParticleSystemCollisionQuality：世界碰撞的质量{Quality of world collision: medium,high,low }
+		ParticleSystemCollisionType: 指定particle system的碰撞类型
+		ParticleSystemCullingMode： 粒子特效离屏时裁切模式
+		ParticleSystemCurveMode：粒子曲线模式
+		ParticleSystemCustomData：自定义粒子数据设置
+		ParticleSystemCustomDataMode：自定义生成数据的模式
+		ParticleSystemEmissionType：[obsolete] 粒子发射模式
+		ParticleSystemEmitterVelocityMode：粒子系统计算速度的方式
+		ParticleSystemForceFieldShape： 影响特效的形状设置
+		ParticleSystemGameObjectFilter：特定粒子系统的粒子对象滤波器[LayerMask,List,LayerMaskAndList]
+		ParticleSystemGradientMode: 粒子梯度模式[Color,Gradient,TwoColors,TwoGradient,RandomColor]
+		ParticleSystemInheritVelocityMode: 应用发射器速度到粒子的方式
+		ParticleSystemMeshDistribution：设置分配mesh到粒子的方法
+		ParticleSystemMeshShapeType： mesh发射类型[Vertex / Edge/ Triangle]
+		ParticleSystemNoiseQuality:  生成噪声的质量
+		ParticleSystemOverlapAction：粒子触发器的操作:[ignore,Kill,Callback]
+		ParticleSystemRenderMode: 粒子系统的渲染模式
+		ParticleSystemRenderSpace：粒子在渲染时如何aligned
+		ParticleSystemRingBufferMode：粒子如何从粒子系统中移除[disabled,pauseuntilreplaced,loopuntilreplaced]
+		ParticleSystemScalingMode: 粒子系统如何应用transform scale
+		ParticleSystemShapeMultiModeValue：模型中生成新points的模式
+		ParticleSystemShapeTextureChannel：纹理通道
+		ParticleSystemShapeType：发射形状
+		ParticleSystemSimulationSpace：粒子系统模拟空间[Local,World,Custom]
+		ParticleSystemSortMode: 粒子系统的排序模式
+		ParticleSystemStopAction：粒子系统暂停时的操作[None,Disable,Destroy,Callback]
+		ParticleSystemStopBehavior: 当stop时，应用的行为[StopEmittingAndClear / StopEmitting]
+		ParticleSystemSubEmitterProperties: sub-emitter粒子的属性
+		ParticleSystemSubEmitterType：新粒子的行为事件{Birth,Collision,Death,Trigger,Manual}
+		ParticleSystemTrailMode: 选择Particle trails是如何生成的[PerParticle,Ribbon]
+		ParticleSystemTrailTextureMode: 应用textures如何应用到Particle Trails；
+		ParticleSystemTriggerEventType：特效触发的不同类型{inside,outside,enter,exit}
+		ParticleSystemVertexStream: 所有可能的粒子系统vertex shader输入
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/ParticleSystemVertexStream.html
+		ParticleSystemVertexStreams：[obsolete]
+	IME：输入法编辑器
+		IMECompositionMode：控制IME模式 [Auto / On / Off]
+	Network：
+		NetworkConnectionError：[obsolete]
+		NetworkDisconnection: [obsolete]
+		NetworkLogLevel:[obsolete]
+		NetworkPeerType:[obsolete]
+		NetworkReachability:网络可达选项[NotReachable,ReachableViaCarrierDataNetwork,ReachableViaLocalAreaNetwork]
+		NetworkStateSynchronization:[obsolete]
+		RPCMode[obsolete]
+	物理：
+		PhysicMaterialCombine：描述碰撞物体的物理材质是如何合并的
+		PhysicsShapeType2D：2D物理[Circle,Capsule,Polygon,Edges]
+		SimulationMode2D：2D物理
+		QueryTriggerInteraction: [UseGlobal,Ignore,Collider]
+	消息传递：
+		SendMessageOptions：如何传输消息；SendMessage & BroadcastMessage in GameObject & Component.
+	
+	
+	Sprite： 2D对象 https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Sprite.html
+		SpriteAlignment
+		SpriteDrawMode
+		SpriteMaskInteraction
+		SpriteMeshType
+		SpritePackingMode
+		SpritePackingRotation
+		SpriteSortPoint
+		SpriteTileMode
+Classes：

@@ -1,0 +1,64 @@
+Attibutes:
+	<CoreModule>
+		AddComponentMenu
+		AssemblyIsEditorAssembly: Assembly level attribute
+		BeforeRenderOrderAttribute: 针对Application.onBeforeRender可自定义callback
+		ColorUsageAttribute: 颜色picker
+		ContextMenu
+		...
+Enumarations:
+	AdditionalCanvasShaderChannels
+Classes:
+	<InputLegacyModule>
+		AccelerationEvent
+Interfaces:
+	IAnimationClipSource
+	ICanvasRaycastFilter
+	IExposedPropertyTable
+	ILogger
+	ILogHandler
+	ISerializationCallbackReceiver
+	ISubsystem：补充Subsystem和IntegratedSubsystem的补充接口
+	ISubsystemDescriptor: 子系统描述子是在加载或初始化子系统的元数据
+Assemblies:
+	UnityEngine.AIModule
+	UnityEngine.AndroidJNIModule
+	UnityEngine.AnimationModule
+	UnityEngine.AssetBundleModule
+	UnityEngine.AudioModule
+	UnityEngine.ClothModule
+	UnityEngine.CoreModule
+	UnityEngine.DirectorModule
+	UnityEngine.GameCenterModule
+	UnityEngine.ImageConversionModule
+	UnityEngine.IMGUIModule
+	UnityEngine.InputLegacyModule
+	UnityEngine.JSONSerializeModule
+	UnityEngine.NVIDIAModule
+	UnityEngine.ParticleSystemModule
+	UnityEngine.Physics2DModule
+	UnityEngine.PhysicsModule
+	UnityEngine.ScreenCaptureModule
+	UnityEngine.SharedInternalsModule
+	UnityEngine.SubsystemsModule
+	UnityEngine.TerrainModule
+	UnityEngine.TerrainPhysicsModule
+	UnityEngine.TextRenderingModule
+	UnityEngine.TilemapModule
+	UnityEngine.TLSModule
+	UnityEngine.UIElementsModule
+	UnityEngine.UIModule
+	UnityEngine.UmbraModule
+	UnityEngine.UnityAnalyticsModule
+	UnityEngine.UnityWebRequestAssetBundleModule
+	UnityEngine.UnityWebRequestAudioModule
+	UnityEngine.UnityWebRequestModule
+	UnityEngine.UnityWebRequestTextureModule
+	UnityEngine.UnityWebRequestWWWModule
+	UnityEngine.VehiclesModule
+	UnityEngine.VideoModule
+	UnityEngine.VirtualTexturingModule
+	UnityEngine.VRModule
+	UnityEngine.WebGLModule
+	UnityEngine.WindModule
+	UnityEngine.XRModule

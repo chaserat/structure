@@ -1,5 +1,58 @@
-新特性
-
-packages
-
-最佳实践向导
+3D 空间声音，实时混合和mastering；等级混合、截图和预定义效果
+	Audio overview
+	Audio files
+		PCM / ADPCM / specific platform formats
+		长度、channel数量、和sample rate
+	Tracker modules
+		.it / .s3m / .xm / .mod
+		使用Tracker模块的优点：大型文件下载是个问题
+		流行插件：Milky Tracker for OSX / OpenMPT for Windows;
+	Audio mixer
+		Audio Mixer Groups: signal chain使用音量衰减和pitch correction | webGL不支持audio mixer
+		Snapshots / Ducking / Views
+			Routing and Mixing: 应用ambience的衰减：：：触发lowpass filter{foley sounds：用于模拟水下}
+			除了菜单音和交互声音，衰减所有的声音；
+			减少枪和爆炸声的音量等
+			Moods and Themes of the Mix
+			Global Mix：
+			Snapshots：截图令你截取Audio Mixer的状态，在(game processes)多个状态间进行切换{
+				Volume、Pitch、send level、wet mix level、effect paramters
+			}
+		Specifies on the Audio mixer
+		AudioGroup inspector
+			Inspector Header：Copy all effect settings to all snapshots/Toggle CPU usage display
+			Pitch Slider / Attenuation Unit / Effect Units / Send Units / Receive Units / Duck Volume Units/ 
+			Common Options:
+				Gear options: allow wet mixing, bypass, copy effect settings to all snapshots, add effect before,
+				add effect afer,remove the effect
+				Wet Mixing: 应用Wet Mixing 在DSP 效果上，{DSP effect unity：Digital Signal Processing}
+				Exposed Parameters: Pitch / Volume / Send Level and Wet Level / Transition Overrides: 迁移覆盖
+					Audi Mixer inspector: 
+				Overview & API:https://docs.unity3d.com/2021.3/Documentation/Manual/AudioMixerUsage.html
+	Native audio plugin SDK
+		What are all these files[ Instatiating the plug-in / which plug-in to load on which platform{Plug-ins with custom GUIs}]
+		Audio Sptializer SDK: 提供了控制audio从audio source到surrounding space的能力；{Head-Related Transfer Function[::基于 KEMAR data set -> IRCAM's data sets]}
+			flags(bit-field)用于控制audio spatializer
+			Spatializer effect meta-data：
+			Matrix conventions
+			Attenuation curves and audibility:
+				Known limitations of the example plugin: overlap-save convolution or cross-fading buffers 
+	Audio profiler
+	Ambisonic audio： 环绕声技术
+		audio skybox for distant aambient sounds; 且对360度的视频和应用是有用的
+		Selecting an ambisonic audio decoder
+		Importing an ambisonic audio clip
+		Playing the ambisonic audio clip through an audio source
+			Audio source -> audio clip
+			Develop an ambisonic audio decoder: audio spatializer{}
+	Audio reference： 
+		Audio Clip:
+		Audio Listener
+		Audio Source
+		Audio Mixer
+		Audio Filter:
+			Low Pass Filter / 
+		Audio Effects
+		Reverb Zones
+		Microphone
+		Audio Settings
