@@ -58,6 +58,31 @@
 		Behaviour：<components,UnityEngine.CoreModule>
 			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Behaviour.html
 
+		MonoBehaviour:<Behaviour,CoreModule>:基础类
+			选择函数：Start(),Update(),FixedUpdate,LateUpdate,OnGUI,OnDisable,OnEnable
+			属性：runEditMode,useGUILayout
+			公用方法: CancelInvoke,Invoke,InvokeRepeating,IsInvoking,StartCoroutine,StopAllCoroutines,StopCoroutine,
+			静态类：print
+			消息类：
+				Awake,FixedUpdate,LateUpdate,Start,Update,
+				OnGUI,
+				OnAnimatorIK,OnAnimatorMove,
+				OnApplicationFocus,OnApplicationPause,OnApplicationPause,OnApplicationQuit,OnAudioFilterRead,
+				OnBecameInvisible,OnCollisionEnter2D,OnCollisionExit,OnCollisionExit2D,OnCollisionStay,OnCollisionStay2D,
+				OnConnectedToServer,OnDisconnectedFromServer,OnMasetrServerEvent,....
+				OnControllerColliderhit,
+				OnDrawGizmos,OnDrawGizmosSelected,
+				OnDestroy,OnDisable,OnEnable,
+				OnFailedToConnect,OnFailedToConnectToMasterServer,
+				OnJointBreak,OnJointBreak2D,
+				OnMouseDown,OnMouseDrag,OnMouseEnter,OnMouseExit,OnMouseOver,OnMouseUp,OnMouseUpAsButton,
+				OnNetworkInstantiate,OnSerializeNetworkView,OnServerInitialized,
+				OnParticleCollision,OnParticleSystemStopped,OnParticleTrigger,OnParticleUpdateJobScheduled,
+				OnPlayerConnected,OnPlayerDisconnected,
+				OnPostRender,OnPreCull,OnPreRender,OnRenderImage,OnRenderObject,OnWillRenderObject,
+				OnTransformChildrenChanged,OnTransformParentChanged,
+				OnTriggerEnter,OnTriggerEnter2D,OnTriggerExit,OnTriggerExit2D,OnTriggerStay,OnTriggerStay2D,
+				OnValidate,Reset,
 		Subsystem:<SubsystemsModule,ISubsystem>
 			属性：running
 			公用方法：Destroy,Start,Stop
@@ -130,6 +155,9 @@
 			Vector3Int:<CoreModule>
 			Vector4:<CoreModule>
 
+			PropertyName：<CoreModule>
+				描述属性类，表示string的int
+
 		网络问题: 
 			WWW:<CustomYieldInstruction,UnityWebRequestWWWModule>： 设置
 			WWWForm:<UnityWebRequestWWWModule>
@@ -138,6 +166,34 @@
 				Constructors：
 				公用方法：
 					AddBinaryData,AddField
+			Ping：<CoreModule>：：：：Ping任意IP address
+
+			RemoteSettings： <UnityAnalyticsModule>
+
+		MESC：
+			QualitySettings：质量设置
+
+			Plane<CoreModule>:3D场景的平面表示
+
+			PlayerPrefs:<CoreModule>::::存储用户偏好设置
+			PlayerPrefsException：<CoreModule>::::用户偏好设置的PlayerPrefs的类
+			Pose：<CoreModule>::::位置、旋转在3D空间中的表示
+
+			ProceduralMaterial:<Material>::::Obsolete
+			ProceduralPropertyDescription：obsolete
+			ProceduralTexture::::removed
+
+			投影：
+				Ray<CoreModule>
+
+			Rect:
+			RectInt:
+			RectOffset:
+			RectTransform:
+			RectTransformUtility:
+
+			RefreshRate:刷新频率
+
 
 	项目设置：
 		Resolution: <CoreModule> 显示器分辨率
@@ -220,6 +276,20 @@
 		Matrix4x4：标准4x4 transformation matrix
 			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Matrix4x4.html
 
+		Quaternion<CoreModule>
+
+		Random<CoreModule>
+
+		RangeInt<CoreModule>
+
+
+
+	遮罩：
+		OcclusionArea：<Component,CoreModule>遮罩区域[occlusion culling]
+		OcclusionPortal:<Component,CoreModule> 运行时动态更新occlusion
+
+
+
 配置项：
 	音频设置：
 		AudioChorusFilter：<Behaviour,AudioModule>: 创建Audio Clip，处理产生“合唱”效果
@@ -252,6 +322,9 @@
 		WebCamTexture:<Texture,AudioModule>
 			WebCam Texture是live video输入渲染的对象
 
+		Microphone:<AudioModule>
+			静态属性：devices
+			静态方法：End,GetDevicesCaps,GetPosition,isRecording,Start
 
 
 	平台交互：<交互可优化点>
@@ -314,6 +387,9 @@
 				Constructor:
 			AnimationInfo:[Removed]
 			AnimationState:运行时可修改
+
+			Motion:<Object,AnimationModule> :Animationclips和blendTrees的基础类
+			MovieTexture: [Removed]
 
 			Keyframe： 关键帧
 		animator:
@@ -395,6 +471,13 @@
 			公用方法：UnloadTile,UpdateTile,UpdateTileRaw
 
 	物理：<PhysicsModule>
+
+		Physics：<PhysicsModule>
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Physics.html
+			静态属性：
+			静态方法：
+			事件：
+
 		Joint:<Component,PhysicsModule>:所有节点的基础类
 			属性：anchor,autoConfigureConnectedAnchor,axis,
 				breakForce,breakTorque,
@@ -445,6 +528,22 @@
 		WheelFrictionCurve：<PhysicsModule>
 			描述：轮胎的摩擦属性(wheel collider)
 			属性: asymptoteSlip，asymptoteValue，extremumSlip，extremumValue，stiffness
+
+		ModifiableContactPair：<PhysicsModule> 获取contacts buffer
+		ModifiableMassProperties:<PhysicsModule> 修改质量属性
+
+		PhysicMaterial：<PhysicsModule>::::物理材质描述如何处理碰撞体[friction,bounciness]
+			静态属性：
+			静态方法：
+			事件：
+
+		PhysicsScene：<PhysicsModule>::::3D物理场景
+		PhysicsSceneExtensions：<PhysicsModule>::::3D物理场景扩展场景
+
+		RaycastCommand：<PhysicsModule>
+
+		RaycastHit:<PhysicsModule>
+
 
 	UI：
 		文本：
@@ -541,7 +640,17 @@
 		SpriteRenderer：渲染2D图形的Sprite
 
 		SurfaceEffector2D:<Effector2D,Physics2DModule>
-		
+
+		物理：
+			Physics2D：
+			PhysicsJobOptions2D：
+			PhysicsMaterial2D：
+			PhysicsScene2D：
+			PhysicsSceneExtensions2D：
+			PhysicsShape2D：
+			PhysicsShapeGroup2D：
+			PhysicsUpdateBehaviour2D：
+			PlatformEffector2D:
 	3D:
 
 	TerrainModule:
@@ -558,7 +667,11 @@
 		TreeInstance:<TerrainModule>
 			属性：color,heightScale,lightmapColor,position,prototypeIndex,rotation,widthScale
 		TreePrototype:<TerrainModule>
-			属性:bendFactor,navMeshLod,prefab	
+			属性:bendFactor,navMeshLod,prefab
+
+		PatchExtents:<TerrainModule>
+			属性：max,min
+
 
 	Material:
 		Material:<Object,CoreModule>
@@ -571,7 +684,15 @@
 	Skybox:<Behaviour,CoreModule>
 		属性：material
 
-	Mesh:<Object,CoreModule>: 允许创建和修改meshes
+	Mesh:
+		Mesh:<Object,CoreModule>: 允许创建和修改meshes
+			class: MeshData,MeshDataArray
+
+		MeshCollider:<Collider,PhysicsModule>
+
+		MeshFilter:<Component,CoreModule>
+
+		MeshRenderer:<Renderer,CoreModule>
 
 		LOD：
 			LOD： <CoreModule>
@@ -584,8 +705,14 @@
 				属性：billboard
 			BitStream:[obsolete]<CoreModule> 将BitStream类序列化，打包仅stream
 
+
+
 	渲染基础类：
 		Renderer:
+			RenderBuffer：<CoreModule>
+
+			
+
 			Renderer:<Components,CoreModule>：产生渲染的所有函数类
 				属性：allowOcclusionWhenDynamic,bounds,enabled,forceRenderingOff,isPartOfStaticBatch,isVisible,
 					lightmapIndex,lightmapScaleOffset,lightProbeProxyVolumeOverride,lightPribeUsage,
@@ -683,6 +810,15 @@
 				SetKeyword,WarmupAllShaders
 		ShaderVariantCollection:<Object,CoreModule>
 			ShaderVariant:<CoreModule>:keywords,passType,shader
+
+	特效：<ParticleSystemNodule>
+		ParticleSystem<Component,>
+		ParticleCollisionEvent：<,>
+		ParticlePhysicsExtensions:<,>
+		ParticleSystemForceField<Behaviour,>
+		ParticleSystemRenderer<Renderer,*>
+
+
 	
 	光照设置：
 		Light：<Behaviour,CoreModule>
@@ -719,6 +855,13 @@
 			事件：needsRetetrahedralization，tetrahedralizationCompleted
 		LineRenderer：<Renderer,CoreModule> 3D 空间中的画 free-floating lines
 		LineUtility: <CoreModule> 通用line函数的集合； 静态方法：Simplify
+
+		ReflectionProbe:<Behaviour,CoreModule>
+
+
+未知类：
+		Projector<Behaviour,CoreModule>: project任意材质到场景中
+
 
 
 扩展业务：
