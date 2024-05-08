@@ -1,0 +1,734 @@
+流程/架构类：
+	系统架构：
+		Application: 获取运行时数据 https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Application.html
+		包含查找信息的静态方法和控制运行时的数据
+			静态属性：
+				判断是否修改：genuine，genuineCheckAvailable,
+				路径和版本；
+			静态方法：
+				CanStreamedLevelBeLoaded：：：：GetStreamProgressForLevel-该方式是否可加载
+				GetBuildTags：返回特征标签
+				GetStackTraceLogType：  log类型
+				HasProLicense： unity激活Pro许可证
+				HasUserAuthorization：用户授权使用webcam或麦克风
+				IsPlaying：若buildplayer或Play mode
+				OpenURL：
+				Quit：退出player application
+				RequestAdvertisingIdentifierAsync：请求advertising ID
+				RequestUserAuthorization：授权请求
+				SetBuildTags：设置build标签
+				SetStackTraceLogType：设置堆栈信息日志类型
+				Unload： 写在UnityPlayer
+			事件：
+				deepLinkActivated：使用deep link URL
+				focusChanged： 定义委托用于登记events[focus gained or lost]
+				logMessageReceived: 收到log message
+				logMessageReceivedThreaded：线程中收到log message
+				lowMemory: 触发low memory event
+				quitting: 当player应用退出的时候的事件
+				unloading： Player卸载时的事件
+				wantsToQuit:
+
+				onBeforeRender：只进行VR设备的委托-"Just Before Render"
+
+			委托：
+				AdvertisingIdentifierCallback：获取advertisingID的委托方法
+				LogCallback：委托类回调
+				LowMemoryCallback：low memory的移动设备提醒的委托方法
+
+		SystemInfo:
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/SystemInfo.html
+
+	Unity基础类架构：
+		UnityEngine.Object:
+			属性：hideFlags,name
+			公用方法：GetInstanceID，ToString
+			静态方法：Destroy,DestroyImmediate,DontDestroyOnLoad,FindAnyObjectByType,FindFirstObjectByType,FindObjectOfType,FindObjectByType,FindObjectsOfType,Instantiate
+			操作子：(bool)是否存在,!=,==
+
+		Component:<Object,CoreModule>
+			关联到GameObject的基础组件类
+			属性：gameObject,tag,transform
+			公共方法：
+				BroadcastMessage,CompareTag,
+				GetComponent,GetComponentInChildren<>,GetComponentInParent,GetComponents,GetComponentsInChildren,GetComponentsInParent,TryGetComponent
+				SendMessage,SendMEssageUpwards
+
+
+		Behaviour：<components,UnityEngine.CoreModule>
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Behaviour.html
+
+		Subsystem:<SubsystemsModule,ISubsystem>
+			属性：running
+			公用方法：Destroy,Start,Stop
+		SubsystemDescriptor：<SubsystemsModule,ISubsystemDescriptor>
+			属性：id,subsystemImplementationType
+
+		SubsystemManager:<SubsystemsModule>
+
+		AsyncOperation:<YieldInstruction,CoreModule>异步操作类
+			属性：
+				allowSceneActivation:场景一旦完成，即可激活
+				isDone: 操作是否完成
+				priority：异步操作的优先级
+				progress：操作的进程
+			事件：
+				completed：操作同步完成的事件
+
+		YieldInstruction:<CoreModule>
+			描述：yield指令集的基础类
+
+		资源：
+			资源bundle：
+				AssetBundle:<Object,AssetBundleModule>
+					静态属性：memoryBudgetKB 共享AssetBundle加载缓存的大小，默认为1MB
+					属性： isStreamedSceneAssetBundle，是否是一个流式场景assetbundle
+					公用方法：
+						Contains,GetAllAssetNames,GetAllScenePaths,LoadAllAssets,LoadAllAssetsAsync,LoadAssets,LoadAssetWithSubAssets,LoadAssetWithSubAssetsAsync,Unload,UnloadAsync
+					静态方法：
+						GetAllLoadedAssetBundles,LoadFromFile,LoadFromFileAsync,LoadFromMemory,LoadFromMemoryAsync,LoadFromStream,LoadFromStreamAsync,RecompressAssetBundleAsyncs,UnloadAllAssetBundles
+				AssetBundleCreateRequest：<AsyncOperation,AssetBundleModule>
+				AssetBundleManifest:<Object,AssetBundleModule> -> 获取所有的Bundle信息
+				AssetBundleRecompressOperation：<AsyncOperation,AssetBundleModule> 异步重新压缩
+					属性：humanReadbleResult,inputPath,outputPath,result,success
+				AssetBundleRequest:<ResourceRequest,AssetBUndleModule> 从assetbundle中异步加载
+					属性：allAssets,asset
+			资源加载：
+				ResourceRequest：<AsyncOperation,CoreModule>: 从bundle中加载出asset
+				Resources:<CoreModule>
+				ResourcesAPI:<CoreModule>: 资源获取的API <-- 特定Resources方法
+
+		社交属性类：
+			Social:<GameCenterModule>:特定社交平台的implementation
+				静态属性：Active,localUser
+				静态方法：
+					CreateAchievement,CreateLeaderboard,LoadAchievementDescriptions,LoadAchievements,LoadScores,LoadUsers,ReportProgress,ReportScore,
+					ShowAchievementsUI,ShowLeaderBoardUI
+
+
+		ScriptableObject:
+			ScriptableObject:<Object,CoreModule>
+				静态方法：CreateInstance
+				消息：Awake,OnDestroy,OnDisable,OnEnable,OnValidate,Reset
+
+		关键设置项：
+			LayerMask:32 layerMask设置
+
+			Batch:
+				StaticBatchingUtility：<CoreModule>:
+					static batching： https://docs.unity3d.com/2021.3/Documentation/ScriptReference/StaticBatchingUtility.html
+
+			StreamingController：<Behaviour>
+				属性：streamingMipmapBias: 应用mipmap level
+				公共方法：
+					CancelPreloading,IsPreloading,SetPreloading
+
+		基础结构类：
+			Vector2:<CoreModule>
+			Vector2Int:<CoreModule>
+			Vector3:<CoreModule>
+			Vector3Int:<CoreModule>
+			Vector4:<CoreModule>
+
+		网络问题: 
+			WWW:<CustomYieldInstruction,UnityWebRequestWWWModule>： 设置
+			WWWForm:<UnityWebRequestWWWModule>
+				使用UnityWebRequest或WWW类
+				属性：data,headers
+				Constructors：
+				公用方法：
+					AddBinaryData,AddField
+
+	项目设置：
+		Resolution: <CoreModule> 显示器分辨率
+
+		Screen: <CoreModule>
+			使用显示器信息的provides
+		ScreenCapture:<ScreenCaptureModule> ;获取屏幕截图
+			StereoScreenCaptureMode -> LeftEye,RightEye,BothEyes
+
+		SleepTimeout：<CoreModule> 熄屏时间
+
+	事件：
+		AccelerationEvent:<InputLegacyModule> 描述设备加速状态的结构
+
+		wait:
+			WaitForEndOfFrame:<YieldInstruction,CoreModule>
+				等待当前帧渲染完成，显示前的最后一帧
+			WaitForFixedUpdate：<YieldInstruction,CoreModule>
+				下一个fixed frame rate更新函数
+			WaitForSeconds：<YieldInstruction,CoreModule>
+				挂起协程才做指定时间
+			WaitForSecondsRealtime：<CustomYieldInstruction,CoreModule>
+				挂起协程,使用unscaled time；
+			WaitUntil：<CustomYieldInstruction,CoreModule>
+				挂起协程直到委托类型为true
+			WaitWhile：<CustomYieldInstruction,CoreModule>
+				挂起，直到类型为false
+
+	缓存：
+
+	消息类：
+		JsonUtility：处理JSON data类
+
+	MESC:
+
+		LazyLoadReference<T0>: <CoreModule>
+			序列化lazy reference到UnityEngine.Object
+			属性：asset,instanceID,isBroken,isSet
+			Constructor：
+			Operators：
+				LazyLoadReference<T> <- asset reference / instance ID
+
+		LocalizationAsset: <Object>特定定位
+		LocationInfo:<InputLegacyModule>:描述设备定位信息
+		LocationService：<InputLegacyModule> 允许获取设备定位信息
+
+		日志：
+			Logger:<ILogger,ILogHandler,CoreModule>
+				属性：filterLogType,logEnabled,logHandler
+				Constructors：logger
+				公共方法：
+					IsLogTypeAllowed,Log,LogError,LogException,LogFormat,LogWarning
+
+		Time:<CoreModule>
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Time.html
+
+		Touch:<InputLegacyModule>：finger触摸屏幕的状态结构
+			属性：
+				角度[altitude,azimuth],
+				deltaPosition,
+				deltaTime,
+				fingerId,
+				maximumPossiblePresure,
+				phase,position,pressure,radius,radiusVariance,rawPosition,
+				tapCount,
+				type：值用于表示触摸是否时直接的、简洁的、stylus类的
+		TouchScreenKeyboard:<CoreModule>: on-screen keyboards
+			class: Android::consumesOutsideTouches
+			enumerations: Status[Visible,Done,Canceled,LostFocus] on-screen键盘状态
+
+		Wait:
+
+	计算类：
+		Mathf:<CoreModule>
+			数学函数
+
+		Snapping：<CoreModule>
+			静态方法：Snap:四舍五入
+
+		Matrix4x4：标准4x4 transformation matrix
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Matrix4x4.html
+
+配置项：
+	音频设置：
+		AudioChorusFilter：<Behaviour,AudioModule>: 创建Audio Clip，处理产生“合唱”效果
+		AudioClip： 音频数据的容器
+		AudioConfiguration: <AudioModule>[dspBufferSize,numRealVoices,numVirtualVoices,sampleRate,speakerMode]
+		AudioDistortionFilter:<Behavior,AudioModule>: distortionLevel
+		AudioEchoFilter:<Behaviour,AudioModule>:回响滤波器[decayRatio,delay,dryMix,wetMix]
+		AudioHighPassFilter:<Behaviour,AudioModule>:高通滤波器
+		AudioListener:<Behaviour,AudioModule>:3D空间的接收器：
+			静态属性：pause，volume
+			属性：velocityUpdateMode
+			静态方法：GetOutputData,GEtSpectrumData
+		AudioLowPassFilter:<Behaviour,AudioModule>低通滤波
+		AudioRenderer:<AudioModule> 在AudioMixer中允许记录game或特定组的输出
+		AudioReverbFilter:<Behaviour,AudioModule>混响滤波器
+		AudioReverbZone：<Behaviour,AudioModule>混响域
+		AudioSettings：
+			属性：driverCapabilities,dspTime,outputSampleRate,speakerMode
+			静态方法：GetConfiguration,GetDSPBufferSize,GetSpatializerPluginBame,GetSpatializerPluginNames,Reset,SetSpatializerPluginName
+			事件：OnAudioConfigurationChanged
+			委托：AudioConfigurationChangeHandler
+			类：
+				Mobile: 静态属性、静态方法、事件
+		AudioSource:<Behaviour,AudioModule>
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/AudioSource.html
+
+		WebCamDevice：<AudioModule> 描述webcam设备的结构体
+			属性：availableResolutions,depthCameraName,isAutoFocusPointSupported,isFrontFacing,kind,name
+
+		WebCamTexture:<Texture,AudioModule>
+			WebCam Texture是live video输入渲染的对象
+
+
+
+	平台交互：<交互可优化点>
+		<InputLegacyModule>
+			AndroidInput：off-screen touch input[static properties | static methods]
+		<AndroidJavaObject,AndroidJNIModule>
+			AndroidJavaClass: java.lang.Class
+				公用方法：
+					Call： 在object上调用Java方法
+					CallStatic：在类上调用静态Java类
+					CloneReference：创建一个C# object，指向同一个Java object
+					Dispose： IDisposable callback
+					Get：非静态-获取对象的阈值
+					GetRawClass：索引raw jclass pointer 到Java class：使用raw JNI函数；
+					GetRawObject：索引原生对象指针到java object；（JNI）
+					GetStatic：对象类的静态域值
+					Set：非静态对象值
+					SetStatic: 对象的静态域值
+			AndroidJavaObject：AndroidJNI.AttachCurrentThread -- 链接当前线程
+			AndroidJavaProxy：可被java接口补充使用，任意java虚拟函数匹配proxy对象将自动传到C# implementation中；
+				API可用于自定义线程，但需要线程首先关联到JVM [AndroidJNI.AttachCurrentThread]
+			AndroidJNI: C#调用Android Java VM到原生JNI接口
+			AndroidJNIHelper：JNI interaction的Helper interface <---- 使用raw JNI函数，需要JNI的高级knowledge
+		<WebGLModule>
+			WebGLInput: captureAllKeyBoardInput,stickyCursorLock
+
+	动画：
+		Transform:<Component,CoreModule>
+			属性：
+				childCount,parent,
+				eulerAngle，forward，rotation,up,worldToLocalMatrix,
+				hasChanged,hierarchyCapacity,hierarchyCount,root,
+				localEulerAngles,localPosition,localRotation,localScale,localToWorldMatrix,position,right,
+				lossyScale,
+			公用方法：
+				DetachChildren,Find,GetChild,GetLocalPositionAndRotation,GetPositionAndRotation,GetSiblingIndex,
+				InveerseTransformDirection,InverseTransformPoint,InverseTransformVector,
+				isChildOf,
+				LookAt,Rotate,RotateAround,
+				SetAsFirstSibling,SetAsLastSibling,SetLocalPositionAndRotation,
+				SetParent,SetPositionAndRotation,SetSiblingIndex,
+				TransformDirection,TransformPoint,TransformVector,Translate
+
+		animation:
+			Animation:<Behaviour,UnityEngine.AnimationModule[https://docs.unity3d.com/2021.3/Documentation/ScriptReference/UnityEngine.AnimationModule.html]>
+				属性：animatePhysics,clip,cullingType,isPlaying,localBounds,playAutomatically,this[string,animation state name],wrapmode
+				公用方法:AddClip,Blend,CrossFade,CrossFadeQueued,GetClipCount,IsPlaying,Play,PlayQueued,RemoveClip,Rewind,Sample,Stop
+			AnimationClip:<Motion,UnityEngine.AnimationModule>
+				属性：empty,events,frameRate,hasGenericRootTransform,hasMotionCurves,hasMotionFloatCurves,hasRootCurves,humanMotion,legacy,length,localBounds,wrapMode
+				Constructors：创建
+				公用方法：AddEvents,ClearCurves,EnsureQuaternionContinuity,SampleAnimation,SetCurve
+			AnimationClipPair:<obsolete>
+			AnimationCurve:<CoreModule>
+				属性：keys，length，postWrapMode,preWrapMode,this[int]
+				Constructor：创建者
+				公用方法：AddKey,Evaluate,MoveKey,RemoveKey,SmoothTangents
+				静态方法：Constant,EaseInOut,Linear
+			AnimationEvent:
+				属性：messageOptions:
+				Constructor:
+			AnimationInfo:[Removed]
+			AnimationState:运行时可修改
+
+			Keyframe： 关键帧
+		animator:
+			Animator:<Behaviour,UnityEngine.AnimationModule>
+				控制Mecanim animation system的接口
+				属性：avatar参数、裁剪模式、层控制、playableGraph、动画参数
+				公用方法：RootMotion，动画融合，获取Behaviour,获取当前Animator信息，获取/设置IK参数，获取/设置层信息，write存储在animator中的默认值
+				静态方法：StringToHash
+			AnimatorClipInfo:
+			AnimatorControllerParameter:[defaultBool,defaultFloat,defaultInt,name,nameHash,type]
+			AnimatorOverrideController: <RuntimeAnimatorController,AnimationModule>
+			AnimatorStateInfo: <UnityEngine.AnimationModule>-当前或者下一个状态
+			AnimatorTransitionInfo：当前transition的信息
+			AnimatorUtility：animtor处理的不同类处理[DeoptimizeTransformHierarchy / OptimizeTransformHierarchy]
+
+			MatchTargetWeightMask:用于判断Animator.MatchTarget的设置
+
+			RuntimeAnimatorController:<AnimationModule>
+
+			StateMachineBehaviour：<ScriptableObject,AnimationModule>
+				可添加到state machine state
+
+
+
+		铰链body：https://zhuanlan.zhihu.com/p/407814020
+			ArticulationBody: logical tree的bodies的物理铰链集合
+			ArticulationDrive： 应用force和torque到链接体上
+			ArticulationJacobian： 节点体hierarchy的稠密JacobianMatrix，尤其是IK
+			ArticulationReducedSpace：自由度数量的internal array的长度
+
+		Avatar:
+			Avatar:<Object,AnimationModule>
+				属性：humanDescription,isHuman,isValid
+			AvatarBuilder:<AnimationModule>
+				静态方法：BuildGenericAvatar,BuildHumanAvatar
+			AvatarMask:<Object,AnimationModule>
+				属性：transformCount
+				Constructors:AvatarMask
+				公用方法：
+					AddTransformPath,GetHumanoidBodyPartActive,GetTransformActive,GetTransformPath,RemoveTransformPath,SetHumanoidBodyPartActive,SetTransformActive,SetTransformPath
+			SkeletonBone:<AnimationModule> -> T-pose
+
+
+	贴图：
+		Texture:<Object,CoreModule>
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Texture.html
+			静态属性：
+				allowThreadedTextureCreation,currentTextureMemory,desiredTextureMemory,GenerateAllMips,nonStreamingTextureCount,nonStreamingTextureMemory,
+				streamingMipmapUploadCount,streamingRendererCount,streamingTextureCount,streamingTextureDiscardUnusedMips,streamingTextureForceLoadAll,streamingTextureLoadingCount,streamingTexturePendingLoadCount,
+				targetTextureMemory,totalTextureMemory
+			属性：
+				anisoLevel,dimension,filterMode,graphicsFormat,height,imageContentsHash,isDataSRGB,isReadable,mipMapBias,mipmapCount,updateCount,width,
+				wrapMode,wrapModeU,wrapModeV,wrapModeW
+			公用方法：
+				GetNativeTexturePtr,IncrementUpdateCount
+			静态方法：
+				SetGlobalAnisotropicFilteringLimits,SetStreamingTextureMaterialDebugProperties
+
+		Texture2D:<Texture,CoreModule>
+			EXRFlags: 控制编码到EXR file
+			ImageConversion:
+		Texture2DArray：<Texture,CoreModule>::::处理2D texture arrays: 
+			静态方法：allSlices
+			属性：depth,format
+			Constructors
+			公用方法：
+				Apply,GetPixelData,GetPixels,GetPixels32,SetPixelData,SetPixels,SetPixels32
+
+		Texture3D:<Texture,CoreModule>
+			属性：depth,format
+			Constructors:
+			公用方法：Apply,GetPixelData,GetPixels,GetPixels32,SetPixelData,SetPixels,SetPixels32;UpdateExternalTexture
+			静态方法: CreateExternalTexture
+
+
+		SparseTexture:<Texture,CoreModule>：：：：处理稀疏纹理
+			属性：IsCreated,tileHeight,tileWidth
+			Constructors:
+			公用方法：UnloadTile,UpdateTile,UpdateTileRaw
+
+	物理：<PhysicsModule>
+		Joint:<Component,PhysicsModule>:所有节点的基础类
+			属性：anchor,autoConfigureConnectedAnchor,axis,
+				breakForce,breakTorque,
+				connectedAnchor,connectedArticulationBody,connectedMassScale,ConnectedBody,
+				currentForce,currentTorque,
+				EnableCollision,enbaleProcessing,
+				massScale:求解约束之前，反质量和惯性张量的比例，使得运动快速收敛
+			消息：OnJointBreak
+		ConfigurableJoint:<Joint,PhysicsModule>:弹性节点使得控制rotation和线性运行
+		JointDrive：节点运动[maximumForce,positionDamper,positionSpring]
+		JointLimits:限制HingeJoint角度
+		JointMotor：motorize a Joint：自动处理[force,freeSpin,targetVelocity]
+		JointSpring：[damper,spring,targetPosition]
+
+		SpringJoint:<PhysicsModule>
+			属性：damper,maxDistance,minDistance,spring,tolerance
+
+		SoftJointLimit：<PhysicsModule>
+			属性：bounciness,contactDistance,limit
+		SoftJointLimitSpring:<PhysicsModule>:弹簧结构-linear & angular
+			属性：damper,spring
+
+		SpherecastCommand:<PhysicsModule>
+			属性：direction,distance,layerMask,origin,physicsScene,radius
+			Constructors:
+			静态方法：ScheduleBatch
+		SphereCollider:<Collider,PhysicsModule>
+			属性：center,radius
+
+		Rigidbody:<Component,PhysicsModule>
+			属性：angularDrag,angularVelocity,centerOfMass,collisionDetectionMode,constraints,detectCollisions,drag,freezeRotation,
+				intertiaTensor,inertiaTensorRotation,
+				interpolation,isKinematic,
+				mass,maxAngularVelocity,maxDepenetrationVelocity,
+				position,rotation,sleepThreshold,solveriterations,solverVelocityIterations,useGravity,velocity,worldCenterOfMass,
+			公用方法：
+				AddExplosionForce,AddForce,AddForceAtPosition,AddRelativeForce,AddRelativeTorque,AddTorque,
+				ClosestPointOnBounds,GetPointVelocity,GetRelativePointVelocity,
+				isSleeping,
+				MovePosition,MoveRotation,
+				ResetCenterOfMass,ResetIntertiaTensor,
+				SetDensity,Sleep,
+				SweepTest,SweepTestAll,
+				WakeUp,
+			事件：
+				OnCollisionEnter，OnCollisionExit，OnCollisionStay
+
+		WheelFrictionCurve：<PhysicsModule>
+			描述：轮胎的摩擦属性(wheel collider)
+			属性: asymptoteSlip，asymptoteValue，extremumSlip，extremumValue，stiffness
+
+	UI：
+		文本：
+			TextAsset:<Object,CoreModule>
+			TextGenerationSettings:<TextRenderingModule>
+			TextGenerator:<TextRenderingModule>
+			TextMesh:<Component,TextRenderingModule>
+
+		UICharInfo:<TexRenderingModule>：：渲染字体信息
+			属性:charWidth,cursorPos
+		UILineInfo:<TexRenderingModule>：：渲染划线信息
+			属性:height,leading,startCharIdx,topY
+		UIVertex:<TexRenderingModule>::被Canvas控制的Vertex类
+			静态属性:simpleVert
+			属性：color,normal,position,tangent,uv0,uv1,uv2,uv3
+
+	网络：
+	
+渲染：
+	2D:
+		AnchoredJoint2D:<Joint2D,Physics2DModule>  
+			-----DistanceJoint2D,HingeJoint2D,SliderJoint2D,SpringJoint2D,WheelJoint2D
+			属性：
+				anchor：object上的锚点[拥有节点组件]
+				autoConfigureConnectedAnchor:链接锚点可自动计算？
+				connectedAnchor：第二个object上节点的锚点
+			继承成员：
+				属性：
+					enabled： 
+					isActiveAndEnabled: GameObject和关联行为被激活或可用
+					gameObject:
+					tag:
+					transform:
+					attachedRigidbody:
+					breakForce:
+					breakTorque:
+					connectedBody:
+					enableCollision:
+					reactionForce: 获取节点的应力[reaction force]
+					reactionTorque: 获取节点的力矩[reaction torque]
+					hideFlags:对象可否被用户隐藏、保存或修改
+					name: object的名字
+				公用方法：
+					BroadcastMessage：通过方法名反射获取方法在所有的children上获取[基于MonoBehaviour]
+					CompareTag: 基于定义的tag并检查对象的tag
+					获取组件类：
+						GetComponent，GetComponentInChildren，GetComponentInParent，GetComponents，GetComponentsInChildren，GetComponentsInParent
+					message：
+						SendMessage：通过方法名调用该game object上monobehaviour的每一个方法
+						SendMessageUpwards：通过方法名调用该game object和每一个ancestor上的所有monobehaviour的方法
+					TryGetComponent：若存在，则获取指定类
+					GetInstanceID，GetReactionForce，GetReactionTorque
+					ToString
+				静态方法：
+					Destroy： 移除GameObject，Component，Asset
+					DestroyImmediate：立即移除
+					DontDestroyOnLoad：当加载一个新的场景，不要摧毁target object
+					FindAnyObjectByType：检索所有的激活加载类
+					FindFirstObjectByType：检索第一个激活加载类
+					FindObjectOfType：
+					FindObjectsByType：
+					FindObjectsOfType：
+					Instantiate：复制对象并返回克隆对象
+				操作子：
+					bool：object是否存在
+					operator(!=): 对象的比较
+					operator(==): 是否指向同一个的对象
+				消息：
+					OnJointBreak2D：当一个Joint2D指向同一个对象的时候，break
+		AreaEffector2D: 应用到area的forces
+			属性:angularDrag,drag,forceAngle,forceMagnitude,forceTarget,forceVariation,useGlobalAngle
+		CompositeCollider2D: <Collider2D,Physics2DModule>
+			GenerationType: 组合Collider集合同步即时更新，当组合碰撞体修改时；更新类型
+			GeometryType：几何类型，轮廓/多边形
+		Joint2D：<Behaviour,Physics2DModule> 节点连接到Rigidbody2D对象的父类
+		JointAngleLimits2D：2D刚体的角度限制
+		JointMotor2D:2D机械化节点
+		JointSuspension2D:
+		JointTranslationLimits2D:
+		Rigidbody2D：
+		TargetJoint2D：
+
+		WheelJoint2D:<AnchoredJoint2D,Physics2DModule>
+
+		Sprite: -- https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Sprite.html
+			SecondarySpriteTexture:<CoreModule> Sprite-based 渲染access
+		SortingLayer：<CoreModule> 层排序，用于设置顺序
+			静态属性：layers  
+			属性：id，name，layer
+			静态方法：
+				GetLayerValueFromID,GetLayerValueFromName,IDToName,IsValid,NameToID
+		SpriteMask:<Renderer>
+			masking sprites 和 particles
+		SpriteRenderer：渲染2D图形的Sprite
+
+		SurfaceEffector2D:<Effector2D,Physics2DModule>
+		
+	3D:
+
+	TerrainModule:
+		Terrain:<Behaviour,TerrainModule>
+		SplatPrototype:<TerrainModule> ：： 使用terrainData的Splat prototype
+			属性：metallic,normalMap,smoothness,texture,tileOffset,tileSize
+		TerrainCallbacks:<TerrainModule>
+		TerrainCollider:
+		TerrainData:
+		TerrainExtensions:
+		TerrainLayer:
+		Tree:<Component,TerrainModule>
+			属性：data,hasSpeedTreeWind
+		TreeInstance:<TerrainModule>
+			属性：color,heightScale,lightmapColor,position,prototypeIndex,rotation,widthScale
+		TreePrototype:<TerrainModule>
+			属性:bendFactor,navMeshLod,prefab	
+
+	Material:
+		Material:<Object,CoreModule>
+			属性：
+				color，doubleSideGI，enabledKeywords,enbaleInstancing,globalIlluminationFlags,
+				manTexture,mainTextureOffset,mainTextureScale,passCount,renderQueue,shader,shaderKeywords
+		MaterialPropertyBlock:应用block of material value::被Graphics.DrawMesh, Renderer.SetPropertyBlock
+			相同的材质画不多个对象
+
+	Skybox:<Behaviour,CoreModule>
+		属性：material
+
+	Mesh:<Object,CoreModule>: 允许创建和修改meshes
+
+		LOD：
+			LOD： <CoreModule>
+			LODGroup:<Component,CoreModule>
+				静态属性：crossFadeAnimationDuration
+				属性：[animateCrossFading,enabled,fadeMode,localReferencePoint,lodCount,size]
+				公共方法:ForceLOD,GetLODs,RecalculateBounds,SetLODs
+			BillboardAsset:<Object,CoreModule> 描述billboard如何渲染；通常建立SpeedTree资产
+			BillboardRenderer：<Renderer,CoreModule> <- 使用相同的BillboardAsset的资产可以合批
+				属性：billboard
+			BitStream:[obsolete]<CoreModule> 将BitStream类序列化，打包仅stream
+
+	渲染基础类：
+		Renderer:
+			Renderer:<Components,CoreModule>：产生渲染的所有函数类
+				属性：allowOcclusionWhenDynamic,bounds,enabled,forceRenderingOff,isPartOfStaticBatch,isVisible,
+					lightmapIndex,lightmapScaleOffset,lightProbeProxyVolumeOverride,lightPribeUsage,
+					localBounds,localToWorldMatrix,
+					material,materials,motionVectorGenerationMode,probeAnchor,
+					rayTracingMode,realtimeLightmapIndex,realtimeLightmapScaleOffset,
+					receiveShadows,reflectionProbeUsage,rendererPriority,renderingLayerMask,shadowCastingMode,staticShadowCaster
+					sharedMaterial,sharedMaterials,
+					sortingLayerID,sortingLayerName,sortingOrder,
+					worldToLocalMatrix
+				公用方法：
+					GetCloseReflectionProbes,GetMaterials,GetPropertyBlock,GetSharedMaterials,HasPropertyBlock,ResetBounds,ResetLocalBounds,SetPropertyBlock
+				消息：
+					OnBecameInvisible,OnBecameVisible
+			RendererExtensions：
+				UpdateGIMaterials[GI系统的UpdateGIMaterials]
+			RenderParams:<CoreModule>
+				属性：
+					camera
+					layer,renderingLayerMask,
+					lightProbeProxyVolume,lightProbeUsage,reflectionProbeUsage,
+					material,matProps,
+					motionVectorMode,
+					receiveShadows,shadowCastingMode,
+					rendererPrority,
+					worldBounds:用于culling和排序
+				Constructors：
+			RenderSettings:<Object,CoreModule>渲染设置：fog，ambient light；
+				静态属性：
+					sun,
+					ambientEquatorColor,ambientGroundColor,ambientIntensity,ambientLight,ambientMode,ambientProbe,ambientSkyColor,
+					customReflection,defaultReflectionMode,reflectionBounces,reflectionIntensity,
+					flareFadeSpeed,flareStrength,
+					fog,fogColor,fogDensity,fogEndDistance,fogMode,fogStartDistance,
+					skybox,
+					subtractiveShadowColor,
+					haloStrength,
+			RenderTargetSetup:<CoreModule>
+				静态属性：
+					color,colorLoad,colorStore,subemapFace,depth,depthLoad,depthSlice,depthStore,mipLevel
+			RenderTexture:<Texture,CoreModule>
+				静态属性:active
+				属性：
+					antiAliasing,autoGenerateMips,bindTextureMS,colorBuffer,
+					depth,depthBuffer,depthStencilFormat,stencilFormat,
+					descriptor,
+					dimension, :::: renderTexture的维度
+					enableRandomWrite,
+					graphicsFormat[RT的颜色模式],sRGB,
+					height，width,
+					memorylessMode,
+					useDynamicScale,
+					useMipMap,
+					volumeDepth, volume extent of a 3D render texture or number of slices of array texture;
+					vrUsage: 指定special rendering mode
+			RenderTextureDescriptor:<CoreModule>
+			ScalableBufferManager:<CoreModule>:若平台支持，则进行设置动态分辨率
+
+		SkinnedMeshRenderer:<Renderer,CoreModule>
+			属性：bones,forceMatrixRecalculationPerRender,quality,sharedMesh,skinnedMotionVectors,updateWhenOffScreen,vertexBufferTarget
+			公用方法：BakeMesh,GetBlendShapeWeight,GetPreviousVertexBuffer,GetVertexBuffer,SetBlendShapeWeight
+
+		TrailRenderer:<Renderer,CoreModule>
+			属性：alignment,autodestruct,
+				colorGradient,emitting,endColor,endWidth,genenrateLightingData,
+				minVertexDistance,numCapVertices,numCornerVertices,
+				positionCount,startColor,startWidth,
+				shadowBias,textureMode,time,widthCurve,widthMultiplier
+
+
+		ComputeBuffer：<System.IDisposable> GPU data buffer，通常用于compute shader；
+			属性：count,name,stride
+			Constructors：ComputeBuffer-创建一个ComputeBuffer
+			公共方法：BeginWrite,EndWrite,GetData,GetNativeBufferPtr,IsValid,Release,SetCounterValue,SetData
+			静态方法：CopyCount
+		ComputerShader:<Object,CoreModule>
+			属性：enabledKeywords,keywordSpace,shaderKeywords
+			公用方法：
+				DisableKeyword,Dispatch,DispatchIndirect,
+				EnableKeyword,IsKeyWordEnabled,
+				FindKernel,GetKernelThreadGroupSize,HasKernel,IsSupported,
+				SetBool,SetBuffer,SetConstantBuffer,SetFloat,SetFloats,SetInt,SetInts,SetKeyword,SetMatrix,SetTexture,SetTextureFromGlobal,SetVector,SetVectorArray
+
+		Shader:<Object,CoreModule>
+			静态属性：enabledGlobalKeywords,globalKeywords,globalMaximumLOD,globalRenderPipeline,maximumChunksOverride[设置unity加载内存的变体块上限]
+			属性：
+				isSupported,keywordSpace,maximumLOD,passCount,renderQueue,subshaderCount
+			公用方法：
+				FindPassTagValue,FindPropertyIndex,FindSubshaderTagValue,FindTextureStack,
+				GetDependency,GetPassCountInSubshader,GetPropertyAttributes,GetPropertyCount,GetPropertyDefaultFloatValue,GetPropertyDefaultVectorValue,GetPropertyDescription,GetPropertyFlags,GetPropertyName,GetPropertyNameId,GetPropertyRangeLimits,GetPropertyTextureDefaultName,GetPropertyTextureDimension,GetPropertyType
+			静态方法：
+				DisableKeyword，EnableKeyword，Find,GetGlobalColor,GetGlobalFloat,GetGlobalFloatArray,GetGlobalInt,GetGlobalInteger,GetGlobalMatrix,GetGlobalMatrixArray,
+				GetGlobalTexture,GetGlobalVector,GetGlobalVectorArray,IsKeywordEnabled,PropertyToID,SetGlobalBuffer,SetGlobalColor,SetGlobalConstantBuffer,SetGlobalFloat,
+				SetGlobalFloatArray,SetGlobalInt,SetGlobalInteger,SetGlobalMatrix,SetGlobalMatrixArray,SetGlobalTexture,SetGlobalVector,SetGlobalVectorArray,
+				SetKeyword,WarmupAllShaders
+		ShaderVariantCollection:<Object,CoreModule>
+			ShaderVariant:<CoreModule>:keywords,passType,shader
+	
+	光照设置：
+		Light：<Behaviour,CoreModule>
+			属性：areaSize,bakingOutput,bounceIntensity,boundingSphereOverride,color,colorTemperature,commandBufferCount,cookie,cookieSize,cullingMask,flare,
+				innerSpotAngle,intensity,layerShadowCullDistances,lightmapBakeType,lightShadowCasterMode,range,renderingLayerMask,renderMode,
+				shadowAngle,shadowBias,shadowCustomResolution,shadowMatrixOverride,shadowNearPlane,shadowNormalBias,shadowRadius,shadowResolution,shadows,shadowStrength,
+				shape,spotAngle,type,useBoundingSphereOverride,useColorTemperature,useShadowMatrixOverride,useViewFrustumForShadowCasterCull
+			公用方法：
+				AddCommandBuffer,AddCommandBufferAsync,GetCommandBuffers,RemoveAllCommandBuffers,RemoveCommandBuffer,RemoveCommandBuffers,Reset,SetLightDirty
+		LensFlare:<Behaviour,CoreModule>
+			属性：brightness,color,fadeSpeed,flare
+		LightBakingOutput:<CoreModule>
+			属性：IsBaked,lightmapBakeType,mixedLightingMode,occlusionMaskChannel,probeOcclusionLightIndex
+		LightingSettings: precomputing lighting data
+			枚举：DenoiserType,FilterMode[None,Auto,Advanced],FilterType[Gaussian,ATrous,None],Lightmapper[Enlighten,ProgressiveCPU,ProgressiveGPU]
+		LightmapData:[lightmapColor,lightmapDir,shadowMask]
+		LightmapSettings:[存储场景的lightmaps]
+		LightProbeGroup:[light probe group]:dering[Editor],probePositions[Editor]
+		LightProbeProxyVolume:<Behaviour,CoreModule> large non-static GameObjects
+			静态属性：
+				isFeatureSupported
+			属性: 
+				Bounding, 
+				dataFormat, gridResolutionX|Y|Z,
+				originCustom,
+				probeDensity,probePositionMode,
+				qualityMode,
+				refreshMode,
+				resolutionMode,sizeCustom
+			公用方法：update
+		LightProbes：所有的当前loaded scenes存储light probe data
+			属性：bakedProbes,cellCount,count,positions
+			静态方法：CalculateInterpolatedLightAndOcclusionProbes,GetInterpolatedProbe,Tetrahedralize,TetrahedralizeAsync
+			事件：needsRetetrahedralization，tetrahedralizationCompleted
+		LineRenderer：<Renderer,CoreModule> 3D 空间中的画 free-floating lines
+		LineUtility: <CoreModule> 通用line函数的集合； 静态方法：Simplify
+
+
+扩展业务：
+	<VehiclesModule>
+		WheelCollider:<Collider,VehiclesModule>
+			https://docs.unity3d.com/2021.3/Documentation/ScriptReference/WheelCollider.html
+		WheelHit
+
+	<WindModule>
+		WindZone:<Component,WindModule>
+			属性: mode,radius,windMain,windPulseFrequency,windPulseMagnitude,windTurbulence
+			constructors
+
