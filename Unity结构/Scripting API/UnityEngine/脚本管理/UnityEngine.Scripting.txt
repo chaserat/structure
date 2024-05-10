@@ -1,0 +1,15 @@
+Attributes:
+	AlwaysLinkAssemblyAttribute:<CoreModule> 代码裁剪时，确保程序集执行
+	PreserveAttribute:<CoreModule> link.xml和PreserveAttribute都可用于Mono和IL2CPP脚本支持
+	RequireAttributeUsagesAttribute：<CoreModule> low和medium 裁剪等级不删除自定义类
+	RequireDerivedAttribute：<CoreModule> 派生类标记
+	RequiredInterfaceAttribute：<CoreModule> 指定类型的接口派生被marked
+	RequiredMemberAttribute：<CoreModule> 当某类型被标记，他所有的成员会被标记
+	RequireImplementorsAttribute：<CoreModule> 当接口类型被标记，所有的接口补充类型也会被标记
+Classes:
+	GarbageCollector：<CoreModule>
+		控制GC类
+		静态属性：GCMode,incrementalTimeSliceNanoseconds,isIncremental
+			GCMode: Disabled,Enbaled,Manual
+		静态方法: CollectIncremental
+		事件：GCModeChanged

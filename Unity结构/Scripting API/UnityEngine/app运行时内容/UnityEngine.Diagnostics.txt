@@ -1,0 +1,8 @@
+Enumerations:
+	ForcedCrashCategory:
+		属性：
+			AccessViolation,FatalError,Aboart,PureVirtualFunction,MonoAbort
+Classes:
+	Utils:
+		静态方法：
+			ForceCrash,NativeAssert,NativeError,NativeWarning

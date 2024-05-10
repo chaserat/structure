@@ -1,0 +1,64 @@
+工程拆解：
+目录：
+	Server:
+	Client:
+		Assets:
+			Resources:
+			XLua:
+			Plugins:
+			StreamingAssets:
+		Packages:
+			Examples:
+				Game:测试启动场景
+				示例资源项目
+	Packages:
+		第三方插件
+		animationJobs：
+			mixer
+			双骨IK
+			全身IK
+		battlehub：
+			运行时逻辑编辑插件
+		bepuphysics：
+			定点数物理插件
+		blocks：
+			运行时蓝图编辑插件
+		kengine：
+			常用基础功能插件
+		nfsdk：
+			网络通信Plugin模式插件
+		qframework:
+			系统设计：
+				MVC,分层，CQRS，事件驱动，数据驱动等
+			数据中转
+		rx-system::
+			响应式编程Unit插件
+		stompyrobot：
+			RunTime Debug/GM插件
+		ecslite：
+			Ecs lite结构
+	Product:
+		目标平台： Android/windows/ios
+		Lua: 运行时脚本目录
+
+	Servers:
+		功能介绍：
+			Master Server 1...N:
+		优点:
+			为游戏部署到每个区域划分为多个区域，使用“Area”属性在服务器.xml文件中设置的；若要
+			专门部署到一个区域，可以将“Area”的值更改为1、2、3,以表示例如美洲、欧盟和亚洲
+		缺点：结构复杂
+		特点：
+			区域部署：适合扩展、负载均衡、插件结构、避免单点故障
+			服务器管理：
+				主服务器、世界服务器、登陆服务器、游戏服务器、代理服务器
+			插件和模块机制：
+				Actor模型用于解决同步阻塞访问的瓶颈
+			直接NoSQL数据库机制：
+				从架构图中看出，游戏服务器直接连接到数据库，没有像前面限制的架构那样使用网关节点
+				NoahGameGrame的一般设计和内部工作原理
+
+结构：：：：
+	Assets；
+	Packages：
+	Plugins：

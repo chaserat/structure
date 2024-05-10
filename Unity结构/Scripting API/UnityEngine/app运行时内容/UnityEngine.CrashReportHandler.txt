@@ -1,0 +1,8 @@
+CrashReportHandler:
+	API for CrashReporting Service
+	静态属性：
+		enbaleCaptureExceptions: 默认enable 截图异常为true
+		logBufferSize：保存最近的 自定义 数量的log message，用于获取crash reports
+	静态方法：
+		GetUserMetadata: 获取用户元数据-获取自定义崩溃日志元数据
+		SetUserMetadata: 设置自定义包含了crash报告的元数据key-value pair

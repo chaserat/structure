@@ -1,0 +1,27 @@
+Enumerations:
+	Folder: Window Store Apps list of accessible
+	TileForeground: 基于secondary文件的前景文本类型
+	TileTemplate: 不同Tile[瓦片]类型的模板
+	ToastTemplate:不同Toast[弹出提示]类型的模板
+	WindowActivationState:
+Classes:
+	Application:<CoreModule>
+		静态属性: advertisingIdentifier，arguments
+		静态方法：InvokeOnAppTHread,InvokeOnUIThread,RunningOnUIThread,RunningOOnAppThread
+		事件:windowActivated,windowSizeChanged
+	Cursor:<CoreModule>
+		静态方法：SetCustomCursor
+	Launcher:<CoreModule>
+		静态方法：LaunchFile,LaunchFileWithPicker,LaunchUri
+	SecondaryTileData:<CoreModule>
+		通知到相同的tile，一些值被使用
+	Tile:<CoreModule>：：：：屏幕上的Windows
+		静态属性：main
+		属性:exists,hasUserConsent,id
+		公用方法:Delete,PeriodicBadgeUpdate,PeriodicUpdate,RemoveBadge,StopPeriodicBadgeUpdate,
+			StopPeriodicUpdate,Update,UpdateBadgeImage,UpdateBadgeNumber
+		静态方法:CreateOrUpdateSecondary,DeleteSecondary,Exists,GetSecondary,GetSecondary,GetTemplate
+	Toast:<CoreModule> 弹窗提示
+		属性：activated,arguments,dismissed,dismissed,dismissedByUser
+		公用方法:Hide,Show
+		静态方法：Create,GetTemplate

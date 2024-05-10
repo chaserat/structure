@@ -1,0 +1,66 @@
+Enumerations:
+	NavMeshBuildDebugFlags
+		BitMask从NavMesh处理流程，操作debug数据
+		属性：
+			None,InputGeometry,Voxels,Regions,
+			RawContours,SimplifiedContours,
+			PolygonMeshes,PolygonMeshesDetail,
+			All
+	NavMeshBuildSourceShape
+		属性：
+			Mesh,Terrain,Box,Sphere,Capsule,ModifierBox
+	NavMeshCollectGeometry
+		属性：
+			RenderMeshes：从渲染几何中收集meshes
+			PhysicsColliders：从3D物理碰撞中收集几何体
+	NavMeshObstacleShape
+		属性:Capsule,Box
+	NavMeshPathStatus
+		属性:PathComplete,PathPartial,PathInvalid
+	ObstacleAvoidanceType：：：：避障等级
+		属性：NoObstacleAvoidance,LowQualityObstacleAvoidance,MedQualityObstacleAvoidance,GoodQualityObstacleAvoidance,HighQualityObstacleAvoidance
+	OffMeshLinkType
+		属性：Link类型： LinkTypeManual[手动指定类型],LinkTypeDropDown[竖直掉落],LinkTypeJumpAcross[水平跳]
+Classes:<AIModule>
+	NavMesh：baked NavMesh的单项类
+		https://docs.unity3d.com/2021.3/Documentation/ScriptReference/AI.NavMesh.html
+	NavMeshAgent：<Behaviour>
+		属性：Navigation mesh agent
+		公用方法：
+			ActivateCurrentOffMeshLink,CalculatePath,CompleteOffMeshLink,FindClosestEdge,GetAreaCost,
+			Move,Raycast,ResetPath,SamplePathPosition,SetAreaCost,
+			SetDestination,SetPath,Warp
+	NavMeshBuildDebugSettings
+		当构建NavMesh时，定义哪些临时数据进行生成
+	NavMeshBuilder
+	NavMeshBuildMarkup
+	NavMeshBuildSettings
+	NavMeshBuildSource
+	NavMeshData
+	NavMeshDataInstance
+	NavMeshHit
+		NavMesh queries的结果信息
+	NavMeshLinkData
+		链接NavMesh的polygons
+	NavMeshLinkInstance
+		寻路的link available实例表示
+	NavMeshObstacle:<Behaviour,AIModule>
+		障碍
+		属性：
+			carveOnlyStationary,carving,carvingMoveThreshold,carvingTimeToStationary,
+			center,height,radius,shape,size,
+			velocity
+	NavMeshPath
+		属性：corners,status
+		constructors：
+		公用方法： ClearCorners,GetCornersNonAlloc[计算路径corner]
+	NavMeshQueryFilter：
+		属性：agentTypeID,areaMask
+		公用属性：GetAreaCost,SetAreaCost
+	NavMeshTriangulation:
+		属性：areas,indices,vertices
+	OffMeshLink:<Behaviour,AIModule>
+		属性：
+			activated,area,autoUpdatePositions,
+			biDirectional,costOverride,
+	OffMeshLinkData

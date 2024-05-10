@@ -1,0 +1,23 @@
+Interfaces:
+	IJobParticleSystem:
+		.Execute
+	IJobParticleSystemParallelFor
+		.Execute
+	IJobParticleSystemParallelForBatch
+		.Execute
+Classes:
+	ParticleSystemJobData<ParticleSystemModule>
+		属性：
+			aliveTimePercent,axisOfRotations,
+			count,customdata1,customData2,
+			inverseStartLifetimes,
+			meshIndices,
+			positions,randomSeeds,
+			rotationSpeeds,rotations,
+			sizes,startColors,velocities
+	ParticleSystemNativeArray3
+		属性：
+			x,y,z:每个粒子的容器
+	ParticleSystemNativeArray4
+		属性：
+			w,x,y,z

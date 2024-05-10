@@ -1,0 +1,15 @@
+.Comparers
+	FloatComparer<CoreModule>
+		静态属性：kEpsilon,s_ComparerWithDefaultTolerance
+		Constructors
+		静态方法：
+			AreEqual:绝对误差检查
+			AreEqualRelative:相对误差检查
+.Must
+	MustExtensions<Obsolete>
+.Classes
+	Asset<CoreModule>
+		静态方法：
+			AreApproximatelyEqual,AreEqual,ArNotApproximatelyEqual,AreNotEqual,IsFalse,IsNotNull,IsNull,IsTrue
+	AssertionException<CoreModule>
+		断言失败，则退出

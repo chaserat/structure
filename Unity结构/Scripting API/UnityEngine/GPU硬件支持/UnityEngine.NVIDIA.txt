@@ -1,7 +1,41 @@
-Classes:
+DLSS: 深度学习超采样技术
+只执行应用于HDRP render类：
 Enumerations:
 	GraphicsDeviceFeature: 
 		Deep Learning Super Sampling[DLSS]
 			列举GraphicsDevice API
-		DLSSQuality
-		DLSSFeatureFlags
+	DLSSQuality：[MaximumQuality,Balanced,MaximumPerformance,UltraPerformance]
+	DLSSFeatureFlags：[None,IsHDR,MVLowRes,MVJittered,DepthInverted,DoSharpening]
+Classes:
+	<NVIDIAModule>
+	DLSSCommandExecutionData:
+		表示DLSSContext,Device.ExecuteDLSS的数据
+	DLSSCommandInitializationData：：：：调用GraphicsDevice.CreateFeature中创建图像特征
+	DLSSContext：DLSS的状态描述，
+		属性: executeData,initData
+	DLSSDebugFeatureInfos:
+		属性：
+			execData: 处理中引入的DLSS上下文处理数据
+			featureSlot: internal feature slot ID-> 只用于Debug
+			initData：DLSS上下文使用的initdata
+			validFeature：Debug信息，表示上次执行的特征是否合理
+	DLSSTextureTable：
+		属性: 
+			biasColorMask,
+			colorInput,colorOutput,
+			depth,
+			exposureTexture,motionVactors,transparentMask
+	GraphicsDevice:
+		静态属性：device,version
+		公共方法：
+			CreateDebugView,CreateFeature,DeleteDebugView,DestroyFeature,ExecuteDLSS,
+			GetOptomalSettings,IsFeatureAvailable,UpdateDebugView
+		静态方法:CreateGraphicsDevice
+	GraphicsDeviceDebugView：
+		表示当前特征状态的内存快照
+		属性：deviceVersion,dlssFeatureInfos,ngxVersion
+	NVUnityPlugin:
+		静态属性: IsLoaded,Load
+	OptimalDLSSSettingsData:
+		属性：
+			maxHeight,maxWidth,minHeight,minWidth,outRenderHeight,outRenderWidth,sharpness
