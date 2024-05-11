@@ -20,7 +20,8 @@
 	对象池：IObjectPool<T0>
 		UnsafeGenericPool<T0>......
 	网络设置：
-		Networking:
+		Networking: https://github.com/MirrorNetworking/Mirror
+			
 	框架<unity>:
 		Jobs:
 		Events:
@@ -86,6 +87,7 @@
 4-2D、渲染流程
 	U2D
 	Sprites:2D gameplay
+	Spine2D:2D骨骼动画
 
 5、SceneManagement: sub业务
 	LoadSceneMode,

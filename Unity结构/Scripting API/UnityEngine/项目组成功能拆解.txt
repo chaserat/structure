@@ -1,0 +1,33 @@
+项目追踪工具拆解：
+	crashHandler：
+	profiling：
+	log：
+
+依赖工具拆解：
+	网络：
+		Network：
+			https://github.com/MirrorNetworking/Mirror
+	数据层：
+		静态数据：
+		动态数据：
+	ObjectPool：
+		https://github.com/keypax/object-pooling-in-unity-demo [裁剪]
+	资源内容：
+		YooAsset
+
+	UI: 
+		FairyGUI
+
+	底层依赖：
+		异步插件: 
+			unitask
+全局task(job)拆解：
+	资源更新
+		静态数据获取
+
+
+架构：
+	GameFramework,qframework,ET,
+
+运行时架构:
+	ECS:

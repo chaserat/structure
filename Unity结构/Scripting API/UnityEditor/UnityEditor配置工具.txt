@@ -1,0 +1,26 @@
+packages:
+	官方releasepackages：
+		https://docs.unity3d.com/2021.3/Documentation/Manual/pack-safe.html
+	开发packages：
+		https://openupm.com/packages/
+
+Assets管理工具：
+	消息工具：
+		MessagePipe
+	事件总线：
+		Generic Event Bus
+	场景管理：
+		Navigathena： 场景管理framework
+
+	XR：
+		RealityToolKit
+运行时Editor工具：
+	
+
+
+基础工具类：
+	ZString：  无GC
+
+参考项目：
+	https://github.com/AIO-GAME
+	Unity-MVVM
