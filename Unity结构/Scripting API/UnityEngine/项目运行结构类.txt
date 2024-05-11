@@ -1,0 +1,103 @@
+代码框架工具：长期
+
+平台设置项：
+	XR,tvOS,
+	WSA,Android,Apple,Windows,Lumin,iOS,
+	硬件支持：
+		NVIDIA,
+		Device,
+
+工具层：
+	TestTools：允许解析Assembly、Class、Constructors、Method、结构体 from coverage
+	Serialization: FormerlySerializedAsAttribute <CoreModule>
+	SearchService:[属性：labels,tags]
+	Search：SearchContextAttribute<PropertyAttribute,CoreModule>
+
+
+整体设计基础类：系统初始化
+	SubsystemsImplementation
+		抽象属性[custom]:provider,descriptor
+	对象池：IObjectPool<T0>
+		UnsafeGenericPool<T0>......
+	网络设置：
+		Networking:
+	框架<unity>:
+		Jobs:
+		Events:
+	试验性代码：
+		Experimental:
+
+1、监控工具：埋点应在最底层
+    异常检查、关键节点监控
+    	Diagnostics:
+    	CrashReportHandler:
+    	Analytics:
+    **app运行时内容
+    	Device:
+    	Assert:
+
+    运行状态监控：
+    	https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Playables.PlayState.html
+
+    流程控制:
+    	PlayerLoop:
+    		https://docs.unity3d.com/2021.3/Documentation/ScriptReference/PlayerLoop.EarlyUpdate.AnalyticsCoreStatsUpdate.html
+    	LowLevel: unity中的playerloop
+    脚本管理：
+    	GarbageCollector
+    性能监控：
+    	Profiling:
+    		ProfilerArea:
+    		Profiling.Memory:
+    		Profiling.Experimental:
+2、任务pipeline拆解
+	1、初始化工程设置和合法性校验
+		Accessility,Analytics,
+	2、资源初始化校验{缓存等处理}
+	3、业务代理初始化
+	4、业务逻辑
+		1、Awake：准备
+		2、Start：任务初始化，参数初始化
+		3、Update：事件处理 / 渲染更新 / 状态机切换 
+	5、LogOut
+		场景退出，应用退出
+4-3D、渲染流程
+		https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Rendering.AmbientMode.html
+	Audio:
+	动画组件:
+		Animations:
+
+	UI组件：
+		Text Element组件：
+			TextCore: 
+				枚举：GlyphGlassDefinitionType[象形文字] 
+					https://docs.unity3d.com/2021.3/Documentation/ScriptReference/TextCore.GlyphClassDefinitionType.html
+		UI Canvas：
+			UIElements:
+			Video:
+
+	渲染：
+		Tilemaps:
+
+	ParticleSystem：
+		VFX<事件触发>
+		ParticleSystemJobs
+
+4-2D、渲染流程
+	U2D
+	Sprites:2D gameplay
+
+5、SceneManagement: sub业务
+	LoadSceneMode,
+	LocalPhysicsMode,
+	UnloadSceneOptions
+
+6、地形组件：
+	TerrainTools
+	TerrainUtils
+	AI
+
+*****************************业务层结构************************************************************************************
+SocialPlatforms
+	https://docs.unity3d.com/2021.3/Documentation/ScriptReference/SocialPlatforms.UserScope.html
+

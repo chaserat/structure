@@ -1,0 +1,22 @@
+***********
+Attributes：
+	VFXEventAttribute:当使用VisualEffect.SendEvent的属性处理类
+		Constructors:
+		公用方法：
+			拷贝VFXEventAttribute
+			获取对应的参数<Type>
+			拥有属性
+			设置属性
+Enumerations:
+	VFXCameraBufferTypes: None,Depth,Color,Normal
+	VFXSpawnerLoopState: 
+		Finished,DelayingBeforeLoop,Looping,DelayingAfterLoop
+Classes:
+	VFXCameraXRSettings: XR相关设置
+	VFXManager,
+	VFXExposedProperty,VFXOutputEventArgs,
+	VFXExpressionValues,
+	VFXParticleSystemInfo[提供information data的结构体],VFXSpawnerCallbacks<继承ScriptableObject类>[OnPlay,onStop,OnUpdate],
+	VFXSpawnerState<Sprawn system: >
+	VisualEffect<Behaviour>:视觉特效 / VisualEffectAsset<VisualEffectObject>:visual effect system, generated shaders和编译数据
+	VisualEffectObject<Object>:特效基础类

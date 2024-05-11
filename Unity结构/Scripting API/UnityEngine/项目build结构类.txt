@@ -1,0 +1,5 @@
+build时需要的监控：
+	流程监控:
+	scipts errors:
+	
+Editor模式

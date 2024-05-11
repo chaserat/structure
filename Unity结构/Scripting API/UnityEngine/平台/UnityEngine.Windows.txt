@@ -1,0 +1,42 @@
+Classes:
+	CrashReporting:
+		windows参考："C:\Users\username\AppData\Local\Unity\Editor\Crashes"
+	Crypto:加密算法：
+		ComputeMD5Hash,ComputeSHA1Hash
+	Directory:
+	File:
+	Input: 提供针对windows特定输入操作的静态类方法
+	LicenseInformation:
+
+WebCam：
+	枚举：
+		CapturePixelFormat:
+			用PhotoCapture和VideoCapture的存储格式
+		PhotoCaptureFileOutputFormat:JPG/PNG
+			图片编码格式
+		WebCamMode:
+			None,PhotoMode,VideoMode
+	Classes：
+		CameraParameters:
+		PhotoCapture:
+			枚举：CaptureResultType-Success,UnknownError
+			Classes:
+				hResult,resultType,success
+		PhotoCaptureFrame:
+
+		VideoCapture:
+			枚举：CaptureResultType,AudioType
+			Classes：
+				hResult,resultType,success
+		WebCam:
+			web camera当前状态的通用方法：
+				Mode:特定当前Web Camera是什么模式
+Speech:
+	枚举：
+		ConfidenceLevel,
+		DictationCompletionCause,DictationTopicConstraint,
+		SpeechError,SpeechSystemStatus
+	Classes：
+		DictationRecognizer,GrammarRecognizer,KeywordRecognizer,
+		PhraseRecognitionSystem,PhraseRecognizedEventArgs,PhraseRecognizer,
+		SemanticMeaning<语义信息：识别phrase的语义属性>

@@ -3,7 +3,8 @@ Enumerations:
 	TileForeground: 基于secondary文件的前景文本类型
 	TileTemplate: 不同Tile[瓦片]类型的模板
 	ToastTemplate:不同Toast[弹出提示]类型的模板
-	WindowActivationState:
+	WindowActivationState:特定窗口激活事件的原因:
+		属性： CodeActivated,Deactivated,PointerActivated
 Classes:
 	Application:<CoreModule>
 		静态属性: advertisingIdentifier，arguments

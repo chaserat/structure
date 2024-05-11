@@ -1,0 +1,3 @@
+VisionUtility: 不同的视觉能力
+	静态方法：
+		GetColorBlindSafePalette： 获取调色板颜色信息

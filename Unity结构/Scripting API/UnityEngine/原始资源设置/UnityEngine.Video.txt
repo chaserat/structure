@@ -1,0 +1,11 @@
+Enumerations:
+	Video3DLayout: 视频中3D内容layout
+	VideoAspectRatio：用于适配目标区域视频的方法
+	VideoAudioOutputMode：视频中嵌入音频的places
+	VideoRenderMode：读取图片的区域类型
+	VideoSource：videoPlayer的视频内容源
+	VideoTimeReference：VideoPlayer用于检测和矫正偏移的clock
+	VideoTimeSource：读取内容时，VideoPlayer的time source
+Classes:
+	VideoClip: <Object,VideoModule>
+	VideoPlayer: <Behaviour,VideoModule>
