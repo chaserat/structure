@@ -19,9 +19,9 @@
 		抽象属性[custom]:provider,descriptor
 	对象池：IObjectPool<T0>
 		UnsafeGenericPool<T0>......
+			补充：https://github.com/mackysoft/XPool.git
 	网络设置：
-		Networking: https://github.com/MirrorNetworking/Mirror
-			
+		Networking: 
 	框架<unity>:
 		Jobs:
 		Events:

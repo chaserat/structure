@@ -14,6 +14,10 @@ Assets管理工具：
 
 	XR：
 		RealityToolKit
+
+	资源管理工具：
+		navMesh：
+			https://github.com/dotsnav/dotsnav
 运行时Editor工具：
 	
 
@@ -21,6 +25,76 @@ Assets管理工具：
 基础工具类：
 	ZString：  无GC
 
+	日志：
+		Loxodon Framework NLog
+
+		unirx-observablelifecyclemonobehaviour: 
+
+Mesc的工具：
+	fordy
+
 参考项目：
 	https://github.com/AIO-GAME
 	Unity-MVVM
+
+	settingFrameWork:
+		https://github.com/zenvin-dev/UnitySettingsFramework/tree/main
+
+	常用模块设计：
+		https://github.com/FronkonGames/GameWork-Foundation
+			|
+			|\_Runtime......................... Utilities for the game.
+			|   |\_Algorithms.................. Algorithms.
+			|   |    \_Structures.............. Data structures.
+			|   |\_Attributes.................. Attributes for fields and class properties.
+			|   |\_Components.................. Components.
+			|   |\_Development................. Developer utilities.
+			|   |   |\_Check................... Assert extension.
+			|   |   |\_Console................. Development console.
+			|   |   |\_Draw.................... Utilities for drawing gameplay information.
+			|   |   |\_Profiling............... To find bottlenecks.
+			|   |    \_Prototype............... Useful components for prototypes.
+			|   |\_Extensions.................. Utility extensions.
+			|   |   |\_System.................. C# extensions.
+			|   |    \_Unity................... Unity extensions.
+			|   |\_Math........................ Mathematical utilities.
+			|   |\_Patterns.................... Design patterns.
+			|   |   |\_Behavioral.............. Behavioural patterns.
+			|   |   |\_Creational.............. Creation patterns.
+			|   |    \_Structural.............. Structure patterns.
+			|    \_Utils....................... Utilities.
+			|
+			 \_Editor.......................... Editor utilities.
+			    |\_Drawers..................... Custom attribute viewers.
+			    |\_Fonts....................... Font for debug.
+			     \_Inspector................... Editor appearance utilities.
+
+	参考框架：
+		JEngine：
+			https://github.com/JasonXuDeveloper/JEngine
+		IFramework：
+		QFramework：
+		GameFramework:
+		Lcc:<Framework>:
+
+		unifantasy:核心关注内容网络层<tcp,udp,kcp,websocket>
+
+
+		TEngine:
+		BundleMaster:
+		Nino: 高性能模块:::https://github.com/JasonXuDeveloper/Nino
+			共享模块：
+				IO / Collections / Mgr / Util
+				序列化模块：仅支持C#
+		流水线架构设计：
+			BDFramework：https://github.com/yimengfan/BDFramework.Core
+
+			ROS:
+				https://github.com/lgsvl/simulator:
+
+				https://github.com/Unity-Technologies/Unity-Robotics-Hub
+
+
+关注公司：
+vovgou:
+	***** https://github.com/vovgou/loxodon-framework <- 单例工具
