@@ -1,0 +1,81 @@
+软件合理性监控：
+	Adevertisements:
+	Analytics:
+	Purchasing:
+资源框架监视器：
+	项目监控：
+		CrashReportingSettings:
+		EditorTools:
+		UnityEventTools:
+
+		ShortcutManagement:
+	项目合理性校验：
+		VersionControl:
+	资源管理工具：
+		AI:
+		PackageManager:
+	文件管理：
+		Search:
+		SearchService:
+	平台管理：
+		Android:
+		AppleTV:
+		iOS:
+
+	项目设置：
+	监控系统：
+	网络设置:
+		Networking:
+
+资源管理工具：
+	资源事件监控流程：
+		Callbacks:
+		MPE:
+		Overlay<?>:
+
+		UnityLinker<?>:
+	渲染工具处理：	
+		Experimental:
+		Rendering:
+
+		ShaderKeywordFilter:
+	UI文件处理：
+		IMGUI:
+
+		ToolBars:
+
+		UIElements:
+
+	资源处理工具：
+		AssetImporters:
+
+		Presets:
+
+		AnimatedValues:
+		Animations:
+
+		Playables:
+
+		Media:
+
+		Sprites:
+		U2D:
+
+		TerrainTools:
+	场景处理：
+		SceneTemplate:
+		SceneManageMent:
+	代码管理：
+		Compilation:
+		Il2Cpp:
+		Scripting:
+	构建设置：
+		Build:
+
+运行时监控工具：
+	Profiling：
+	logcat：
+	meomoryprofiler：
+
+模拟工具：
+	DeviceSimulation:
