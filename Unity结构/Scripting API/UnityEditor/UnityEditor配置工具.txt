@@ -9,6 +9,7 @@ Assets管理工具：
 		MessagePipe
 	事件总线：
 		Generic Event Bus
+			
 	场景管理：
 		Navigathena： 场景管理framework
 
@@ -29,6 +30,8 @@ Assets管理工具：
 		Loxodon Framework NLog
 
 		unirx-observablelifecyclemonobehaviour: 
+
+		dreamExcel: C#创建和处理excel
 
 Mesc的工具：
 	fordy

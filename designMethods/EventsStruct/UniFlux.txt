@@ -1,0 +1,4 @@
+逻辑抽象：
+	nested model: hierarchical arrangement of GameObjects within a scene;
+
+	
