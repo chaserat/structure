@@ -1,0 +1,2 @@
+Rendering Techniques
+	: light interacts with objects. By understanding and replicating these interactions, the model can produce images with high-quality lighting effects, shadows, and reflections, enhancing the overall realism.

@@ -1,4 +1,88 @@
 逻辑抽象：
 	nested model: hierarchical arrangement of GameObjects within a scene;
 
-	
+uniflux：
+	Editor:
+	Runtime:
+		Unity:
+			MonoFlux:[OnEnble,OnDisable,OnSubsciption(bool condition),OnFlux(in bool condition)]
+		Plugin:
+			Attributes:
+				MethodsFluxAttribute:
+					Flux属性方法类:::: MehthodFluxAttribute(object key):base(key)
+				StateFluxAttribute:
+					类似上述方法，但保存了最后的saved data
+			Core:
+				FLuxes:
+					ActionFlux：
+						ActionFlux<TKey>:IFlux<TKey,Action>
+					ACtionParamFlux
+						ActionParamFlux<TKey, TValue> : IFluxParam<TKey, TValue, Action<TValue>>
+					FuncFlux
+						FuncFlux<TKey, TReturn> : IFluxReturn<TKey, TReturn, Func<TReturn>>
+					FuncParamFLux
+						FuncParamFlux<TKey, TParam, TReturn> : IFluxParamReturn<TKey, TParam, TReturn, Func<TParam, TReturn>>
+					StateFlux
+						StateFlux<TKey, TValue> : IFluxParam<TKey, TValue, Action<TValue>>
+				Internal:
+					Classes:
+						StaticFluxes
+							Flux：
+								/// static Flux aspects
+							FluxParamReturn_T_T2_T3
+								FluxParamReturn<T,T2,T3>
+							FluxParam_T_T2
+								FluxParam<T,T2>
+							FluxReturn_T_T2
+								FluxReturn<T,T2>
+							FluxState
+								FluxState<T,T2>
+							Flux_T
+								Flux<T>
+						FluxAttributeUtils.cs:
+							FluxAttributeUtils::::
+								SubscribeAttributes<T>(in T obj, in bool condition)
+						State.cs:
+							State<TValue>
+					Interfaces:
+						IDispatch:
+							IDispatch:
+								IDispatch<in TKey>
+							IDispatchParameter:
+								IDispatchParameter<in TKey, in TParameter>
+							IFispatchParameterReturn:
+								IDispatchParameterReturn<in TKey, in TParameter, out TReturn>
+							IDispatchReturn:
+								IDispatchReturn<in TKey, out TReturn>
+						IFlux:
+							IFlux:
+								IFlux<in TKey, in TStorage>
+							IFluxParam:
+								IFluxParam<in TKey, in TParam, in TStorage>
+							IFLuxParamReturn:
+								IFluxParamReturn<in TKey, in TParam, out TReturn, in TStorage> 
+							IFluxReturn:
+								IFluxReturn<in TKey, out TReturn, in TStorage>
+						IStore.cs
+							IStore<in TKey, in TStorage>
+				Flux.cs:
+					Store / Dispatch
+				FluxAttributes.cs:
+					FluxAttribute : Attribute[
+						object key;
+						FluxAttribute(object key){this.key = key;}
+					]
+			Extensions:
+				UniFlux.Int: <Int,T> ::: Store,Dispatch				UniFlux.String: <string,T> ::: Store,Dispatch
+				FluxExtension::::
+					考虑宏：NETFX_CORE,NET_4_6,NET_STANDARD_2_0,UNITY_WSA_10_0
+					泛化类型:
+						Action,Action<T>,Func<out T>,Func<T,out T2>,Func<T,out T2>,State Action<T>
+						Action<IEnumerator>, Action<Task>, 
+						Action<IObservable<T>>,
+						Action<IObserver<T>>
+			Utils:
+				UniFlux.Utils:[
+					Subscribe<T>(in this bool condition, ref T action,in T callback)
+					SubscribeAttributes<T>(in T obj,in bool condition)
+				]
