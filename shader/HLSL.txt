@@ -1,0 +1,10 @@
+https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-while
+
+High-Level shader language:
+	类C语言，使用programmable shaders in DirectX::::the programmable 3D pipeline
+		vertex shader / pixel shader
+		programming guide for HLSL
+			create, compile, optimize, bind and link shaders
+		Reference for HLSL:
+			语言语法和构建HLSL的intrinsic函数用于简化coding 需求
+			内容包含程序集指令、D3D编译工具和返回shader的错误和警告信息

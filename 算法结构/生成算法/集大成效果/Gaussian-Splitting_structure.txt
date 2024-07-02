@@ -1,0 +1,116 @@
+arguments:
+	__init__.py
+		ParamGroup:
+			__init__()
+			extract(self,args)
+		ModelParams(ParamGroup):
+			__init__()
+			extract(self,args)
+		PipelineParams(ParamGroup):
+			__init__
+		OptimizationParam(ParamGroup):
+			__init__(self,parser)
+
+		get_combined_args(parser: ArgumentParser)
+assets:
+gaussian_renderer:
+	__init__.py:
+		render()
+			GaussianRasterizationSettings
+			GaussianRasterizer
+			rasterizer
+	network_gui.py:
+		init()
+		try_connect()
+		read()
+		send()
+		receive()
+IpipsPytorch:
+	__init__.py
+		lpips
+	modules:
+		lpips.py
+			LPIPS(nn.Module)
+				__init__
+				forward()
+		networks.py
+			get_network()
+
+			LinLayers(nn.ModuleList)
+			BaseNet(nn.Module)
+			SqueezeNet(BaseNet)
+			AlexNet(BaseNet)
+			VGG16(BaseNet)
+		utils.py
+			normalize_activation()
+			get_state_dict
+scene:
+	cameras.py
+	colmap_loader.py
+	dataset_reader.py
+	gaussian_model.py
+	__init__.py
+SIBR_viewers:
+	to learn
+submodules:
+	diff-gaussian-rasterization:
+	simple-knn:
+		SimpleKNN::knn(int P, float3* points, float* meanDists)
+utils:
+	camera_utils.py
+		loadCam
+		cameraList_from_camInfos
+		camera_to_JSON
+	general_utils.py
+		inverse_sigmoid()
+		PILtoTorch()
+		get_expon_lr_func
+		strip_lowerdiag
+		strip_symmetric(sym)
+		build_rotation(r)
+		build_scaling_rotation(s,r)
+		safe_state(silent)
+	graphics_utils.py
+		BasicPointCloud(NamedTuple)
+
+		geom_transform_points(points,transf_matrix)
+		getWorld2View(R,T)
+		getWorld2View2()
+		getProjectionMatrix
+		fov2focal
+		focal2fov
+	image_utils.py
+		mse(img1,img2)
+		psnr(img1,img2)
+	loss_utils.py
+		l1_loss
+		l2_loss
+		gaussian
+		create_window
+		ssim
+		_ssim
+	sh_utils.py
+		eval_sh(deg,sh,dirs)
+		RGB2SH(rgb)
+		SH2RGB(sh)
+	system_utils.py
+		mkdir_p(folder_path)
+		searchForMaxIteration(folder)
+convert.py
+	解畸变
+full_eval.py ----> cmd 调用如下函数
+	training
+	rendering
+	skip_metrics
+metrics.py
+	readImages(renders_dir,gt_dir)
+	evaluate(model_paths)
+render.py
+	render_set
+	render_sets
+train.py
+	training(dataset,opt,pipe,testing_iterations,saving_iterations,checkpoint_iterations,checkpoint,debug_from)
+	prepare_output_and_logger
+	training_report() -> 训练report
+
+	main() <---

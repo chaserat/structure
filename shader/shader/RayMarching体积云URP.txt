@@ -1,0 +1,102 @@
+RayMarching:
+	https://blog.csdn.net/wubaohu1314/article/details/120359442
+	游戏视觉效果：
+		模拟做法，关于带有随机透明度的贴图，可用柏林噪声实现；
+			https://zhuanlan.zhihu.com/p/360235233 {柏林噪声}
+
+	RayMarching: 基于积分的方法，层级之间的间隔就是微分，叠加积分
+
+	RayMarching:
+		1、发射射线
+			每隔一段距离进行一次浓度采样
+		2、发射方向
+			体积雾是一个后期处理特效，两个世界坐标相减后标准化；
+		3、体积雾/云渲染，总得有一块体积
+			步进世界坐标，判断该步进点是否处于该范围内，若是，则采样为density，否则返回0；最终行程一块体积，体积是指定的范围，形成体积；
+		4、采样浓度及如何产生浓度差异
+			依赖3D噪声处理浓度差异
+
+	URP后期处理：
+		URP的后期处理脚本规范
+			1、CustomRenderFeature
+				RenderFeature所用的shader，另外一个RenderPass执行；默认为BeforeRenderingPosProcessing
+				增加RenderFeature -> 该RenderFeature所用的Shader，另外一个是RenderPass执行的时间{
+					RenderPassEvent evt = RenderPassEvent.BeforeRenderingPostProcessing;
+				}
+			2、CustomRenderPass -- Custom Render Pass
+				决定如何渲染对象，这个对象除了被CustomRenderFeature引用之外，也会获取VolumetricCloud.cs； load函数： 负责将所有的参数传递到Shader里用；
+
+			3、VolumetricCloud
+				property设置
+		VolumetricCloud.cs: 在Volume追加一个自定义的后期处理特效；
+
+		----后期处理Shader的模板
+			Properties{}
+			SubShader{
+				Tags{}
+				pass{
+					Cull Off
+					ZTestAlways
+					ZWrite Off
+
+					HLSLPROGRAM
+
+					ENDHLSL
+				}
+			}
+
+	RayMarching体积云实现
+		https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@11.0/manual/writing-shaders-urp-reconstruct-world-position.html
+		1、重建世界坐标
+		2、RayMarching算法的基本测试{
+			_MainTex.Sample(sampler_MainTex, IN.uv)  // 采样
+
+			// 重建世界坐标
+			float3 worldPosition = GetWorldPosition(IN.pos);
+			float3 rayPosition = _WorldSpaceCameraPos.xyz;
+			float3 worldViewVector = worldPosition - rayPosition;
+			float3 rayDir = normalize(worldViewVector);
+
+			// 基本的RayMarching测试
+		}
+		3、用射线包围盒算法解决遮挡问题
+			https://jcgt.org/published/0007/03/04/
+			射线包围盒算法
+				发射起点、发射步长、步数
+				浓度值
+		4、用噪声实现浓度差异
+			https://github.com/mtwoodard/TextureGenerator
+			通过噪声来让它变得不那么均匀[3D 柏林噪声；3D 威利(Worley)噪声]
+		5、摩尔消光系数
+			采样到的看起来是雾的东西本质上是浓度(density)
+			摩尔消光系数是对溶液的能见度的一种描述手段，这个值越大，显得很厚实
+				消光系数近似地服从于Beer-Lambert's Law; 它是光吸收地基本定律，适用于所有地电磁辐射和所有地吸光物质；
+		6、光照计算引导
+			RayMarching： Lambert's Law -> 光照方向、该点法线、光照的强度与色彩
+		7、RayMarching光照计算
+			该计算中，围绕的具体对象不再时一个物体表面的点，而是每个采样的方向
+				1、采样点浓度：：：：丁达尔现象
+				2、采样点的接收到光线强度：：：：L(x)函数
+				3、视角方向对光的吸收：：：：在进行光线步进时地当前总浓度
+		8、基础代码实现：：：：
+		9、追加控制参数
+
+		----散射事件
+			1、 通过RBG通道模拟可见光的散射波长
+			2、 相位函数
+		----渲染体积云--参与介质计算模型
+		----各类参数控制效果
+			1、 波长模拟效果
+			2、 介质吸收率
+			3、 散射吸收率
+
+TODO，解决现有Shader中的三个部分：
+	1、 性能开销大的问题
+	2、 层纹明显的问题
+	3、 基于复合噪声对云层进行主形状控制
+
+噪声：
+	https://thebookofshaders.com/13/?lan=ch
+
+
+

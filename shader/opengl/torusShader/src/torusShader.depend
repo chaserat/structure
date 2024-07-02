@@ -1,0 +1,144 @@
+# depslib dependency file v1.0
+1657563339 source:c:\song\scripts\cpp\opengl\torusshader\src\glextension.cpp
+	<iostream>
+	<algorithm>
+	"glExtension.h"
+
+1657600449 c:\song\scripts\cpp\opengl\torusshader\src\glextension.h
+	<windows.h>
+	<OpenGL/gl.h>
+	<GL/gl.h>
+	<string>
+	<vector>
+	"glext.h"
+
+1521125863 c:\song\scripts\cpp\opengl\torusshader\src\glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1359045696 source:c:\song\scripts\cpp\opengl\torusshader\src\lodepng.cpp
+	"lodepng.h"
+
+1359045696 c:\song\scripts\cpp\opengl\torusshader\src\lodepng.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<vector>
+	<string>
+	<fstream>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+
+1682740444 source:c:\song\scripts\cpp\opengl\torusshader\src\main.cpp
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<iostream>
+	<sstream>
+	<iomanip>
+	<fstream>
+	"Matrices.h"
+	"Png.h"
+	"Torus.h"
+
+1426371328 c:\song\scripts\cpp\opengl\torusshader\src\freeglut\include\gl\glut.h
+	"freeglut_std.h"
+
+1426371328 c:\song\scripts\cpp\opengl\torusshader\src\freeglut\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1585322334 c:\song\scripts\cpp\opengl\torusshader\src\matrices.h
+	<iostream>
+	<iomanip>
+	"Vectors.h"
+
+1593445495 c:\song\scripts\cpp\opengl\torusshader\src\vectors.h
+	<cmath>
+	<iostream>
+
+1533915837 c:\song\scripts\cpp\opengl\torusshader\src\png.h
+	<string>
+	<vector>
+
+1678770246 c:\song\scripts\cpp\opengl\torusshader\src\torus.h
+	<vector>
+
+1616566061 source:c:\song\scripts\cpp\opengl\torusshader\src\matrices.cpp
+	<cmath>
+	<algorithm>
+	"Matrices.h"
+
+1533922436 source:c:\song\scripts\cpp\opengl\torusshader\src\png.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstring>
+	"lodepng.h"
+	"Png.h"
+
+1678829503 source:c:\song\scripts\cpp\opengl\torusshader\src\torus.cpp
+	<windows.h>
+	<OpenGL/gl.h>
+	<GL/gl.h>
+	<iostream>
+	<iomanip>
+	<cmath>
+	"Torus.h"
+
+1682662752 source:c:\song\scripts\cpp\opengl\torusshader\src\glad\src\glad.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<glad/glad.h>
+	<windows.h>
+	<winapifamily.h>
+	<dlfcn.h>
+
+1682662752 c:\song\scripts\cpp\opengl\torusshader\src\glad\include\\glad\glad.h
+	<KHR/khrplatform.h>
+
+1682662752 c:\song\scripts\cpp\opengl\torusshader\src\glad\include\\khr\khrplatform.h
+	<stdint.h>
+	<inttypes.h>
+	<stdint.h>
+
+1658496778 c:\song\scripts\cpp\opengl\torusshader\src\glfw\include\\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<vulkan/vulkan.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl32.h>
+	<GLES2/gl2ext.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<GL/glcorearb.h>
+	<GL/glext.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+	<OpenGL/gl.h>
+	<GL/gl.h>
+	<GL/glext.h>
+

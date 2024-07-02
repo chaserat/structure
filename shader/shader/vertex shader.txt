@@ -1,0 +1,4 @@
+可编程shader stage：  post-projection space :::: Vertex Post-Processing stage
+	perform setup work for later shader stages
+	调用频率：
+	Input： 

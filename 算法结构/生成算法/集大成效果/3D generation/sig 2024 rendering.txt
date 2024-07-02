@@ -1,0 +1,17 @@
+2024 rendering: https://zhuanlan.zhihu.com/p/703192097
+Kami Export - srfoe -- Stylized Rendering as a Function of Expectation
+
+
+Specular Polynomials：：
+
+
+https://graphics.cs.utah.edu/research/projects/area-restir/
+Area ReSTIR: Resampling for Real-Time Defocus and Antialiasing
+
+
+mesh generation:
+
+Multi-Material Mesh-Based Surface Tracking with Implicit Topology Changes
+	mesh方案可完全保留原始几何细节，又像体素方案一样可以健壮性的处理非流行表面
+
+Kinetic Simulation of Turbulent Multifluid Flows

@@ -1,0 +1,10 @@
+denoising diffusion probabilistic models (DDPMs)：
+	Forward and Reverse Processes
+	Gaussian Noise Addition
+	Denoising Objective
+	Sample Generation
+	Training Stability and Quality
+
+DDPM: https://ar5iv.labs.arxiv.org/html/2006.11239
+DDPM:
+https://learnopencv.com/denoising-diffusion-probabilistic-models/

@@ -1,0 +1,37 @@
+高级图形学知识
+Lighting and shading： ambient lighting, diffuse component, specular component,
+	Gouraud shading[color at the vertex] / Phong shading[color at the polygon fragment]
+	顶点着色器输出代码是干净的，whether 我们插入颜色或法线
+	使用shaders 进行shading
+		Gouraud shading / Phong shading
+	Shader sample: Gooch shading
+		non-realistic rendering, 使用conventional lighting 方程选择冷色或者暖色
+		conventional illumination： 相比于照明，光照简单量化underlying surface color；
+		链接edge-highlighting 通过一个second renderer pass，将创建3D模型(like engineering schematics)
+
+	Texture mapping:
+		real-life objects: 
+		Texture mapping: 
+			Real-life 对象
+
+	Procedural texture: 
+		可无限获取procedurely generated textures; 不需查找表，直接通过UV计算得到颜色；
+			曲线brick图案
+		Non-color textures: nomral mapping--法线映射应用于纹理映射的主轴到表面法线而不是表面颜色；
+		normal mapping:
+			procedural texture in the fragment shader
+
+	Advanced surface effects:
+		抗锯齿：MSAA是最简单形式的硬件抗锯齿设置
+		渲染所有的物体使用高分辨率，然后降采样到blur jaggies
+		使得OpenGL的MSAA，使用glfwWindowHint(GLFW_SAMPLES,4)
+			Eric Chan(2004) 基于line filter lines table优化了改算法，但是针对polygonal models有效，针对effects-heavy visual scenes则比较差
+		 	----> FXAA
+		 	adaptive analytic prefiltering
+		 	SDF在贴图读取时的抗锯齿贴图；
+
+		Tessellation shaders: -> geometry and fragment shaders
+
+
+
+

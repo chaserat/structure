@@ -1,0 +1,92 @@
+code管理工具: git / SVN
+
+项目结构设计：
+	Unity与NA的关系
+		NA作为相关的插件引入
+	商业化与资源的关系	----   ID管理基础
+	App出包和资源管理设置：：：：分开还是独立
+	对美术资源的结构需求
+		基础资源结构拆分
+			prefab
+			fbx
+			tex
+			mat
+			asset
+				显式资源拆分
+				隐式资源文件管理
+
+资源结构：
+	配置表管理
+		表管理id{
+			Excel意见生成Class，Sqlite，Json，Xml；服务器、本地表格分开导出；
+			自定义配置保留字段、单条记录等；
+			自定义表格逻辑检测；
+			兼容DevOps,CI,CD；
+		}
+	配置工具
+		根据项目本身设计项目需求
+	资源管理工具
+		资源管理和生成工具
+	内置资源结构：
+		Resources：
+		StreamingAssets：
+	代码结构：
+		Editor脚本----
+		Runtime脚本
+			C#脚本        ----   C#热更   HybridCLR
+			Lua脚本/XLua
+			Plugins
+	Packages：
+		xcompany.com
+		animation-jobs.com
+		battlehub.com
+		bepuphysics.com ---- 定点数物理插件
+		blocks.com  	---- 运行时蓝图编辑插件
+		kengine.com 	---- 常用基础功能插件
+		nfsdk.com   	---- 网络通信Plugin模式插件
+		qframework  	---- 系统设计：
+							MVC、分层、CQRS、事件驱动、数据驱动
+							数据中转
+		rx-system   	---- 响应式编程Uinit插件
+		stompyrobot 	---- Runtime Debug / GM 插件
+		ecslit			---- ECS lite 结构
+
+功能架构：
+	代码架构
+		Editor:
+			资源管理和监控工具：
+				美术资源管理工具
+				美术异常监控
+				参数配置和生成工具
+			Simulate:
+				模拟模型数据
+				模拟功能
+			App出包工具：
+				1、打包参数设置
+				2、宏管理
+				3、资源内置
+				...
+		RunTime:
+			业务管理: 
+				Logic Manage: 管理器和被管理类自动注册
+				导航机制(Navication)
+				全面定制Editor
+					提供完整的编辑器生命周期、方便可定制、拓展
+					完整的测试用例，保证框架的稳定；
+					-> 大量定制Editor
+			同步 <-- 同步功能
+			MMO：类型的自研架构
+	服务器：
+		Server ---- 
+			解决问题：扩展、负载均衡、插件架构、避免了单点故障的问题
+		服务器类型：
+			主服务器、世界服务器、登陆服务器、游戏服务器、代理服务器
+
+			插件和模块机制
+
+			Actor模型
+
+			直接NoSQL数据库机制
+
+
+

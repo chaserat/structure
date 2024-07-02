@@ -1,0 +1,81 @@
+顶点规范--vertex specification
+	顶点渲染--Vertex Rendering
+		：：render failure
+		：：Primitive Restart
+		：：Direct Rendering
+			Basic Drawing, Multi-Draw, Base Index, Instancing, Range, Combinations
+		：：Transform feedback rendering
+		：：Indirect rendering
+		：：Conditional rendering
+	primitives--Primitive
+		Vertex stream
+		point primitives
+		line primitives
+		triangle primitives
+		quads
+		adjacency primitives
+		patches
+		provoking vertex
+		primitive restart 
+顶点处理--Vertex Processing
+	顶点着色器--Vertex Shader
+		input: Multiple attributes, Attribute limits, Other inputs【gl_VertexId, gl_instanceID, gl_DrawID, gl_BaseVertex, gl_BaseInstance】
+		output: Tessellation, Geometry Shader, Vertex Post-Processing
+	镶嵌--Tessellation
+		Patches
+		Tesselation control shader
+		tesselation primitive generation[abstract patch, tesselation levels, edge tesselation spacing, primitive generation order]
+		tesselating primitives[triagnles, quads, Isolines]
+		tesselation evaluation shader
+		patch interface and continuity
+	几何着色器--Geometry Shader
+		primitive in/out specification::::Instancing
+		Inputs:
+			gl_PerVertex, gl_PrimitiveIDIn, gl_InovationID
+		Outputs:
+			Layered rendering(vertex):
+				gl_PerVertex, gl_Position, gl_PointSize, gl_ClipDistance, 
+				gl_Layer
+				gl_ViewportIndex
+			output streams
+				layout(stream=stram_index) out vec4 some_output;
+				layout(stream=2) out
+		output limitations:
+			GS单次调用可以输出的最大顶点数
+			GS单次调用可以输出的输出组件的最大总数
+顶点后处理--Vertex Post-Processing[Transform Feedback, Primitive Assembly, Clipping, Perspective divide, Viewport transform]
+	转换反馈--Transform Feedback
+		Shader setup
+			captured data format / advancing interleaving / doubles and alignment / In-shader specification
+		Buffer binding
+		Feedback process
+		Feedback objects
+原始组装--Primitive Assembly[primitive order, rasterizer discard, face culling]
+	面剔除--Face Culling
+		-> fragment shader
+光栅化--Rasterization: 处理为离散单元(discrete elements)
+片段着色器--Fragment Shader
+	inputs:
+		gl_FragCoord, gl_FrontFacing, gl_PointCoord,
+		gl_SampleID, gl_SamplePosition, gl_SampleMaskIn[],
+		gl_Layer, gl_ViewportIndex
+	outputs: -- buffer
+		diffuseColor
+		materialID
+		normal
+		diffuseColor
+		position
+		specularColor
+每个样本的处理--Per-Sample Processing
+	剪刀测试--Scissor Test
+		丢弃超出屏幕特定矩形部分的fragment
+	模板测试--Stencil Test
+		模板操作使用模板测试的结果来决定如何修改帧缓冲区中的模板值；
+	深度测试--Depth Test
+		片段着色器执行的主样本处理操作；
+	混合-- Blending：：：：[透明度、片段输出、绘制缓冲区混合、源-目标-缓冲区、混合启用、混合方程式、混合参数(常量值、颜色、混合颜色、双源混合)]
+		允许以各种方式组合每个输出的源颜色和目标颜色
+	逻辑运算--Logical Operation
+		表示颜色的位模式执行的布尔运算
+	写掩码--Write Mask
+		allow or prevents color, depth, or stencil components from being written to the current framebuffer

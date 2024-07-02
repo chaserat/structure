@@ -1,0 +1,38 @@
+AI Agent的关键特性：
+	Autonomy,Perception,Action,Goal-oriented,Adaptability
+AI Agents的类型:
+	Simple Reflex Agents,
+	Model-based Reflex Agents,
+	Goal-based Agents,
+	Utility-based Agents,
+	Learning Agents: 学习型Agent
+创建最小的AI Agent:
+	步步补充：
+		1、Define Environment
+		2、Perception Function
+		3、Condition-Action Rules: 映射到actions
+		4、Action Function: 
+		5、Main Agent Loop: 
+			agent continuously perceives,decides,and acts in the environment
+	additional layers of logic, learning algorithms,decision-making processes to handle dynamic and unpredictable environment;
+
+SimpleReflexAgent:
+	__init__
+	void:
+		perceive(self)
+		act(self,percept)
+		clean(self)
+		move(self)
+		run(self):
+			while(self.current_location < len(self.environment))
+				percept = self.perceive()
+				self.act(percept)
+	sample:
+		agent = SimpleReflexAgent()
+		agent.run()
+
+	Explanation:
+		Environment: 表示list的clean (0), dirty (1) states
+		Perceive: agent checks the cleanliness of the current location
+		Act: 基于perception，agent 要么clean location 或者 移动到下一个
+		MainLoop: agent 运行，直到检查了所有的locations

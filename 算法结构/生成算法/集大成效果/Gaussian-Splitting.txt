@@ -1,0 +1,107 @@
+The research paper "3D Gaussian Splatting for Real-Time Radiance Field Rendering" introduces a novel approach for real-time rendering of radiance fields. Here is a summary and critical analysis of the key points:
+
+Summary
+Authors: Bernhard Kerbl, Georgios Kopanas, Thomas Leimkühler, George Drettakis
+Publication: ACM Trans. Graph., August 2023
+Focus: The paper presents a method for real-time rendering of radiance fields using a novel 3D Gaussian scene representation coupled with a differentiable renderer.
+Key Contributions:
+3D Gaussian Representation: A flexible and expressive scene representation[如何表达；scene reconstruction
+	{
+		tile-based和排序renderer：栅格化表示visibility order; -> [解决CNN引入的时域不确定性问题]
+		反向传播在所有的像素所有的splats和栅格化各项异性的splats；
+		specular effects[基于点扩散的渲染追踪]：
+		3D Gaussians for a more flexible scene representations: 避免需要MVS，并基于tile-renderd rendering[块渲染，分块处理深度和光栅化]算法提高运算速度
+	}; 
+		-> {插入模块：optimization/density control, efficient depth sorting for rendering包含北京的完整的场景}
+	3D Gaussians Splatting:{
+		Differentiable 3D Gaussian Splatting:
+			从SFM的不含法线的稀疏几何点： 3D Gaussians[可微和简单投射到2D splats，允许快速alpha-blending;使用3D Gaussians不需估计法线；3D representation: 3D vector s & a quaternion q for rotation; 这些可通用地转换到他们的respective matrices和合并；确保normalize q获取一个合理的unity quaternion]
+		Optimization with Adaptive Density Controls of 3D Gaussians:position、alpha、covariance；和SH系数表示color；这些参数的优化用于控制Gaussians密度；【60% for right】;
+			使用SGD进行优化；栅格化操作用于提速[优化瓶颈问题]；使用sigmoid函数(alpha)；
+				Loss: L = (1-lambda) * L1 + lambda * L_D-SSIM ---> 设置lambda = 0.2
+			Adaptive Control of Gaussians: 保留了欧式距离
+				*
+				large view-space positional gradients: 移除alpha值小于阈值[暂定0.0002]的部分
+				large Gaussians 在高variance区域（phi = 1.6）需分离成更小的Gaussians；
+				第一种case中我们检查和对待增加系统的需求和Gaussians数量; <--- GMM优化
+		Fast Differentiable rasterizer for Gaussians: 
+			用于快速全局渲染和快速排序用于alpha-blending;
+			针对远距离的物体、近plane；per-pixel ordering of points;
+				*排序细节和高阶
+				栅格化时：前向阶段恢复全序列的per-pixel的混合points； tile-based -> 反处理
+				divide [final accumulated opacity alpha] -> back-to-front traversal 用于获取gradient计算的required系数
+	}			
+
+	spatial data structures-用于存储[volumetric ray-marching: 光线步进算法]features、不同的编码、MLP capacity{最小的MLP用于表达density和representation；稀疏体素；基于球谐函数，}] that maintains the properties of continuous volumetric radiance fields[连续体积辐射场] while reducing unnecessary computation in empty space.
+Optimization of Anisotropic Covariance: An accurate scene representation is achieved through optimization of the 3D Gaussians' properties.[通过获取3D高斯性质获取精确的场景表述]
+Fast Visibility-Aware Rendering Algorithm: Supports anisotropic splatting, accelerating both training and real-time rendering.[快速视觉敏感的渲染算法：支持无向溅射，加速训练和实时渲染]
+Performance:
+Achieves real-time novel view synthesis at 1080p resolution.
+Provides state-of-the-art visual quality with competitive training times.
+Outperforms previous methods like Mip-NeRF360, InstantNGP, and Plenoxels in both training speed and rendering quality.
+Critical Analysis
+Innovative Scene Representation:  场景表大创新点
+
+The use of 3D Gaussians for scene representation is innovative, combining the benefits of volumetric radiance fields with efficient computation. This approach effectively balances quality and performance, making real-time rendering feasible.
+Optimization Techniques:
+
+The interleaved optimization of 3D Gaussian properties, along with adaptive density control, is a robust method for achieving high-quality scene representation. This iterative process ensures that the model adapts well to different scenes, maintaining compactness and accuracy. [插入3D高斯性质的优化算法]
+Rendering Algorithm:
+
+The fast visibility-aware rendering algorithm is a significant advancement, allowing for real-time rendering with high visual fidelity. The tile-based rasterizer and GPU-based sorting algorithms enhance efficiency, making the approach scalable and practical for various applications.
+	[基于tiled栅格化的方法和GPU排序算法提高了效率]
+Comparative Performance:
+
+The paper provides comprehensive comparisons with other state-of-the-art methods, demonstrating superior performance in both quality and speed. The quantitative results and visual comparisons underscore the effectiveness of the proposed method.
+Applications and Future Work:
+
+The potential applications of this method in areas like virtual reality, gaming, and film are vast. Future work could explore further optimizations, integration with other rendering techniques, and applications in more complex and dynamic scenes.
+Figures and Tables (Examples)
+Figure 1: Comparison of rendering quality and training times with other methods like InstantNGP, Plenoxels, and Mip-NeRF360.
+Table 1: Quantitative evaluation metrics (SSIM, PSNR, LPIPS【相似度感知损失】) across different datasets.
+Figure 5: Visual comparison of test scenes rendered by different methods.
+Table 2: PSNR scores for synthetic NeRF datasets, showcasing the method's effectiveness in various scenarios.
+Conclusion
+The paper presents a significant advancement in real-time rendering of radiance fields. The innovative use of 3D Gaussians, coupled with efficient optimization and rendering techniques, positions this method as a new benchmark in the field. The detailed experimental results and comparisons validate the approach, highlighting its potential for wide-ranging applications.
+
+附录：
+	1、Gradient Computation细节
+	2、密度优化算法
+		M <- SFM points         		 ::  positions
+		S,C,A <- InitAttributes()        ::  Covariance,Colors,Opacities
+		i <- 0 							 :: Iteration Count
+		while(not converge)
+		{
+			Camera & Image[Sample TrainingView]
+			Rasterize(M,S,C,A,V)
+			L <- Loss(I,I~)
+			M,S,C,A <- Adam(grad(L))
+			if(IsRefinementIteration(i))
+			{
+				for all Gaussians(mu,sigma,c,alpha) in (M,S,C,A)
+				{
+					if(alpha < e or TooLarge)              :: 裁剪
+					{
+						RemoveGaussians
+					}
+					if(grad(L) > tao_p)                    :: Densification
+					{
+						if(||S||>tao_s)						:: Over-reconstruction
+						{
+							SplitGaussian(mu,sigma,c,alpha)
+						}
+						Examples							:: Under-reconstruction
+						{
+							CloneGaussian(mu,sigma,c,alpha)
+						}
+					}
+				}
+			}
+
+			i += 1;
+		}
+	3、栅格化细节（排序[a list splats per tile]、DepthSorting）
+		GPU 3D Gaussians的软件栅格化
+		Frustrum Culling -> Transform -> CreatTiles[Indices and Keys,Global Sort] 
+		-> Init Canvas（GetTileRange,BlendInOrder） 
+	4、per-scene error metrics
