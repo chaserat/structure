@@ -1,0 +1,176 @@
+CGIncludes
+	UnityInstancing.cginc
+
+	UnityDeferredLibrary.cginc
+
+	UnityIndirect.cginc
+
+	UnityGlobalIllumination.cginc
+
+	AutoLight.cginc
+	Lighting.cginc
+	UnityLightingCommon.cginc
+	UnityPBSLighting.cginc
+
+	UnityShaderUtilities.cginc
+	UnityShaderVariables.cginc
+
+	UnityShadowLibrary.cginc
+
+	UnityImageBasedLighting.cginc
+
+	UnityLegacyTextureStack.cginc
+	UnitySprites.cginc
+
+	UnityMetaPass.cginc
+
+	EditorUIE.cginc
+	GLSLSupport.glslinc: 定义观察空间转换为世界坐标系
+	GraniteShaderLib3.cginc
+	HLSLSupport.cginc
+
+	UnityCG.cginc
+	UnityCG.glslinc
+
+	UnityBuiltin2xTreeLibrary.cginc
+	UnityBuiltin3xTreeLibrary.cginc
+
+	SpeedTree8Common.cginc
+	SpeedTreeBillboardCommon.cginc
+	SpeedTreeCommon.cginc
+	SpeedTreeVertex.cginc
+	SpeedTreeWind.cginc
+
+	TerrainEngine.cginc
+	TerrainPreview.cginc
+	TerrainSplatmapCommon.cginc
+	TerrainTool.cginc
+
+	Tessellation.cginc
+
+	TextCoreProperties.cginc
+	TextCore_Properties.cginc
+	TextCore_SDF_SSD.cginc
+
+	UnityCustomRenderTexture.cginc
+
+	UnityGBuffer.cginc
+
+	UnityDeprecated.cginc
+
+	UnityUI.cginc
+	UnityUIE.cginc
+
+	UnityStereoExtensions.glslinc
+	UnityStereoSupport.glslinc
+
+	Standard:
+		UnityStandardConfig.cginc
+		UnityStandardUtils.cginc
+		UnityStandardBRDF.cginc
+		UnityStandardCore.cginc
+		UnityStandardCoreForward.cginc
+		UnityStandardCoreForwardSimple.cginc
+		UnityStandardInput.cginc
+		UnityStandardMeta.cginc
+		UnityStandardParticleEditor.cginc
+		UnityStandardParticleInstancing.cginc
+		UnityStandardParticles.cginc
+		UnityStandardParticleShadow.cginc
+		UnityStandardShadow.cginc
+DefaultResources
+	FrameDebuggerRenderTargetDisplay.shader --> UV映射
+		SubShader{
+			Pass{            // 2D texture
+				frag(v2f i):SV_Target{ return ProcessColor(tex);}
+			}
+			Pass{			 // Cubemap
+				frag(v2f i): SV_Target{ return ProcessColor(tex);}
+			}
+		}
+		SubShader{
+			Pass{			 // 2D array texture
+				frag(v2f i): SV_Target{ return ProcessColor(tex);}
+			}
+		}
+		Fallback Off
+DefaultResourcesExtra
+	Font.shader
+		Shader{
+			SubShader{
+				Tags{}
+				Pass{
+					v2f vert(appdata_t v)
+					fixed4 frag(v2f i):SV_Target
+				}
+			}
+		}
+	Internal-BlendShape.compute
+		main(uint3 threadID : SV_DispatchThreadID)
+			BlendShapeVertex blendShapeVertex <= FetchBlendShape
+			vertIndex = blendShapeVertex.index; 
+			MeshVertex vertex = FetchVert(inOutMeshVertices, verIndex)
+				vertex.pos += blendShapeVert.pos * g_Weight;
+				(SKIN_NORM)vertex.norm += blendShapeVert.norm * g_Weight;
+				(SKIN_TANG)vertex.tang.xyz += blendShapeVert.tang * g_Weight;
+			StoreVert(inOutMeshVertices,vertex,vertIndex)
+	Internal-Clear.shader
+		vert{}
+		frag{}
+		SubShader{
+			Pass{ ColorMask 0 ZWrite Off }
+			Pass{ ZWrite Off }
+			Pass{ ColorMask 0 }
+			Pass{ ColorMask 0 ZWrite Off 
+				Stencil{} }
+			Pass{ ZWrite Off
+				Stencil{} }
+			Pass{ 
+				ColorMask 0
+				Stencil{} }
+			Pass{ Stencil{} }
+		}
+	Internal-Colored.shader
+		SubShader{
+			Tags{}
+			Pass{
+				Blend / ZWrite / ZTest / Cull / Offset
+
+				multi_compile -> 定义多个变体
+
+				vert{}
+				frag{}
+			}
+		}
+	Internal-ErrorShader.shader
+		#pragma multi_compile _ UNITY_SINGLE_PASS_STEREO STEREO_INSTANCING_ON STEREO_MULTIVIEW_ON
+		vert
+		frag
+	Internal-Loading.shader
+		vert / frag
+	Internal-Skinning-Util.cginc
+		FetchBuffer/FetchBuffer2/FetchBuffer3/FetchBuffer4
+		StoreBuffer/StoreBuffer2/StoreBuffer3/StoreBuffer4
+		MeshVertex FetchVert / SkinInfluence FetchSkin / BlendShapeVertex FetchBlendShape / 
+		StoreVert / 
+	Internal-Skinning.compute
+		[numthreads(64,1,1)]
+		FetchVert -> FetchSkin -> [(blendedMatrix) -> mul(pos/norm/tang)] -> StoreVert
+	Internal-VT-TranslationTableReplace.compute
+		ReplaceTranslationTable
+	Internal-VT-TranslationTableUpsample.compute
+		IsEvicted, IsAdded, 
+		bool IsEvicted(uint tile) / uint IsAdded(uint tile) (addedTileTuple)
+		[numthreads(TGSize, TGSize, 1)]
+		Main
+			Fetch data on level above => 
+			Fetch data on current level =>
+			Coalesced reads (合并读取) => 
+			(WITH_REPLACEMENT) Fetch FlatTileID for current tile{
+				[unroll]
+					<- SELECT_CHANNEL
+				[branch]
+			}
+
+			(writeNeeded)
+			=> Write to translation table texture

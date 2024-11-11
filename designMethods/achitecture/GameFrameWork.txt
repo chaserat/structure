@@ -1,0 +1,246 @@
+Config:
+	ConfigManager : GameFrameworkModule, IConfigManager
+		ConfigData
+		实例，数量，获取二进制流/确保内存够用/释放，成功/失败/更新事件，加载依赖资源事件，数据轮询，设置资源/数据配置器，ReadData/ParseData,HaseConfig/GetBool/GetInt/GetFloat/GetString,AddConfig/RemoveConfig/RemoveAllConfig，GetConfigData
+	IConfigManager : IDataProvider<IConfigManager> ：： 全局配置管理器接口
+	IConfigHelper： 全局配置辅助器接口
+	{ Setting, Utility[Properties], WebRequest }
+Debugger:
+	IDebuggerManager，IDebuggerWindow，IDebuggerWindowGroup : IDebuggerWindow，
+	DebuggerManager : GameFrameworkModule, IDebuggerManager，
+		调试窗口组，初始化调试器管理器的新实例，
+		初始化，优先级，激活状态，调试窗口根节点，调试管理器轮询，clear，注册/注销,获取调试器窗口，选中调试窗口
+Base: 
+	数据基础{
+		DataNode:
+			DataNodeManager : GameFrameworkModule, IDataNodeManager
+				数据节点管理器 增删改查；路径切分工具
+				DataNode : IDataNode, IReference
+			IDataNodeManager -> 数据节点管理器接口
+		DataTable:
+			DataTableBase : IDataProvider<DataTableBase> ：：：： 数据表基类
+			IDataRow{Id,ParseDataRow}
+			IDataTable<T> : IEnumerable<T> where T : IDataRow => 数据表接口
+			IDataTableHelper: 数据表辅助器接口
+			IDataTableManager： 数据表管理器接口
+			DataTableManager : GameFrameworkModule, IDataTableManager
+				设置数据表，是否存在数据表，获取数据表，创建数据表，销毁数据表，}，
+	事件池{ Event, Download, Network, Resource, Scene, Sound, UI[UI manager], }，类型对，日志，引用池，任务池，变量，版本号，
+	GameFramework:::: 
+		Action:: 封装方法
+		Entry: 模块框架 -- 轮询，关闭并清理所有游戏框架模块，获取游戏模块，创建游戏模块
+		EventArgs: 事件数据的类的基类
+		Exception: 异常类
+		Func: 封装函数
+		LinkedList： 框架链表类 / LinkedListRange： 链表范围
+		Module:	模块抽象类
+		MultiDictionary: 框架多值字典类
+		Serializer: 序列化基类
+Download:
+	DownloadManager : GameFrameworkModule, IDownloadManager
+		下载管理器：：：：Agent,Counter,DownloadCounterNode,DownloadTask,DownloadTaskStatus
+	Constants,
+	EventArgs:
+		DownloadAgentHelperCompleteEventArgs : GameFrameworkEventArgs,
+		DownloadAgentHelperErrorEventArgs : GameFrameworkEventArgs,
+		DownloadAgentHelperUpdateBytesEventArgs : GameFrameworkEventArgs,
+		DownloadAgentHelperUpdateLengthEventArgs : GameFrameworkEventArgs
+		DownloadFailureEventArgs : GameFrameworkEventArgs
+		DownloadStartEventArgs : GameFrameworkEventArgs
+		DownloadSuccessEventArgs : GameFrameworkEventArgs
+		DownloadUpdateEventArgs : GameFrameworkEventArgs
+	IDownloadAgentHelper
+	IDownloadManager	
+Entity:
+	EntityManager : GameFrameworkModule, IEntityManager
+	IEntity，IEntityGroup，IEntityGroupHelper，IEntityHelper，IEntityManager
+	EventArgs:
+		ShowEntityDependencyAssetEventArgs : GameFrameworkEventArgs
+		ShowEntityFailureEventArgs : GameFrameworkEventArgs
+		ShowEntitySuccessEventArgs : GameFrameworkEventArgs
+		ShowEntityUpdateEventArgs : GameFrameworkEventArgs
+		HideEntityCompleteEventArgs : GameFrameworkEventArgs
+Event:
+	EventManager : GameFrameworkModule, IEventManager
+	GameEventArgs : BaseEventArgs
+	IEventManager
+FileSystem:
+	CommonFileSystemStream : FileSystemStream, IDisposable :: 通用文件系统
+	FileSystemManager : GameFrameworkModule, IFileSystemManager :: 文件系统管理器
+	FileInfo
+	FileSystem : IFileSystem
+		BlockData,HeaderData,StringData,
+	FileSystemAccess
+	FileSystemStream ：： 文件系统流
+	IFileSystem，IFileSystemHelper，IFileSystemManager
+Fsm:
+	IFsm<T> where T : class => 有限状态机名称
+		Name,FullName,Owner,
+		FsmStateCount,
+		IsRunning,IsDestroyed,
+		CurrentState,CurrentStateTime,GetState<TState>(),GetState(Type stateType),GetAllStates(),
+		Start<TState>,Start(Type stateType),HasState<TState>(),HasState(Type stateType),HasData(string name),GetData<TData>(string name),
+		SetData,RemoveData
+	IFsmManager:
+		数量；
+		HasFsm,GetFsm,GetAllFsms,CreateFsm<T>,DestroyFsm,
+	FsmBase: 有限状态机基类
+	FsmState<T>：有限状态机状态基类
+	Fsm<T> : FsmBase, IReference, IFsm<T>：
+		Create, Start, Update, Shutdown,
+		ChangeState<TState>,ChangeState(Type stateType),
+		HasData,SetData,GetData,RemoveData,
+Localization:
+	ILocalizationHelper(SystemLanguage): 本地化辅助器接口
+	enum Language : byte
+	ILocalizationManager : IDataProvider<ILocalizationManager> ::::本地化管理器接口
+		语言，缓存二进制流大小，设置资源管理器，设置本地化数据提供者辅助器，设置本地化辅助器，缓存的二进制流，
+		GetString,
+		HasRawString,GetRawString,AddRawString,RemoveRawString,RemoveAllRawStrings
+Network:
+	AddressFamily : byte（网络地址类型）, Packet : BaseEventArgs(网络消息包基类)，INetworkChannel（网络频道接口），
+	INetworkChannelHelper（网络频道辅助器接口），INetworkManager（网络管理器接口），IPacketHandler（网络消息包处理器接口），IPacketHeader（网络消息包头接口），
+	EventArgs:
+		NetworkClosedEventArgs : GameFrameworkEventArgs,
+		NetworkConnectedEventArgs : GameFrameworkEventArgs,
+		NetworkCustomErrorEventArgs : GameFrameworkEventArgs,
+		NetworkErrorEventArgs : GameFrameworkEventArgs, <- enum NetworkErrorCode : byte(网络错误码)
+		NetworkMissHeartBeatEventArgs : GameFrameworkEventArgs :: 网络心跳包丢失事件
+	NetworkManager : GameFrameworkModule, INetworkManager
+		ConnectState,HeartBeatState,NetworkChannelBase,ReceiveState,SendState,TcpNetworkChannels,TcpWithSyncReceiveNetworkChannels,
+	Packet : BaseEventArgs ==> 网络消息包基类
+	enum ServiceType : byte ==> 网络服务类型
+ObjectPool:
+	struct ObjectInfo, 
+	IObjectPool<T> （对象池接口），
+		对象类型、对象是否被多次获取，
+	IObjectPoolManager ：：：： 对象池管理器
+	ObjectBase : IReference -> 对象基类
+	ObjectPoolBase: 对象池基类
+	ObjectPoolManager : GameFrameworkModule, IObjectPoolManager
+		HasObjectPool, GetObjectPool, CreateSingleSpawnObjectPool, CreateMultiSpawnObjectPool,
+		DestroyObjectPool, Release, ReleaseAllUnused, InternalHasObjectPool, 
+		ObjectPoolComparer,
+		对象池管理器：Object,ObjectPool,
+
+		Object<T> : IReference => 内部对象；
+		ObjectPool<T> : ObjectPoolBase, IObjectPool<T> => 对象池
+	List<T> ReleaseObjectFilterCallback<T>(List<T> candidateObjects, int toReleaseCount, DateTime expireTime)
+		释放对象筛选函数
+Procedure:
+	IProcedureManager ：：：： 流程管理接口
+		流程持续时间
+		Initialize, StartProcedure, HasProcedure, GetProcedure
+	ProcedureBase : FsmState<IProcedureManager>
+		流程基类:::: OnEnter，OnUpdate，OnLeave, OnDestroy
+	ProcedureManager : GameFrameworkModule, IProcedureManager
+		流程管理器
+		模块优先级，获取当前流程，获取当前流程持续时间，流程管理轮询，关闭并清理流程管理器，
+		Initialize,StartProcedure<T>,HasProcedure<T>,GetProcedure<T>
+Properties: AssemblyInfo -> 程序集信息，版本信息[主版本，此版本，生成号，修订号]
+Resource:
+	Callback:
+	ResourceManager:
+	EventArgs:
+	UpdateVersionList:
+	LoadResourceProgress:
+Scene:
+	ISceneManager -> 场景管理接口
+		EventHandlder, 获取场景状态，场景资源加载状态，LoadScene, UnloadScene
+	SceneManager : GameFrameworkModule, ISceneManager ==> 场景管理器
+	EventArgs:
+		LoadSceneDependencyAssetEventArgs : GameFrameworkEventArgs 加载场景时加载依赖资源事件
+		LoadSceneFailureEventArgs : GameFrameworkEventArgs
+		LoadSceneSuccessEventArgs : GameFrameworkEventArgs
+		LoadSceneUpdateEventArgs : GameFrameworkEventArgs
+		UnloadSceneFailureEventArgs : GameFrameworkEventArgs
+		UnloadSceneSuccessEventArgs : GameFrameworkEventArgs
+Setting:
+	ISettingHelper :::: 游戏配置辅助器接口
+		Load,Save,HasSettings,RemoveSettings,Get/Set Bool/Int/Float/String/Object
+	ISettingManager :::: 游戏配置管理器接口
+		同上
+	SettingManager : GameFrameworkModule, ISettingManager -- 游戏配置管理器
+		实例，Update,Shutdown,Load,Save,GetAllSettingsNames,HasSettings,RemoveSetting,Get/Set Bool/Float/String/Object
+Sound:
+	Contant <- 声音相关常量
+	Interface:
+		ISoundAgent, 声音代理接口
+			Id,Length,Time,Mute,Loop,Priority,Volume,Pitch,PanStereo,SpatialBlend,DopplerLevel,
+			Play,Stop,Pause,Resume,Reset
+		ISoundAgentHelper,
+		ISoundGroup,
+			StopAllLoadedSounds
+		ISoundGroupHelper,
+		ISoundHelper,
+			ReleaseSoundAsset
+		ISoundManager -- 声音管理器接口
+	EventArgs:
+		PlaySoundErrorCode
+		PlaySoundDependencyAssetEventArgs : GameFrameworkEventArgs
+		PlaySoundFailureEventArgs : GameFrameworkEventArgs
+		PlaySoundSuccessEventArgs : GameFrameworkEventArgs
+		PlaySoundUpdateEventArgs : GameFrameworkEventArgs
+		ResetSoundAgentEventArgs : GameFrameworkEventArgs
+	PlaySoundParams : IReference
+	SoundManager : GameFrameworkModule, ISoundManager
+		PlaySoundInfo
+		SoundAgent
+		SoundGroup
+UI:
+	Interface:
+		IUIForm
+		IUIFormHelper
+		IUIGroup
+		IUIGroupHelper
+		IUIManager
+	EventArgs:
+		CloseUIFormCompleteEventArgs : GameFrameworkEventArgs
+		OpenUIFormDependencyAssetEventArgs : GameFrameworkEventArgs
+		OpenUIFormFailureEventArgs : GameFrameworkEventArgs
+		OpenUIFormSuccessEventArgs : GameFrameworkEventArgs
+		OpenUIFormUpdateEventArgs : GameFrameworkEventArgs
+	UIManager:
+		OpenUIFormInfo
+		UIFormInstanceObject
+		UIGroup (UIFormInfo)
+Utility:
+	Assembly :::: 程序集相关的实用函数；
+		GetType, GetAssemblies
+	Compression :::: 压缩数据 Compress / Decompress
+	Converter :::: 类型转换相关的实用函数
+		IsLittleEndian, ScreenDpi, 
+		GetCenteimetersFromPixels/GetPixelsFromCentimeters/GetInchesFromPixels/GetPixelsFromInches,
+		GetBytes,Get Boolean/Char/Int16/Single/Double/String,
+	Encryption <- GetXorBytes, GetSelfXorBytes,
+	Json
+		设置Json辅助器，、
+		对象序列化，反序列化，
+	Marshal
+		Marshal相关的实用函数
+			获取缓存的从进程的非托管内存中分配的内存大小，确保分配内存大小足够，释放缓存中的内存，
+			StructureToBytes, BytesToStructure
+	Path
+		GetRegularPath, GetRemotePath, RemoveEmptyDirectory, 
+	Random
+		SetSeed, GerRandom, GetRandomDouble, GetRandomBytes
+	Text
+		设置字符辅助器，获取格式化字符串，
+	Verifier 
+		Crc32:
+			Initialize, HashCore, HashFinal, CalculateHash
+			InitializeTable
+WebRequest:
+	Constant: 默认web请求任务优先级
+	IWebRequestAgentHelper
+	IWebRequestManager
+	WebRequestManager : GameFrameworkModule, IWebRequestManager
+		WebRequestAgent
+		WebRequestTask
+		WebRequestTaskStatus
+	EventArgs:
+		WebRequestAgentHelperCompleteEventArgs : GameFrameworkEventArgs <- web请求代理辅助器完成事件
+		WebRequestAgentHelperErrorEventArgs : GameFrameworkEventArgs
+		WebRequestFailureEventArgs : GameFrameworkEventArgs
+		WebRequestStartEventArgs : GameFrameworkEventArgs
+		WebRequestSuccessEventArgs : GameFrameworkEventArgs

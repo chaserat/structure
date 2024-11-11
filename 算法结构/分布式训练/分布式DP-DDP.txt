@@ -1,0 +1,26 @@
+https://zhuanlan.zhihu.com/p/366253646
+DP: data paralel
+DDP: distributed data paralel
+--------------------------------------------------------------------------------------------
+模型加速
+	分布式并行
+		数据并行-计算梯度，通信梯度；梯度汇总
+		模型并行
+		混合并行
+	混合精度
+	在线编译
+--------------------------------------------------------------------------------------------
+分布式训练：：：：分布式、高并发、多线程等
+--------------------------------------------------------------------------------------------
+通信原理：
+	pytorch:
+		Data-Parallel-DP 单机多卡
+		Distributed Data-Parrallel(DDP) 多级多卡
+		RPC-Based Distributed Training 
+		Collective Communication(c10d)
+	tensorflow: 支持分布式训练的不同策略
+		MirroredStrategy
+		TPUStrategy
+		MultiWorkerMirroredStrategy
+		CentralStorageStrategy
+		ParameterServerStrategy

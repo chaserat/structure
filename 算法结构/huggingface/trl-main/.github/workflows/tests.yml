@@ -1,0 +1,88 @@
+name: tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    paths:
+      # Run only when relevant files are modified
+      - "trl/**.py"
+      - "examples/**.py"
+      - "scripts/**.py"
+      - ".github/**.yml"
+      - "tests/**.py"
+
+env:
+  TQDM_DISABLE: 1
+
+jobs:
+  check_code_quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: --all-files
+
+  tests:
+    needs: check_code_quality
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+        os: ['ubuntu-latest', 'windows-latest']
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: "pip"
+        cache-dependency-path: |
+            setup.py
+            requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # install PEFT & transformers from source
+        pip install -U git+https://github.com/huggingface/peft.git
+        pip install -U git+https://github.com/huggingface/transformers.git
+        # cpu version of pytorch
+        pip install ".[test, diffusers]"
+    - name: Test with pytest
+      run: |
+        make test
+
+  tests_no_optional_dep:
+    needs: check_code_quality
+    runs-on: 'ubuntu-latest'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+        cache: "pip"
+        cache-dependency-path: |
+            setup.py
+            requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # cpu version of pytorch
+        pip install .[test]
+    - name: Test with pytest
+      run: |
+        make test

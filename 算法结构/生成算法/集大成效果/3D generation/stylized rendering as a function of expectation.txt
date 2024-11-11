@@ -1,0 +1,81 @@
+Stylized Rendering as a Function of Expectation
+----------------------------------------------------------------------------------------
+一致性的渲染方程繁华，用于获取PBR的真实光照传播&非图片化的principled manner的NPR 风格化的子集；
+简单的无偏估计器，
+Given this observation, we generalize the recursive integrals of
+the rendering equation to recursive functions of expectation
+toolkit for 无偏估计和偏差估计
+<==== Rendering;Raytracing
+----------------------------------------------------------------------------------------
+摘要：
+PBR -> 
+	cel-shading::::赛璐珞着色法(卡通着色)
+	cross-hatching::::
+	Tonemapping
+	<==== image editing(contrast & satuaration adjustment; => locally modifying the color of objects)
+	<==== exitant radiance(an expectation)
+	渲染方程的泛化recursive integrals：：：<= 光晕，color bleeding用于影响NPR风格化；多次反弹
+	无偏估计和有偏估计，
+	----> 泛化；pratical estimator & sampling算法;
+背景：
+	1、  physically-plausible integral formulation:::: Pharr et al.[2023]
+		Non-photorealistic rendering <==== style transfer
+			hand drawn sketch styles / artistic and scientific illustrations / Hatching methods / stippling methods/
+	2、  Integrating NPR stylization into PBR
+		highly parallel architecture of modern computing platforms
+			Color Remapping on a path Trace(ACP) & Fidelity for Texture Values(FTV) <---- 
+		feature line rendering in a PBR framework
+		Functions of expectation:    g(I)=g(E[<I>])
+		----computer graphics
+		----rendering: volumetric transmittance( an exponential of expectation ) | 使用power series expasion的无偏估计
+Stylized rendering equation --> 泛化 L(x,y)=g0(Le(x,y) + Integral_V(fr(x,y,z)G(y,z)L(y,z)dz))
+	当style function是identity function; non-trivial function
+	motivation:
+		1、 affine style function的PBR函数
+		2、 弹性参数化，提供分割话的radiance的控制
+		3、 the point of stylization；打开visualizations；
+	性质：properties：
+		1、 existence and uniqueness => reduce to the usual rendering equation, 应用收敛到唯一解
+				the auxiliary non-linear Fredholm equation
+		2、 Reciprocity of light:  non-linearity <= 积分；因此，
+		3、 Divergence: 能量守恒
+		4、 Pixel forming： 
+		5、 Parametrization： 参数化 
+		6、 Composition
+		7、 Tristinulus rendering
+		8、 Compatibility with non-transport stylizations => 非迁移风格化{
+			mesh deformation or wide variety of appearance editing methods;修改材质球属性，光照和object属性(vertex positions & surface normals)
+		}
+风格化渲染公式的Monte Carlo估计
+	无偏和有偏评估器，
+	Group-unbiased estimator: 
+	Biased estimators:
+	1、 prior work in 无偏估计的期望函数
+		1、 Power series
+		2、 telescoping series
+	2、 合并特定操作的group-unbiased风格函数 
+		1、 group-unbiased style functions
+	3、 多项式approximation
+		1、 Canonical experiments
+	4、 Direct application g_theta(I) ~= g_theta(<I>)
+	5、 a complete estimator
+		Unbiasedness
+	Implementation:
+		1、 Sampling cost
+		2、 Divergence
+		3、 Consistency when using biased estimators
+		4、 Discontinuous style functions
+----------------------------------------------------------------------------------------------------------------------------------------------
+Results:
+	1、  color mapping & cel-shading
+		1、 color mapping and ACP
+		2、 cel shading and FTV
+	2、  parametrically-varying style functions
+	3、  无偏stylization using power series and certain operations
+	4、  有偏风格化使用多项式逼近
+	5、  representing existing stylizations 
+	6、  advanced 风格化
+----------------------------------------------------------------------------------------------------------------------------------------------
+limitations & future work:
+	1、 期望函数
+	2、 风格化的渲染(rendering)
